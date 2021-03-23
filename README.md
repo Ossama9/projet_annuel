@@ -2,7 +2,7 @@
 
 Ce projet à pour but de répondre à un [appel d'offre](Documentation/Sujet%20du%20projet%20-%20appel%20d'offre.pdf) (fictif) de la société Fair Repack.
 
-*Les différents documents relatifs à l'appel d'offre ainsi que les descriptifs de la solutions peuvent être retrouvé dans le dossier ["Documentation"](Documentation/)*
+*Les différents documents relatifs à l'appel d'offre ainsi que les descriptifs de la solutions peuvent être retrouvés dans le dossier ["Documentation"](Documentation/)*
 
 #### Réalisé par : ####
 
