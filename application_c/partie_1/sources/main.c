@@ -1,7 +1,10 @@
-#include <stdio.h>
-#include <curl/curl.h>
+#include "../headers/createXML.h"
+#include<stdio.h>
 
+int main(void){
 
-int main(int argc, char** argv){
+	printf("%d\n",downloadXML("https://world.openfoodfacts.org/api/v0/product/737628064502.json", "test.json"));
+
+	return 0;
 	
 }
