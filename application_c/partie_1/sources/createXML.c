@@ -9,12 +9,12 @@ int downloadXML(char* url, char* fileName){
 
 	struct curl_slist *header = NULL;
 
-	curl = curl_easy_init();
-
     /* try to open/create the file where to download */
 	fd = fopen(fileName, "wb");
 	if(!fd)
 		return 0;
+
+	curl = curl_easy_init();
 
 	if(curl) {
 

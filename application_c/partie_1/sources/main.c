@@ -1,9 +1,12 @@
 #include "../headers/createXML.h"
+#include "../headers/sendXML.h"
 #include<stdio.h>
 
 int main(void){
 
-	printf("%d\n",downloadXML("https://world.openfoodfacts.org/api/v0/product/737628064502.json", "test.json"));
+	downloadXML("https://world.openfoodfacts.org/api/v0/product/737628064502.json", "test.json");
+
+	sendXML("https://enaq0wlextx63sp.m.pipedream.net", "test.json");
 
 	return 0;
 	
