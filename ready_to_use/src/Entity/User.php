@@ -80,6 +80,11 @@ class User implements UserInterface, \Serializable
      */
     private $sells;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private int $roles;
+
     public function __construct()
     {
         $this->requestingUser = new ArrayCollection();
@@ -309,9 +314,27 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getRoles()
+    /**
+     * Rôle d'un utilisateur
+     * 0: utilisateur classique
+     * 1: administrateur
+     * @return string[]
+     */
+    public function getRoles(): array
     {
-        return ['ROLE_ADMIN'];
+        $roles = $this->roles;
+
+        // Chaque administrateur est également un utilisateur
+        if ($roles === 1) return ['ROLE_USER', 'ROLE_ADMIN'];
+
+        return ['ROLE_USER'];
+    }
+
+    public function setRoles(int $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 
     public function getSalt()

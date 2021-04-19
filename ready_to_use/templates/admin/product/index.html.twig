@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des produits{% endblock %}
+
+{% block body %}
+    <h3 class="mb-4">Liste des produits</h3>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Marque</th>
+                <th>Modèle</th>
+                <th>Description</th>
+                <th>Condition</th>
+                <th>Prix</th>
+                <th>Date de dépôt</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.brand }}</td>
+                <td>{{ product.model }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.productCondition }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.depositDate ? product.depositDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('admin.product.show', {'id': product.id}) }}">show</a>
+                    <a href="{{ path('admin.product.edit', {'id': product.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8=">Aucun produit</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin.product.new') }}">Ajouter un produit</a>
+{% endblock %}

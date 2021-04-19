@@ -24,6 +24,11 @@
             {{ form_widget(form) }}
             <button class="btn btn-primary">{{ button|default('Enregistrer') }}</button>
             {{ form_end(form) }}
+
+            <form method="post" action="{{ path('account.delete') }}" class="mt-2" onsubmit="return confirm('Voulez-vous vraiment supprimer votre compte ?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}">
+                <button class="btn btn-danger">Supprimer mon compte</button>
+            </form>
         </div>
     </div>
 

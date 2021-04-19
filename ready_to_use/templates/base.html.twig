@@ -20,6 +20,9 @@
                 <ul class="navbar-nav">
 {#                    <li><a class="nav-link nav-item {% if current_page is defined and current_page == 'admin' %}active{% endif %}" href="{{ path('login') }}">Panel admin</a></li>#}
                     {% if app.user %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li><a class="nav-link nav-item {% if current_page is defined and current_page == 'admin' %}active{% endif %}" href="{{ path('admin') }}">Panel administrateur</a></li>
+                        {% endif %}
                         <li><a class="nav-link nav-item {% if current_page is defined and current_page == 'account' %}active{% endif %}" href="{{ path('account.index') }}">Mon compte</a></li>
                         <li><a class="nav-link nav-item" href="{{ path('logout') }}">Déconnexion</a></li>
                     {% else %}
@@ -30,7 +33,10 @@
             </div>
         </nav>
     </header>
-    {% block body %}{% endblock %}
+    <section class="p-4">
+    {% block body %}
+    {% endblock %}
+    </section>
     {#{% block javascripts %}#}
     {#    {{ encore_entry_script_tags('app') }}#}
     {#{% endblock %}#}

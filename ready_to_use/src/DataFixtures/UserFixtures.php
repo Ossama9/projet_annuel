@@ -28,6 +28,7 @@ class UserFixtures extends Fixture
         $user->setFirstName('Charles');
         $user->setLastName('Lefebvre');
         $user->setSignupDate(new \DateTime());
+        $user->setRoles(1);
         $manager->persist($user);
         $manager->flush();
     }
