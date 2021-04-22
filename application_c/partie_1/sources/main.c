@@ -1,5 +1,4 @@
-#include "../headers/createXML.h"
-#include "../headers/sendXML.h"
+#include "../headers/fonctions.h"
 #include<stdio.h>
 
 int main(void){
