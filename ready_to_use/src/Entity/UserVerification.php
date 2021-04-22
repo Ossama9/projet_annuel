@@ -30,7 +30,7 @@ class UserVerification
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private \DateTimeInterface $validationDate;
+    private ?\DateTimeInterface $validationDate;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="requestingUser")
@@ -40,7 +40,7 @@ class UserVerification
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="verifiedBy")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $verifiedBy;
 

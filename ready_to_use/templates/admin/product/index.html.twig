@@ -29,8 +29,8 @@
                 <td>{{ product.price }}</td>
                 <td>{{ product.depositDate ? product.depositDate|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('admin.product.show', {'id': product.id}) }}">show</a>
-                    <a href="{{ path('admin.product.edit', {'id': product.id}) }}">edit</a>
+                    <a class="btn btn-primary" href="{{ path('admin.product.show', {'id': product.id}) }}">Voir</a>
+                    <a class="btn btn-secondary" href="{{ path('admin.product.edit', {'id': product.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -41,5 +41,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('admin.product.new') }}">Ajouter un produit</a>
+    <a class="btn btn-primary" href="{{ path('admin.product.new') }}">Ajouter un produit</a>
 {% endblock %}

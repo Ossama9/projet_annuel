@@ -3,5 +3,8 @@
 {% block title 'Pannel administrateur' %}
 
 {% block body %}
-    <p class="p-2"><a href="{{ path('admin.product.index') }}">Gestion des produits</a></p>
+    <div class="p-2">
+        <p><a href="{{ path('admin.product.index') }}">Gestion des produits</a></p>
+        <p><a href="{{ path('admin.user.verification.index') }}">Gestion des marchands</a></p>
+    </div>
 {% endblock %}

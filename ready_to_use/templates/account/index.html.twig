@@ -22,13 +22,20 @@
                 <div class="col-md-4">{{ form_row(form.lastName) }}</div>
             </div>
             {{ form_widget(form) }}
-            <button class="btn btn-primary">{{ button|default('Enregistrer') }}</button>
+            <button class="btn btn-secondary">{{ button|default('Enregistrer') }}</button>
             {{ form_end(form) }}
 
-            <form method="post" action="{{ path('account.delete') }}" class="mt-2" onsubmit="return confirm('Voulez-vous vraiment supprimer votre compte ?');">
-                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}">
-                <button class="btn btn-danger">Supprimer mon compte</button>
-            </form>
+            <div class="d-flex mt-2">
+                <form method="post" action="{{ path('account.delete') }}" class="mr-2" onsubmit="return confirm('Voulez-vous vraiment supprimer votre compte ?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}">
+                    <button class="btn btn-danger">Supprimer mon compte</button>
+                </form>
+
+                <form method="post" action="{{ path('account.merchant') }}" onsubmit="return confirm('Voulez-vous vraiment faire une demande pour devenir marchand ?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('request' ~ app.user.id) }}">
+                    <button class="btn btn-primary">Devenir marchand</button>
+                </form>
+            </div>
         </div>
     </div>
 

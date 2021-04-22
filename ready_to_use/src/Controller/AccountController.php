@@ -3,32 +3,32 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
+use App\Entity\UserVerification;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AccountController extends AbstractController
 {
 
     /**
-     * @var ObjectManager
-     */
-    private ObjectManager $em;
-    /**
      * @var UserRepository
      */
     private UserRepository $repository;
 
+    /**
+     * @var ObjectManager
+     */
+    private ObjectManager $em;
+
     public function __construct(UserRepository $repository, ObjectManager $em)
     {
-        $this->em = $em;
         $this->repository = $repository;
+        $this->em = $em;
     }
 
     /**
@@ -58,19 +58,18 @@ class AccountController extends AbstractController
     /**
      * @Route("account/delete", name="account.delete", methods={"POST"})
      * @param Request $request
-     * @param UserRepository $userRepository
      * @return Response
      */
-    public function delete(Request $request, UserRepository $userRepository): Response
+    public function delete(Request $request): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $user = $userRepository->findOneBy(['username' => $this->getUser()->getUsername()]);
+        $user = $this->repository->findOneBy(['username' => $this->getUser()->getUsername()]);
 
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($user);
-            $entityManager->flush();
+
+            $this->em->remove($user);
+            $this->em->flush();
 
             return $this->redirectToRoute('account.deleted');
         }
@@ -85,5 +84,31 @@ class AccountController extends AbstractController
     public function accountDeleted(): Response
     {
         return $this->render('account:deleted.html.twig');
+    }
+
+    /**
+     * Permet à un utilisateur de devenir marchand
+     * @Route("account/merchant", name="account.merchant", methods={"POST"})
+     * @param Request $request
+     * @return Response
+     */
+    public function merchant(Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->repository->findOneBy(['username' => $this->getUser()->getUsername()]);
+
+        if ($this->isCsrfTokenValid('request'.$user->getId(), $request->request->get('_token'))) {
+
+            $userVerification = new UserVerification();
+            $userVerification->setStatus(0);
+            $userVerification->setRequestDate(new \DateTime());
+            $userVerification->setRequestingUser($user);
+            $this->em->persist($userVerification);
+            $this->em->flush();
+            $this->addFlash('success', 'Votre demande a bien été prise en compte. Un administrateur va traiter votre demande dans les plus brefs délais.');
+
+        }
+
+        return $this->redirectToRoute('account.index');
     }
 }
