@@ -5,6 +5,4 @@ main: sources/main.c sources/fonctions.c
 
 run:
 	./main
-
-clean:
-	rm main test.json
+	

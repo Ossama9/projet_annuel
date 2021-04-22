@@ -1,7 +1,12 @@
-#include <stdio.h>
-#include <curl/curl.h>
+#include "../headers/fonctions.h"
+#include<stdio.h>
 
+int main(void){
 
-int main(int argc, char** argv){
+	downloadXML("https://world.openfoodfacts.org/api/v0/product/737628064502.json", "test.json");
+
+	sendXML("https://enaq0wlextx63sp.m.pipedream.net", "test.json");
+
+	return 0;
 	
 }
