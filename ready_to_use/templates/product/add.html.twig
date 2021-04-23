@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block title 'Faire simulation' %}
+{% block body %}
+    <div class="container mt-4">
+        <h1>ajouter un produit</h1>
+        <div class="jumbotron">
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="col-md-6">{{ form_row(form.model) }}</div>
+                <div class="col-md-6">{{ form_row(form.brand) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">{{ form_row(form.description) }}</div>
+                <div class="col-md-6">{{ form_row(form.productCondition) }}</div>
+                <div class="col-md-6">{{ form_row(form.wharehouse) }}</div>
+                <div class="col-md-6">{{ form_row(form.price) }}</div>
+            </div>
+            {{ form_widget(form) }}
+            <button class="btn btn-primary">{{ button|default('Enregistrer') }}</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+    </div>
+
+
+{#    {{ form_row(form.model) }}#}
+{#    {{ form_row(form.brand) }}#}
+{#    {{ form_row(form.Description) }}#}
+
+
+
+
+{% endblock %}

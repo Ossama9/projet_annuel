@@ -49,6 +49,7 @@ class Product
      */
     private \DateTimeInterface $depositDate;
 
+
     /**
      * @ORM\ManyToOne(targetEntity=Wharehouse::class, inversedBy="products")
      * @ORM\JoinColumn(nullable=false)
@@ -77,7 +78,9 @@ class Product
 
     public function __construct()
     {
+        $this->depositDate = new \DateTime();
         $this->pictures = new ArrayCollection();
+
     }
 
     public function getId(): ?int

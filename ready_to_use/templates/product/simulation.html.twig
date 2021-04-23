@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+{#{% block body %}#}
+{#{% endblock %}#}
+
+{% block body %}
+
+
+
+
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+
+
+
+    <select name="marque" id="type_select" required >
+            <option value="">--Brands--</option>
+            {% for M in brands %}
+                <option  value={{M.getId}}">
+                    {{M.getName}}
+                </option>
+
+            {% endfor %}
+
+        </select>
+    <select name="model" id="type_select" required >
+            <option value="">--MODEL--</option>
+            {% for M in models %}
+                <option  value={{M.getId}}">
+                    {{M.getName}}
+                </option>
+
+            {% endfor %}
+
+        </select>
+{#    <h1>#}
+{#        {{ model.getPrice}}#}
+{#    </h1>#}
+<br>
+
+
+        <div>
+            <br>
+            Etat de batterie:
+            <input type="radio" id="batterie1" name="batterie" value="1">
+            <label for="batterie1">Parfait</label>
+            <input type="radio" id="batterie2" name="batterie" value="2">
+            <label for="batterie2">Correct</label>
+            <input type="radio" id="batterie3" name="batterie" value="3">
+            <label for="batterie3">Moyenne</label>
+        </div>
+    <br>
+        <div>
+            Etat de d'ecran:
+            <input type="radio" id="ecran1" name="ecran" value="1" checked>
+            <label for="ecran1">Comme neuf.</label>
+            <input type="radio" id="ecran2" name="ecran" value="2">
+            <label for="ecran2">Peut avoir des rayures</label>
+            <input type="radio" id="ecran3" name="ecran" value="3">
+            <label for="ecran3">Peut avoir des micro-rayures</label>
+        </div>
+
+    <button class="btn btn-primary">{{ button|default('Enregistrer') }}</button>
+
+
+            {{ form_end(form) }}
+{% endblock %}

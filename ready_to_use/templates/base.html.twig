@@ -21,7 +21,7 @@
 {#                    <li class="nav-item"><a class="nav-link {% if current_page is defined and current_page == 'property' %}active{% endif %}" href="{{ path('login') }}">Test</a></li>#}
                 </ul>
                 <ul class="navbar-nav">
-{#                    <li><a class="nav-link nav-item {% if current_page is defined and current_page == 'admin' %}active{% endif %}" href="{{ path('login') }}">Panel admin</a></li>#}
+{#                    <li><a class="nav-link nav-item {% if current_page is defined and current_page == 'Admin' %}active{% endif %}" href="{{ path('login') }}">Panel Admin</a></li>#}
                     {% if app.user %}
                         <li><a class="nav-link nav-item {% if current_page is defined and current_page == 'account' %}active{% endif %}" href="{{ path('account.index') }}">Mon compte</a></li>
                         <li><a class="nav-link nav-item" href="{{ path('logout') }}">Déconnexion</a></li>
