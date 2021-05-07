@@ -8,7 +8,7 @@
 #include "../headers/fonctions.h"
 
 #define DESTINATION_MAX_LENGTH 16
-#define FILE_MAX_LENGTH 25  //nom de la ville max 16 charactères
+#define FILE_MAX_LENGTH 25  //nom de la ville max 10 charactères
 
 
 char destination_path[DESTINATION_MAX_LENGTH];

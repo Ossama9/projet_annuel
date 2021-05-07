@@ -1,10 +1,11 @@
 all: main run
 
-main: sources/main.c sources/fonctions.c
-	gcc -g -Wall -Wextra -pedantic sources/main.c sources/fonctions.c -o main -lcurl
+main: sources/main.c sources/databaseConnection.c sources/xmlCreation.c sources/sendXml.c
+	gcc -g -Wall -Wextra -pedantic sources/main.c sources/databaseConnection.c sources/xmlCreation.c sources/sendXml.c -o main -lmysqlclient -lcurl
 
 run:
-	./main
+	sudo ./main 1
 
 clean:
-	rm main test.json
+	sudo rm main *.xml
+
