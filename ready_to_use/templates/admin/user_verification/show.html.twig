@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Aperçu d'une demande{% endblock %}
+
+{% block body %}
+    <h3 class="mb-4">Demande par {{ user_verification.requestingUser.email }}</h3>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user_verification.id }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>{% if user_verification.status == 0 %}En attente{% elseif user_verification.status == 1 %}Vérifié{% else %}Refusé{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Date de la demande</th>
+                <td>{{ user_verification.requestDate ? user_verification.requestDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date de la vérification</th>
+                <td>{{ user_verification.validationDate ? user_verification.validationDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Vérifié par</th>
+                <td>{{ user_verification.verifiedBy ? user_verification.verifiedBy.email : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="d-flex">
+        <a class="btn btn-primary mr-2" href="{{ path('admin.user.verification.index') }}">Retour</a>
+        <a class="btn btn-secondary mr-2" href="{{ path('admin.user.verification.edit', {'id': user_verification.id}) }}">Modifier</a>
+        {{ include('admin/user_verification/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

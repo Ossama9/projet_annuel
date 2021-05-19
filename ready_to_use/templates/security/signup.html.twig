@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title "S'inscrire" %}
+
+{% block body %}
+    <div class="container mt-4">
+
+        {% for message in app.flashes %}
+            <div class="alert alert-success">
+                <a href="{{ path('login') }}">Votre compte a bien été créé, connectez-vous</a>.
+            </div>
+        {% endfor %}
+
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-6">{{ form_row(form.username) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">{{ form_row(form.password) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">{{ form_row(form.email) }}</div>
+        </div>
+
+        {{ form_rest(form) }}
+        <button type="submit" class="btn btn-primary mb-2">S'inscrire</button>
+        <p>Déjà un compte ? <a href="{{ path('login') }}">Se connecter</a></p>
+        {{ form_end(form) }}
+
+    </div>
+{% endblock %}
