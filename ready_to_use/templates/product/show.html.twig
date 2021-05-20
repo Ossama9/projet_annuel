@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produit{% endblock %}
+
+{% block body %}
+    <h3 class="mb-4">Produit</h3>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ product.id }}</td>
+            </tr>
+            <tr>
+                <th>Marque</th>
+                <td>{{ product.brand }}</td>
+            </tr>
+            <tr>
+                <th>Modèle</th>
+                <td>{{ product.model }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ product.description }}</td>
+            </tr>
+            <tr>
+                <th>Condition</th>
+                <td>{{ product.productCondition }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ product.price }}</td>
+            </tr>
+            <tr>
+                <th>Date de dépôt</th>
+                <td>{{ product.depositDate ? product.depositDate|date('d-m-Y à H:i') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>{{ product.sell.status }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="d-flex">
+        <a class="btn btn-primary mr-2" href="{{ path('product.index') }}">Retour</a>
+        {{ include('product/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

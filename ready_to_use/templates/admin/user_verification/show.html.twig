@@ -17,11 +17,11 @@
             </tr>
             <tr>
                 <th>Date de la demande</th>
-                <td>{{ user_verification.requestDate ? user_verification.requestDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ user_verification.requestDate ? user_verification.requestDate|date('d-m-Y à H:i') : '' }}</td>
             </tr>
             <tr>
                 <th>Date de la vérification</th>
-                <td>{{ user_verification.validationDate ? user_verification.validationDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ user_verification.validationDate ? user_verification.validationDate|date('d-m-Y à H:i') : '' }}</td>
             </tr>
             <tr>
                 <th>Vérifié par</th>

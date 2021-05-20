@@ -1,46 +1,63 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Product{% endblock %}
+{% block title %}Produit{% endblock %}
 
 {% block body %}
-    <h1>Product</h1>
+    <h3 class="mb-4">Produit</h3>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ product.id }}</td>
-            </tr>
-            <tr>
-                <th>Brand</th>
-                <td>{{ product.brand }}</td>
-            </tr>
-            <tr>
-                <th>Model</th>
-                <td>{{ product.model }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ product.description }}</td>
-            </tr>
-            <tr>
-                <th>ProductCondition</th>
-                <td>{{ product.productCondition }}</td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>{{ product.price }}</td>
-            </tr>
-            <tr>
-                <th>DepositDate</th>
-                <td>{{ product.depositDate ? product.depositDate|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <td>{{ product.id }}</td>
+        </tr>
+        <tr>
+            <th>Marque</th>
+            <td>{{ product.brand }}</td>
+        </tr>
+        <tr>
+            <th>Modèle</th>
+            <td>{{ product.model }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ product.description }}</td>
+        </tr>
+        <tr>
+            <th>Condition</th>
+            <td>{{ product.productCondition }}</td>
+        </tr>
+        <tr>
+            <th>Prix</th>
+            <td>{{ product.price }}</td>
+        </tr>
+        <tr>
+            <th>Date de dépôt</th>
+            <td>{{ product.depositDate ? product.depositDate|date('d-m-Y à H:i') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Statut</th>
+            <td>{{ product.sell.status }}</td>
+        </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('admin.product.index') }}">Retour</a>
-
-    <a class="btn btn-secondary" href="{{ path('admin.product.edit', {'id': product.id}) }}">Sauvegarder</a>
-
-    {{ include('admin/product/_delete_form.html.twig') }}
+    <div class="d-flex">
+        <form class="mr-2" method="post" action="{{ path('admin.product.update_offer', {'id': product.id}) }}" onsubmit="return confirm('Voulez-vous vraiment accepter l\'offre ?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('accept_offer' ~ product.id) }}">
+            <button class="btn btn-secondary">Accepter l'offre</button>
+        </form>
+        <form class="mr-2" method="post" action="{{ path('admin.product.update_offer', {'id': product.id}) }}" onsubmit="return confirm('Voulez-vous vraiment refuser l\'offre ?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('decline_offer' ~ product.id) }}">
+            <button class="btn btn-danger">Décliner l'offre</button>
+        </form>
+        {{ include('admin/product/_delete_form.html.twig') }}
+        <a class="btn btn-primary mr-2" href="{{ path('admin.product.index') }}">Retour</a>
+    </div>
 {% endblock %}

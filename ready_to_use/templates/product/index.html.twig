@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des produits{% endblock %}
+
+{% block body %}
+    {% if merchant %}
+    <h3 class="mb-4">Liste de vos produits</h3>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Marque</th>
+            <th>Modèle</th>
+            <th>Condition</th>
+            <th>Prix</th>
+            <th>Date de dépôt</th>
+            <th>Statut</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.brand }}</td>
+                <td>{{ product.model }}</td>
+                <td>{{ product.productCondition }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.depositDate ? product.depositDate|date('d-m-Y à H:i') : '' }}</td>
+                <td>{{ product.sell.status }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('product.show', {'id': product.id}) }}">Voir</a>
+{#                    <a class="btn btn-secondary" href="{{ path('product.edit', {'id': product.id}) }}">Modifier</a>#}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8=">Aucun produit</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('product.new') }}">Ajouter un produit</a>
+    {% else %}
+        <p>Vous devez être marchand pour vendre des produits.</p>
+        <a class="btn btn-primary" href="{{ path('account.index') }}">Devenir marchand</a>
+    {% endif %}
+{% endblock %}

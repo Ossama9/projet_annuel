@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\UserVerification;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Repository\UserVerificationRepository;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,13 +22,19 @@ class AccountController extends AbstractController
     private UserRepository $repository;
 
     /**
+     * @var UserVerificationRepository
+     */
+    private UserVerificationRepository $verificationRepository;
+
+    /**
      * @var ObjectManager
      */
     private ObjectManager $em;
 
-    public function __construct(UserRepository $repository, ObjectManager $em)
+    public function __construct(UserRepository $repository, UserVerificationRepository $verificationRepository, ObjectManager $em)
     {
         $this->repository = $repository;
+        $this->verificationRepository = $verificationRepository;
         $this->em = $em;
     }
 
@@ -39,8 +46,11 @@ class AccountController extends AbstractController
     public function index(Request $request): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $form = $this->createForm(UserType::class, $this->getUser());
+        $user = $this->getUser();
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
+        $is_merchant = $this->verificationRepository->findOneBy(['requestingUser' => $user]);
+        $merchant = $is_merchant ? $is_merchant->getStatus() === 1 ? $is_merchant : false : false;
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
@@ -49,8 +59,9 @@ class AccountController extends AbstractController
         }
 
         return $this->render('account/index.html.twig', [
-            'user' => $this->getUser(),
+            'user' => $user,
             'form' => $form->createView(),
+            'merchant' => $merchant,
             'current_page' => 'account'
         ]);
     }

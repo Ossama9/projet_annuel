@@ -5,13 +5,16 @@
 {% block body %}
 
     <div class="container mt-4">
-        <h1>Mon compte</h1>
+        <h1 class="mb-4">Mon compte</h1>
         {% for message in app.flashes('success') %}
             <div class="alert alert-success">
                 {{ message }}
             </div>
         {% endfor %}
         <div class="jumbotron">
+            {% if merchant %}
+                <p>Vous êtes inscrit en tant que marchand depuis le {{ merchant.requestDate|date('d-m-Y à H:i') }}.</p>
+            {% endif %}
             {{ form_start(form) }}
             <div class="row">
                 <div class="col-md-6">{{ form_row(form.username) }}</div>
@@ -30,11 +33,12 @@
                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}">
                     <button class="btn btn-danger">Supprimer mon compte</button>
                 </form>
-
+                {% if not merchant %}
                 <form method="post" action="{{ path('account.merchant') }}" onsubmit="return confirm('Voulez-vous vraiment faire une demande pour devenir marchand ?');">
                     <input type="hidden" name="_token" value="{{ csrf_token('request' ~ app.user.id) }}">
                     <button class="btn btn-primary">Devenir marchand</button>
                 </form>
+                {% endif %}
             </div>
         </div>
     </div>

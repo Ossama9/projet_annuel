@@ -11,10 +11,10 @@
                 <th>ID</th>
                 <th>Marque</th>
                 <th>Modèle</th>
-                <th>Description</th>
                 <th>Condition</th>
                 <th>Prix</th>
                 <th>Date de dépôt</th>
+                <th>Vendu par</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -24,10 +24,10 @@
                 <td>{{ product.id }}</td>
                 <td>{{ product.brand }}</td>
                 <td>{{ product.model }}</td>
-                <td>{{ product.description }}</td>
                 <td>{{ product.productCondition }}</td>
                 <td>{{ product.price }}</td>
-                <td>{{ product.depositDate ? product.depositDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ product.depositDate ? product.depositDate|date('d-m-Y à H:i') : '' }}</td>
+                <td>{{ product.sell.soldBy.email }}</td>
                 <td>
                     <a class="btn btn-primary" href="{{ path('admin.product.show', {'id': product.id}) }}">Voir</a>
                     <a class="btn btn-secondary" href="{{ path('admin.product.edit', {'id': product.id}) }}">Modifier</a>
