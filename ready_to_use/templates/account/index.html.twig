@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Mon compte' %}
+
+{% block body %}
+
+    <div class="container mt-4">
+        <h1>Mon compte</h1>
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <div class="jumbotron">
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="col-md-6">{{ form_row(form.username) }}</div>
+                <div class="col-md-6">{{ form_row(form.email) }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">{{ form_row(form.firstName) }}</div>
+                <div class="col-md-4">{{ form_row(form.lastName) }}</div>
+            </div>
+            {{ form_widget(form) }}
+            <button class="btn btn-secondary">{{ button|default('Enregistrer') }}</button>
+            {{ form_end(form) }}
+
+            <div class="d-flex mt-2">
+                <form method="post" action="{{ path('account.delete') }}" class="mr-2" onsubmit="return confirm('Voulez-vous vraiment supprimer votre compte ?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}">
+                    <button class="btn btn-danger">Supprimer mon compte</button>
+                </form>
+
+                <form method="post" action="{{ path('account.merchant') }}" onsubmit="return confirm('Voulez-vous vraiment faire une demande pour devenir marchand ?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('request' ~ app.user.id) }}">
+                    <button class="btn btn-primary">Devenir marchand</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
