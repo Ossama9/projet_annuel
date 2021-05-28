@@ -40,7 +40,7 @@ class Model
     private $offers;
 
     /**
-     * @ORM\ManyToOne(targetEntity=brand::class, inversedBy="models")
+     * @ORM\OneToMany(targetEntity=Brand::class, mappedBy="models")
      */
     private $brand;
 

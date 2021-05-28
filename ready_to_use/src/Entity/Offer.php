@@ -30,7 +30,7 @@ class Offer
     private $amount;
 
     /**
-     * @ORM\ManyToMany(targetEntity=model::class, inversedBy="offers")
+     * @ORM\OneToMany(targetEntity=Model::class, mappedBy="offers")
      */
     private $model;
 

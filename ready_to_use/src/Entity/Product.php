@@ -20,24 +20,9 @@ class Product
     private int $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private string $brand;
-
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private string $model;
-
-    /**
      * @ORM\Column(type="string", length=200, nullable=true)
      */
     private ?string $description;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private int $productCondition;
 
     /**
      * @ORM\Column(type="float")
@@ -74,6 +59,11 @@ class Product
      * @ORM\OneToOne(targetEntity=Sell::class, mappedBy="product", cascade={"persist", "remove"})
      */
     private $sell;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Offer::class, cascade={"persist", "remove"})
+     */
+    private $offer;
 
     public function __construct()
     {
@@ -251,6 +241,18 @@ class Product
         }
 
         $this->sell = $sell;
+
+        return $this;
+    }
+
+    public function getOffer(): ?Offer
+    {
+        return $this->offer;
+    }
+
+    public function setOffer(?Offer $offer): self
+    {
+        $this->offer = $offer;
 
         return $this;
     }
