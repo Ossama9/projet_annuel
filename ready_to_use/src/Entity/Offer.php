@@ -30,14 +30,10 @@ class Offer
     private $amount;
 
     /**
-     * @ORM\OneToMany(targetEntity=Model::class, mappedBy="offers")
+     * @ORM\ManyToOne(targetEntity=model::class, inversedBy="offers")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $model;
-
-    public function __construct()
-    {
-        $this->model = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -68,27 +64,16 @@ class Offer
         return $this;
     }
 
-    /**
-     * @return Collection|model[]
-     */
-    public function getModel(): Collection
+    public function getModel(): ?model
     {
         return $this->model;
     }
 
-    public function addModel(model $model): self
+    public function setModel(?model $model): self
     {
-        if (!$this->model->contains($model)) {
-            $this->model[] = $model;
-        }
+        $this->model = $model;
 
         return $this;
     }
 
-    public function removeModel(model $model): self
-    {
-        $this->model->removeElement($model);
-
-        return $this;
-    }
 }

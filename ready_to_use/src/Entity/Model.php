@@ -34,15 +34,16 @@ class Model
      */
     private $releaseDate;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Offer::class, mappedBy="model")
-     */
-    private $offers;
 
     /**
-     * @ORM\OneToMany(targetEntity=Brand::class, mappedBy="models")
+     * @ORM\ManyToOne(targetEntity=Brand::class, inversedBy="models")
      */
     private $brand;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Offer::class, mappedBy="model")
+     */
+    private $offers;
 
     public function __construct()
     {
@@ -90,6 +91,18 @@ class Model
         return $this;
     }
 
+    public function getBrand(): ?Brand
+    {
+        return $this->brand;
+    }
+
+    public function setBrand(?Brand $brand): self
+    {
+        $this->brand = $brand;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Offer[]
      */
@@ -102,7 +115,7 @@ class Model
     {
         if (!$this->offers->contains($offer)) {
             $this->offers[] = $offer;
-            $offer->addModel($this);
+            $offer->setModel($this);
         }
 
         return $this;
@@ -111,20 +124,11 @@ class Model
     public function removeOffer(Offer $offer): self
     {
         if ($this->offers->removeElement($offer)) {
-            $offer->removeModel($this);
+            // set the owning side to null (unless already changed)
+            if ($offer->getModel() === $this) {
+                $offer->setModel(null);
+            }
         }
-
-        return $this;
-    }
-
-    public function getBrand(): ?brand
-    {
-        return $this->brand;
-    }
-
-    public function setBrand(?brand $brand): self
-    {
-        $this->brand = $brand;
 
         return $this;
     }

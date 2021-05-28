@@ -75,30 +75,6 @@ class Product
         return $this->id;
     }
 
-    public function getBrand(): ?string
-    {
-        return $this->brand;
-    }
-
-    public function setBrand(string $brand): self
-    {
-        $this->brand = $brand;
-
-        return $this;
-    }
-
-    public function getModel(): ?string
-    {
-        return $this->model;
-    }
-
-    public function setModel(string $model): self
-    {
-        $this->model = $model;
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
@@ -107,18 +83,6 @@ class Product
     public function setDescription(?string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getProductCondition(): ?int
-    {
-        return $this->productCondition;
-    }
-
-    public function setProductCondition(int $productCondition): self
-    {
-        $this->productCondition = $productCondition;
 
         return $this;
     }
