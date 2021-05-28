@@ -22,13 +22,13 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $user = new User();
-        $user->setUsername('admin');
-        $user->setEmail('c.lefebvre76000@gmail.com');
+        $user->setUsername('kearnen');
+        $user->setEmail('test123@gmail.com');
         $user->setPassword($this->encoder->encodePassword($user, '123456789'));
         $user->setFirstName('Charles');
         $user->setLastName('Lefebvre');
         $user->setSignupDate(new \DateTime());
-        $user->setRoles(1);
+        $user->setRoles(0);
         $manager->persist($user);
         $manager->flush();
     }

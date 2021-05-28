@@ -23,6 +23,7 @@
                         {% if is_granted('ROLE_ADMIN') %}
                             <li><a class="nav-link nav-item {% if current_page is defined and current_page == 'admin' %}active{% endif %}" href="{{ path('admin') }}">Panel administrateur</a></li>
                         {% endif %}
+                        <li><a class="nav-link nav-item {% if current_page is defined and current_page == 'product' %}active{% endif %}" href="{{ path('product.index') }}">Mes produits</a></li>
                         <li><a class="nav-link nav-item {% if current_page is defined and current_page == 'account' %}active{% endif %}" href="{{ path('account.index') }}">Mon compte</a></li>
                         <li><a class="nav-link nav-item" href="{{ path('logout') }}">Déconnexion</a></li>
                     {% else %}

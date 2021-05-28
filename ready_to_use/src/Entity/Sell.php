@@ -44,6 +44,11 @@ class Sell
      */
     private $soldBy;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $counterOffer;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +110,18 @@ class Sell
     public function setSoldBy(?User $soldBy): self
     {
         $this->soldBy = $soldBy;
+
+        return $this;
+    }
+
+    public function getCounterOffer(): ?float
+    {
+        return $this->counterOffer;
+    }
+
+    public function setCounterOffer(?float $counterOffer): self
+    {
+        $this->counterOffer = $counterOffer;
 
         return $this;
     }

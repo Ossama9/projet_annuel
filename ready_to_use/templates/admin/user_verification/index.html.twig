@@ -23,8 +23,8 @@
                 <td>{{ user_verification.id }}</td>
                 <td>{% if user_verification.status == 0 %}En attente{% elseif user_verification.status == 1 %}Vérifié{% else %}Refusé{% endif %}</td>
                 <td>{{ user_verification.requestingUser.email }}</td>
-                <td>{{ user_verification.requestDate ? user_verification.requestDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ user_verification.validationDate ? user_verification.validationDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ user_verification.requestDate ? user_verification.requestDate|date('d-m-Y à H:i') : '' }}</td>
+                <td>{{ user_verification.validationDate ? user_verification.validationDate|date('d-m-Y à H:i') : '' }}</td>
                 <td>{{ user_verification.verifiedBy ? user_verification.verifiedBy.email : '' }}</td>
                 <td>
                     <a class="btn btn-primary" href="{{ path('admin.user.verification.show', {'id': user_verification.id}) }}">Voir</a>

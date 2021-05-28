@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Product;
+use App\Entity\Sell;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -100,8 +101,43 @@ class AdminProductController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($product);
             $entityManager->flush();
+            dump($product);
+            die;
         }
 
         return $this->redirectToRoute('admin.product.index');
+    }
+
+    /**
+     * Permet à un administrateur d'accepter une offre
+     * @Route("/{id}/update-offer", name="admin.product.update_offer", methods={"POST"})
+     * @param Request $request
+     * @param Product $product
+     * @return Response
+     */
+    public function updateOffer(Request $request, Product $product): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $sell = $product->getSell();
+
+        if ($this->isCsrfTokenValid('accept_offer'.$product->getId(), $request->request->get('_token'))) {
+
+            $sell->setStatus(1);
+            $sell->setAcceptedDate(new \DateTime());
+            $this->addFlash('success', 'L\'offre a bien été accepté.');
+
+        } else if ($this->isCsrfTokenValid('decline_offer'.$product->getId(), $request->request->get('_token'))) {
+
+            $sell->setStatus(2);
+            $this->addFlash('success', 'L\'offre a bien été refusé.');
+
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($sell);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('admin.product.show', ['id' => $product->getId()]);
     }
 }

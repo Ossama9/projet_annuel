@@ -18,49 +18,49 @@ class Feature
     private int $id;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private ?string $battery;
+    private ?int $battery;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
     private ?string $camera;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
     private ?string $graphicCard;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
     private ?string $hardDisk;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
     private ?string $osVersion;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
     private ?string $processor;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private ?string $ram;
+    private ?int $ram;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
     private ?string $screenSize;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="boolean")
      */
-    private ?string $tactile;
+    private ?bool $tactile;
 
     /**
      * @ORM\OneToOne(targetEntity=Product::class, inversedBy="feature", cascade={"persist", "remove"})
@@ -72,12 +72,12 @@ class Feature
         return $this->id;
     }
 
-    public function getBattery(): ?string
+    public function getBattery(): ?int
     {
         return $this->battery;
     }
 
-    public function setBattery(?string $battery): self
+    public function setBattery(?int $battery): self
     {
         $this->battery = $battery;
 
@@ -144,12 +144,12 @@ class Feature
         return $this;
     }
 
-    public function getRam(): ?string
+    public function getRam(): ?int
     {
         return $this->ram;
     }
 
-    public function setRam(?string $ram): self
+    public function setRam(?int $ram): self
     {
         $this->ram = $ram;
 
@@ -168,12 +168,12 @@ class Feature
         return $this;
     }
 
-    public function getTactile(): ?string
+    public function getTactile(): ?bool
     {
         return $this->tactile;
     }
 
-    public function setTactile(?string $tactile): self
+    public function setTactile(?bool $tactile): self
     {
         $this->tactile = $tactile;
 
