@@ -45,9 +45,20 @@ class Model
      */
     private $offers;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Feature::class, inversedBy="models")
+     */
+    private $feature;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="model")
+     */
+    private $products;
+
     public function __construct()
     {
         $this->offers = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -127,6 +138,48 @@ class Model
             // set the owning side to null (unless already changed)
             if ($offer->getModel() === $this) {
                 $offer->setModel(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getFeature(): ?Feature
+    {
+        return $this->feature;
+    }
+
+    public function setFeature(?Feature $feature): self
+    {
+        $this->feature = $feature;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->setModel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getModel() === $this) {
+                $product->setModel(null);
             }
         }
 

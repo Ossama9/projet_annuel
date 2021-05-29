@@ -46,11 +46,6 @@ class Product
     private $pictures;
 
     /**
-     * @ORM\OneToOne(targetEntity=Feature::class, mappedBy="product", cascade={"persist", "remove"})
-     */
-    private $feature;
-
-    /**
      * @ORM\OneToOne(targetEntity=Purchase::class, mappedBy="product", cascade={"persist", "remove"})
      */
     private $purchase;
@@ -61,9 +56,14 @@ class Product
     private $sell;
 
     /**
-     * @ORM\OneToOne(targetEntity=Offer::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Model::class, inversedBy="products")
      */
-    private $offer;
+    private $model;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $productCondition;
 
     public function __construct()
     {
@@ -153,28 +153,6 @@ class Product
         return $this;
     }
 
-    public function getFeature(): ?Feature
-    {
-        return $this->feature;
-    }
-
-    public function setFeature(?Feature $feature): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($feature === null && $this->feature !== null) {
-            $this->feature->setProduct(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($feature !== null && $feature->getProduct() !== $this) {
-            $feature->setProduct($this);
-        }
-
-        $this->feature = $feature;
-
-        return $this;
-    }
-
     public function getPurchase(): ?Purchase
     {
         return $this->purchase;
@@ -209,15 +187,28 @@ class Product
         return $this;
     }
 
-    public function getOffer(): ?Offer
+    public function getModel(): ?Model
     {
-        return $this->offer;
+        return $this->model;
     }
 
-    public function setOffer(?Offer $offer): self
+    public function setModel(?Model $model): self
     {
-        $this->offer = $offer;
+        $this->model = $model;
 
         return $this;
     }
+
+    public function getProductCondition(): ?int
+    {
+        return $this->productCondition;
+    }
+
+    public function setProductCondition(int $productCondition): self
+    {
+        $this->productCondition = $productCondition;
+
+        return $this;
+    }
+
 }
