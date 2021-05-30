@@ -7,10 +7,12 @@ use App\Entity\Product;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class ProductType extends AbstractType
 {
@@ -22,15 +24,26 @@ class ProductType extends AbstractType
                 'label' => 'Prix souhaité'
             ])
             ->add('productCondition', ChoiceType::class, [
-                'choices' => [
-                    'Bon état' => 0,
-                    'Très bon état' => 1,
-                    'Comme neuf' => 2
-                ]
+                'choices' => Product::CONDITIONS
             ])
             ->add('model', EntityType::class, [
                 'class' => Model::class,
                 'choice_label' => 'name'
+            ])
+            ->add('pictures', FileType::class, [
+                'label' => 'Insérez une image',
+                'mapped' => false,
+                'required' => true,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '4096k',
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpeg',
+                        ],
+                        'mimeTypesMessage' => 'Les seuls formats acceptés sont jpg et png.',
+                    ])
+                ],
             ])
         ;
     }

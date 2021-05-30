@@ -1,4 +1,69 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn btn-secondary mb-2">{{ button_label|default('Sauvegarder') }}</button>
+{#    <a class="btn btn-primary text-white" id="add-picture">Ajouter une image</a>#}
+    <p>Prix estimé: <span id="estimated-price">0</span></p>
+    <a class="btn btn-secondary text-white" id="simulate">Simuler la vente</a>
+    <button class="btn btn-secondary my-2">{{ button_label|default('Vendre') }}</button>
 {{ form_end(form) }}
+
+{% block javascripts %}
+    <script type="text/javascript">
+
+        // let picturesCount = 0
+        //
+        // // let filesArray = [];
+        // let formData = new FormData()
+        // let files = document.getElementById('product_pictures')
+        // let div = files.parentElement.parentElement
+        //
+        // files.onchange = () => {
+        //     // filesArray.push(files.files[0])
+        //     formData.append('files[]', files.files[0])
+        //
+        //     console.log(formData)
+        // }
+        //
+        // let addPicture = document.getElementById('add-picture');
+        //
+        // addPicture.onclick = () => {
+        //     picturesCount++
+        //
+        //     div.innerHTML +=
+        //         `<label for='product_pictures_${picturesCount}' class="required">Insérez une autre image</label>` +
+        //         '<div class="custom-file">' +
+        //         `<input type="file" id='product_pictures_${picturesCount}' class="custom-file-input">` +
+        //         '<label for="product_pictures" class="custom-file-label" lang="fr"></label>\n' +
+        //         '</div>'
+        //
+        //     let file = document.getElementById(`product_pictures_${picturesCount}`)
+        //
+        //     file.onchange = () => {
+        //         // filesArray.push(file.files[0])
+        //         formData.append('files[]', file.files[0])
+        //         div.innerHTML += `<input type='file' name='all-pictures' id='all-pictures'>>`
+        //
+        //         let allPictures = document.getElementById('all-pictures')
+        //         allPictures.files = formData
+        //         console.log(allPictures.files)
+        //     }
+        // }
+
+        let btn = document.getElementById('simulate');
+
+        btn.onclick = () => {
+            let condition = document.getElementById('product_productCondition').value;
+            let model = document.getElementById('product_model').value;
+            let price = document.getElementById('estimated-price');
+
+            axios.get(`/product/simulate/v1?condition=${condition}&model=${model}`)
+                .then(response => {
+                    if (response.data.price) price.innerHTML = response.data.price + '€'
+                    else price.innerHTML = response.data.error
+                })
+                .catch(response => {
+                    price.innerHTML = response.data.error
+                })
+        }
+
+    </script>
+{% endblock %}

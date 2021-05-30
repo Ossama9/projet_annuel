@@ -12,6 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Product
 {
+    public const CONDITIONS = [
+        'Bon état' => 0,
+        'Très bon état' => 1,
+        'Comme neuf' => 2
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -41,7 +47,7 @@ class Product
     private $wharehouse;
 
     /**
-     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="product")
+     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="product", cascade={"persist", "remove"})
      */
     private $pictures;
 

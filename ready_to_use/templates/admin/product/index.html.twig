@@ -15,6 +15,7 @@
                 <th>Prix</th>
                 <th>Date de dépôt</th>
                 <th>Vendu par</th>
+                <th>Statut</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -22,12 +23,13 @@
         {% for product in products %}
             <tr>
                 <td>{{ product.id }}</td>
-                <td>{{ product.brand }}</td>
-                <td>{{ product.model }}</td>
-                <td>{{ product.productCondition }}</td>
+                <td>{{ product.model.brand.name }}</td>
+                <td>{{ product.model.name }}</td>
+                <td>{% if product.productCondition == 0 %}Bon état{% elseif product.productCondition == 1 %}Très bon état{% else %}Comme neuf{% endif %}</td>
                 <td>{{ product.price }}</td>
                 <td>{{ product.depositDate ? product.depositDate|date('d-m-Y à H:i') : '' }}</td>
                 <td>{{ product.sell.soldBy.email }}</td>
+                <td>{% if product.sell.status == 0 %}En attente{% elseif product.sell.status == 1 %}Accepté{% else %}Refusé{% endif %}</td>
                 <td>
                     <a class="btn btn-primary" href="{{ path('admin.product.show', {'id': product.id}) }}">Voir</a>
                     <a class="btn btn-secondary" href="{{ path('admin.product.edit', {'id': product.id}) }}">Modifier</a>
@@ -41,5 +43,5 @@
         </tbody>
     </table>
 
-    <a class="btn btn-primary" href="{{ path('admin.product.new') }}">Ajouter un produit</a>
+{#    <a class="btn btn-primary" href="{{ path('admin.product.new') }}">Ajouter un produit</a>#}
 {% endblock %}

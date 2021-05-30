@@ -38,8 +38,8 @@
     {% block body %}
     {% endblock %}
     </section>
-    {#{% block javascripts %}#}
-    {#    {{ encore_entry_script_tags('app') }}#}
-    {#{% endblock %}#}
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    {% block javascripts %}
+    {% endblock %}
     </body>
 </html>

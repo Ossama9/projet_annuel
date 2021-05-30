@@ -2,6 +2,9 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Model;
+use App\Entity\Offer;
+use App\Entity\Picture;
 use App\Entity\Product;
 use App\Entity\Sell;
 use App\Form\ProductType;
@@ -61,8 +64,20 @@ class AdminProductController extends AbstractController
      */
     public function show(Product $product): Response
     {
+        $offer = $this->getDoctrine()->getRepository(Offer::class)->findOneBy([
+            'productCondition' => $product->getProductCondition(),
+            'model' => $product->getModel()
+        ]);
+
+        if ($offer) $referencePrice = $offer->getAmount();
+        else $referencePrice = 0;
+
+        $pictures = $this->getDoctrine()->getRepository(Picture::class)->findBy(['product' => $product]);
+
         return $this->render('admin/product/show.html.twig', [
             'product' => $product,
+            'pictures' => $pictures,
+            'referencePrice' => $referencePrice
         ]);
     }
 
@@ -90,7 +105,7 @@ class AdminProductController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="admin.product.delete", methods={"DELETE"})
+     * @Route("/{id}/delete", name="admin.product.delete", methods={"POST"})
      * @param Request $request
      * @param Product $product
      * @return Response
@@ -101,8 +116,6 @@ class AdminProductController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($product);
             $entityManager->flush();
-            dump($product);
-            die;
         }
 
         return $this->redirectToRoute('admin.product.index');
@@ -123,6 +136,7 @@ class AdminProductController extends AbstractController
 
         if ($this->isCsrfTokenValid('accept_offer'.$product->getId(), $request->request->get('_token'))) {
 
+            $product->setPrice($product->getPrice());
             $sell->setStatus(1);
             $sell->setAcceptedDate(new \DateTime());
             $this->addFlash('success', 'L\'offre a bien été accepté.');
@@ -135,6 +149,7 @@ class AdminProductController extends AbstractController
         }
 
         $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($product);
         $entityManager->persist($sell);
         $entityManager->flush();
 

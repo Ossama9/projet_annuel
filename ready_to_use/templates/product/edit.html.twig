@@ -5,9 +5,9 @@
 {% block body %}
     <h3 class="mb-4">Éditer un produit</h3>
 
-    {{ include('admin/product/_form.html.twig', {'button_label': 'Vendre'}) }}
+    {{ include('product/_form.html.twig', {'button_label': 'Vendre'}) }}
 
-    {{ include('admin/product/_delete_form.html.twig') }}
+    {{ include('product/_delete_form.html.twig') }}
 
     <a class="btn btn-primary mt-2" href="{{ path('product.index') }}">Retour</a>
 

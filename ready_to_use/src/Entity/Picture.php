@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PictureRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,6 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Picture
 {
+    public const EXTENTIONS = [
+        'jpg' => 0,
+        'png' => 1
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -32,6 +38,11 @@ class Picture
      * @ORM\JoinColumn(nullable=false)
      */
     private $product;
+
+    /**
+     * @ORM\Column(type="string", length=40)
+     */
+    private $name;
 
     public function getId(): ?int
     {
@@ -70,6 +81,18 @@ class Picture
     public function setProduct(?Product $product): self
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }

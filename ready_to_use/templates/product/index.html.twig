@@ -10,10 +10,9 @@
         <thead>
         <tr>
             <th>ID</th>
-            <th>Marque</th>
             <th>Modèle</th>
             <th>Condition</th>
-            <th>Prix</th>
+            <th>Prix souhaité</th>
             <th>Date de dépôt</th>
             <th>Statut</th>
             <th>Action</th>
@@ -23,12 +22,11 @@
         {% for product in products %}
             <tr>
                 <td>{{ product.id }}</td>
-                <td>{{ product.brand }}</td>
-                <td>{{ product.model }}</td>
-                <td>{{ product.productCondition }}</td>
-                <td>{{ product.price }}</td>
+                <td>{{ product.model.name }}</td>
+                <td>{% if product.productCondition == 0 %}Bon état{% elseif product.productCondition == 1 %}Très bon état{% else %}Comme neuf{% endif %}</td>
+                <td>{{ product.price }} €</td>
                 <td>{{ product.depositDate ? product.depositDate|date('d-m-Y à H:i') : '' }}</td>
-                <td>{{ product.sell.status }}</td>
+                <td>{% if product.sell.status == 0 %}En attente{% elseif product.sell.status == 1 %}Accepté{% else %}Refusé{% endif %}</td>
                 <td>
                     <a class="btn btn-primary" href="{{ path('product.show', {'id': product.id}) }}">Voir</a>
 {#                    <a class="btn btn-secondary" href="{{ path('product.edit', {'id': product.id}) }}">Modifier</a>#}
@@ -42,7 +40,7 @@
         </tbody>
     </table>
 
-    <a class="btn btn-primary" href="{{ path('product.new') }}">Ajouter un produit</a>
+    <a class="btn btn-primary" href="{{ path('product.new') }}">Vendre un produit</a>
     {% else %}
         <p>Vous devez être marchand pour vendre des produits.</p>
         <a class="btn btn-primary" href="{{ path('account.index') }}">Devenir marchand</a>
