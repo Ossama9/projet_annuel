@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des entrepôts{% endblock %}
+
+{% block body %}
+    <h3 class="mb-4">Liste des entrepôts</h3>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Adresse</th>
+            <th>Ville</th>
+            <th>Nombre de produits</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for wharehouse in wharehouses %}
+            <tr>
+                <td>{{ wharehouse.id }}</td>
+                <td>{{ wharehouse.address }}</td>
+                <td>{{ wharehouse.city }}</td>
+                <td>{{ wharehouse.products.count }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('admin.wharehouse.show', {'id': wharehouse.id}) }}">Voir</a>
+                    <a class="btn btn-secondary" href="{{ path('admin.wharehouse.edit', {'id': wharehouse.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun entrepôt</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('admin.wharehouse.new') }}">Ajouter un entrepôt</a>
+{% endblock %}

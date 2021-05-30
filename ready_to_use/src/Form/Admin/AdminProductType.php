@@ -8,14 +8,12 @@ use App\Entity\Wharehouse;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\File;
 
-class ProductType extends AbstractType
+class AdminProductType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -31,20 +29,9 @@ class ProductType extends AbstractType
                 'class' => Model::class,
                 'choice_label' => 'name'
             ])
-            ->add('pictures', FileType::class, [
-                'label' => 'Insérez une image',
-                'mapped' => false,
-                'required' => true,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '4096k',
-                        'mimeTypes' => [
-                            'image/png',
-                            'image/jpeg',
-                        ],
-                        'mimeTypesMessage' => 'Les seuls formats acceptés sont jpg et png.',
-                    ])
-                ],
+            ->add('wharehouse', EntityType::class, [
+                'class' => Wharehouse::class,
+                'choice_label' => 'city'
             ])
         ;
     }

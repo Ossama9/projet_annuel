@@ -49,6 +49,11 @@ class Sell
      */
     private $counterOffer;
 
+    /**
+     * @ORM\Column(type="string", length=12, nullable=true)
+     */
+    private $voucher;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -122,6 +127,18 @@ class Sell
     public function setCounterOffer(?float $counterOffer): self
     {
         $this->counterOffer = $counterOffer;
+
+        return $this;
+    }
+
+    public function getVoucher(): ?string
+    {
+        return $this->voucher;
+    }
+
+    public function setVoucher(?string $voucher): self
+    {
+        $this->voucher = $voucher;
 
         return $this;
     }

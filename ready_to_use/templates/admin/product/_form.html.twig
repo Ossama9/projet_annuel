@@ -1,9 +1,8 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-<a class="btn btn-primary text-white" id="add-picture">Ajouter une image</a>
-<p>Prix estimé: <span id="estimated-price">0</span></p>
-<a class="btn btn-secondary text-white" id="simulate">Simuler la vente</a>
-<button class="btn btn-secondary my-2">{{ button_label|default('Vendre') }}</button>
+    <p>Prix estimé: <span id="estimated-price">0</span></p>
+    <a class="btn btn-secondary text-white" id="simulate">Simuler la vente</a>
+    <button class="btn btn-secondary my-2">{{ button_label|default('Vendre') }}</button>
 {{ form_end(form) }}
 
 {% block javascripts %}
@@ -12,8 +11,8 @@
         let btn = document.getElementById('simulate');
 
         btn.onclick = () => {
-            let condition = document.getElementById('product_productCondition').value;
-            let model = document.getElementById('product_model').value;
+            let condition = document.getElementById('admin_product_productCondition').value;
+            let model = document.getElementById('admin_product_model').value;
             let price = document.getElementById('estimated-price');
 
             axios.get(`/product/simulate/v1?condition=${condition}&model=${model}`)

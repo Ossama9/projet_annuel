@@ -39,6 +39,12 @@
                 <th>Statut</th>
                 <td>{% if product.sell.status == 0 %}En attente{% elseif product.sell.status == 1 %}Accepté{% else %}Refusé{% endif %}</td>
             </tr>
+            {% if product.sell.voucher %}
+                <tr>
+                    <th>Bon de suivi colissimo</th>
+                    <td>{{ product.sell.voucher|upper }}</td>
+                </tr>
+            {% endif %}
         </tbody>
     </table>
 
@@ -46,7 +52,7 @@
         <h5>Photos du produit</h5>
         {% if pictures %}
             {% for picture in pictures %}
-                <img src="{{ asset('uploads/pictures/' ~ picture.name) }}" class="w-25" alt="Test">
+                <img src="{{ asset('uploads/pictures/' ~ picture.name) }}" class="w-25" alt="Produit">
             {% endfor %}
         {% else %}
             <p>Aucune photo</p>
