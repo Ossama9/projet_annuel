@@ -19,11 +19,11 @@
         </tr>
         <tr>
             <th>Marque</th>
-            <td>{{ product.brand }}</td>
+            <td>{{ product.model.brand.name }}</td>
         </tr>
         <tr>
             <th>Modèle</th>
-            <td>{{ product.model }}</td>
+            <td>{{ product.model.name }}</td>
         </tr>
         <tr>
             <th>Description</th>
@@ -31,11 +31,11 @@
         </tr>
         <tr>
             <th>Condition</th>
-            <td>{{ product.productCondition }}</td>
+            <td>{% if product.productCondition == 0 %}Bon état{% elseif product.productCondition == 1 %}Très bon état{% else %}Comme neuf{% endif %}</td>
         </tr>
         <tr>
             <th>Prix</th>
-            <td>{{ product.price }}</td>
+            <td>{{ product.price }} € {% if referencePrice != 0 %} (Prix de référence: {{ referencePrice }} €){% endif %}</td>
         </tr>
         <tr>
             <th>Date de dépôt</th>
@@ -43,10 +43,27 @@
         </tr>
         <tr>
             <th>Statut</th>
-            <td>{{ product.sell.status }}</td>
+            <td>{% if product.sell.status == 0 %}En attente{% elseif product.sell.status == 1 %}Accepté{% else %}Refusé{% endif %}</td>
         </tr>
+        {% if product.wharehouse %}
+            <tr>
+                <th>Entreposé à</th>
+                <td>{{ product.wharehouse.city }}</td>
+            </tr>
+        {% endif %}
         </tbody>
     </table>
+
+    <div class="w-50 my-4">
+        <h5>Photos du produit</h5>
+        {% if pictures %}
+            {% for picture in pictures %}
+                <img src="{{ asset('uploads/pictures/' ~ picture.name) }}" class="w-25" alt="Test">
+            {% endfor %}
+        {% else %}
+            <p>Aucune photo</p>
+        {% endif %}
+    </div>
 
     <div class="d-flex">
         <form class="mr-2" method="post" action="{{ path('admin.product.update_offer', {'id': product.id}) }}" onsubmit="return confirm('Voulez-vous vraiment accepter l\'offre ?');">

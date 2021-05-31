@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FeatureRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -63,9 +65,14 @@ class Feature
     private ?bool $tactile;
 
     /**
-     * @ORM\OneToOne(targetEntity=Product::class, inversedBy="feature", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Model::class, mappedBy="feature")
      */
-    private $product;
+    private $models;
+
+    public function __construct()
+    {
+        $this->models = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -180,15 +187,34 @@ class Feature
         return $this;
     }
 
-    public function getProduct(): ?Product
+    /**
+     * @return Collection|Model[]
+     */
+    public function getModels(): Collection
     {
-        return $this->product;
+        return $this->models;
     }
 
-    public function setProduct(Product $product): self
+    public function addModel(Model $model): self
     {
-        $this->product = $product;
+        if (!$this->models->contains($model)) {
+            $this->models[] = $model;
+            $model->setFeature($this);
+        }
 
         return $this;
     }
+
+    public function removeModel(Model $model): self
+    {
+        if ($this->models->removeElement($model)) {
+            // set the owning side to null (unless already changed)
+            if ($model->getFeature() === $this) {
+                $model->setFeature(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

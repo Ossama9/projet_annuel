@@ -1,4 +1,29 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn btn-secondary mb-2">{{ button_label|default('Sauvegarder') }}</button>
+    <p>Prix estimé: <span id="estimated-price">0</span></p>
+    <a class="btn btn-secondary text-white" id="simulate">Simuler la vente</a>
+    <button class="btn btn-secondary my-2">{{ button_label|default('Vendre') }}</button>
 {{ form_end(form) }}
+
+{% block javascripts %}
+    <script type="text/javascript">
+
+        let btn = document.getElementById('simulate');
+
+        btn.onclick = () => {
+            let condition = document.getElementById('admin_product_productCondition').value;
+            let model = document.getElementById('admin_product_model').value;
+            let price = document.getElementById('estimated-price');
+
+            axios.get(`/product/simulate/v1?condition=${condition}&model=${model}`)
+                .then(response => {
+                    if (response.data.price) price.innerHTML = response.data.price + '€'
+                    else price.innerHTML = response.data.error
+                })
+                .catch(response => {
+                    price.innerHTML = response.data.error
+                })
+        }
+
+    </script>
+{% endblock %}

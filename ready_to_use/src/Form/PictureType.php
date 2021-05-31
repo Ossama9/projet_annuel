@@ -2,22 +2,21 @@
 
 namespace App\Form;
 
-use App\Entity\Model;
-use App\Entity\Offer;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Picture;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class OfferType extends AbstractType
+class PictureType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('model', EntityType::class, [
-                'class' => Model::class,
-                'choice_label' => 'name'
+            ->add('file', FileType::class, [
+                'label' => 'Insérez une image',
+                'mapped' => false,
+                'required' => true
             ])
         ;
     }
@@ -25,7 +24,7 @@ class OfferType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Offer::class,
+            'data_class' => Picture::class,
         ]);
     }
 }

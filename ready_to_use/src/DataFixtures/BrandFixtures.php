@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Brand;
+use App\Entity\Feature;
 use App\Entity\Model;
 use App\Entity\Offer;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -19,10 +20,23 @@ class BrandFixtures extends Fixture
         $brand->setLocation('Cupertino, USA');
         $manager->persist($brand);
 
+        $feature = new Feature();
+        $feature->setBattery(1);
+        $feature->setCamera("16MP");
+        $feature->setGraphicCard("RTX 2080");
+        $feature->setHardDisk("256GO");
+        $feature->setOsVersion("V10.1");
+        $feature->setProcessor("A11");
+        $feature->setRam(6);
+        $feature->setScreenSize('5"8');
+        $feature->setTactile(true);
+        $manager->persist($feature);
+
         $model = new Model();
         $model->setName('Iphone 8');
         $model->setDescription("L'iPhone 8 et l'iPhone 8 Plus sont deux smartphones, modèles de la 11ᵉ génération d'iPhone de la marque Apple.");
         $model->setReleaseDate(new \DateTime('09-01-2017'));
+        $model->setFeature($feature);
         $model->setBrand($brand);
         $manager->persist($model);
 

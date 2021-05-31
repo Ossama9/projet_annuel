@@ -2,8 +2,13 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Model;
+use App\Entity\Offer;
+use App\Entity\Picture;
 use App\Entity\Product;
 use App\Entity\Sell;
+use App\Entity\Wharehouse;
+use App\Form\AdminProductType;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,7 +41,7 @@ class AdminProductController extends AbstractController
     public function new(Request $request): Response
     {
         $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
+        $form = $this->createForm(AdminProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -61,8 +66,20 @@ class AdminProductController extends AbstractController
      */
     public function show(Product $product): Response
     {
+        $offer = $this->getDoctrine()->getRepository(Offer::class)->findOneBy([
+            'productCondition' => $product->getProductCondition(),
+            'model' => $product->getModel()
+        ]);
+
+        if ($offer) $referencePrice = $offer->getAmount();
+        else $referencePrice = 0;
+
+        $pictures = $this->getDoctrine()->getRepository(Picture::class)->findBy(['product' => $product]);
+
         return $this->render('admin/product/show.html.twig', [
             'product' => $product,
+            'pictures' => $pictures,
+            'referencePrice' => $referencePrice
         ]);
     }
 
@@ -74,7 +91,7 @@ class AdminProductController extends AbstractController
      */
     public function edit(Request $request, Product $product): Response
     {
-        $form = $this->createForm(ProductType::class, $product);
+        $form = $this->createForm(AdminProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -90,7 +107,7 @@ class AdminProductController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="admin.product.delete", methods={"DELETE"})
+     * @Route("/{id}/delete", name="admin.product.delete", methods={"POST"})
      * @param Request $request
      * @param Product $product
      * @return Response
@@ -101,8 +118,6 @@ class AdminProductController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($product);
             $entityManager->flush();
-            dump($product);
-            die;
         }
 
         return $this->redirectToRoute('admin.product.index');
@@ -123,8 +138,21 @@ class AdminProductController extends AbstractController
 
         if ($this->isCsrfTokenValid('accept_offer'.$product->getId(), $request->request->get('_token'))) {
 
+            $product->setPrice($product->getPrice());
+            $wharehouseRepository = $this->getDoctrine()->getRepository(Wharehouse::class);
+            $wharehouses = $wharehouseRepository->findAll();
+
+            $wharehouseId = [];
+            foreach ($wharehouses as $wharehouse) $wharehouseId[] = $wharehouse->getId();
+
+            // on choisit un entrepôt aléatoirement pour stocker le produit
+            $randomWharehouse = $wharehouseRepository->find(rand(min($wharehouseId), max($wharehouseId)));
+            $product->setWharehouse($randomWharehouse);
+
             $sell->setStatus(1);
             $sell->setAcceptedDate(new \DateTime());
+            // bon colissimo
+            $sell->setVoucher(bin2hex(random_bytes(6)));
             $this->addFlash('success', 'L\'offre a bien été accepté.');
 
         } else if ($this->isCsrfTokenValid('decline_offer'.$product->getId(), $request->request->get('_token'))) {
@@ -135,6 +163,7 @@ class AdminProductController extends AbstractController
         }
 
         $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($product);
         $entityManager->persist($sell);
         $entityManager->flush();
 

@@ -19,23 +19,6 @@ class WharehouseRepository extends ServiceEntityRepository
         parent::__construct($registry, Wharehouse::class);
     }
 
-    // /**
-    //  * @return Wharehouse[] Returns an array of Wharehouse objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('w')
-            ->andWhere('w.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('w.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
     /*
     public function findOneBySomeField($value): ?Wharehouse
     {
