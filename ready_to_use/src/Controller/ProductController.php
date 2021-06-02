@@ -3,209 +3,95 @@
 
 namespace App\Controller;
 
-use App\Entity\Model;
-use App\Entity\Offer;
-use App\Entity\Picture;
+use DateTime;
 use App\Entity\Product;
-use App\Entity\Sell;
+use App\Entity\Purchase;
 use App\Entity\User;
-use App\Form\ProductType;
-use App\Repository\ProductRepository;
-use App\Repository\SellRepository;
-use App\Repository\UserVerificationRepository;
+use Stripe\Checkout\Session;
+use Stripe\Exception\ApiErrorException;
+use Stripe\Stripe;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * @Route("/product")
  */
 class ProductController extends AbstractController
 {
-
     /**
-     * @Route("/", name="product.index")
-     * @param SellRepository $sellRepository
-     * @param UserVerificationRepository $verificationRepository
+     * @Route("/{id}/test", name="product.test", methods={"GET"})
+     * @param Product $product
      * @return Response
      */
-    public function index(SellRepository $sellRepository, UserVerificationRepository $verificationRepository): Response
+    public function test(Product $product): Response
     {
-        $is_merchant = $verificationRepository->findOneBy(['requestingUser' => $this->getUser()]);
-        $merchant = $is_merchant ? $is_merchant->getStatus() === 1 ? $is_merchant : false : false;
-
-        $products = [];
-        $sells = $sellRepository->findBy(['soldBy' => $this->getUser()]);
-        foreach ($sells as $sell) {
-            $products[] = $sell->getProduct();
-        }
-
-        return $this->render('/product/index.html.twig', [
-            'products' => $products,
-            'current_page' => 'product',
-            'merchant' => $merchant
-        ]);
-
-    }
-
-    /**
-     * @Route("/new", name="product.new")
-     * @param Request $request
-     * @param SluggerInterface $slugger
-     * @return Response
-     */
-    public function new(Request $request, SluggerInterface $slugger): Response
-    {
-        $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $product->setDepositDate(new \DateTime());
-            $product->setPrice($product->getPrice());
-            $product->setModel($product->getModel());
-            $entityManager->persist($product);
-
-            // images
-            $pictures = $form->get('pictures')->getData();
-            // this condition is needed because the 'pictures' field is not required
-            // so the PDF file must be processed only when a file is uploaded
-            if ($pictures) {
-                $originalFilename = pathinfo($pictures->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$pictures->guessExtension();
-
-                // Move the file to the directory where brochures are stored
-                try {
-
-                    $picture = new Picture();
-                    $picture->setName($newFilename);
-                    $picture->setExtension(
-                        Picture::EXTENTIONS[$pictures->guessExtension()]
-                    );
-                    $picture->setSize($pictures->getSize());
-                    $picture->setProduct($product);
-
-                    $pictures->move(
-                        $this->getParameter('pictures_directory'),
-                        $newFilename
-                    );
-
-                    $entityManager->persist($picture);
-
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
-
-            }
-
-            $sell = new Sell();
-            $sell->setProduct($product);
-            $sell->setStatus(0);
-            $sell->setDepositDate($product->getDepositDate());
-            $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username' => $this->getUser()->getUsername()]);
-            $sell->setSoldBy($user);
-            $entityManager->persist($sell);
-
-            $entityManager->flush();
-
-            return $this->redirectToRoute('product.index');
-        }
-
-        return $this->render('/product/new.html.twig', [
+        return $this->render('merchant/product/test.html.twig', [
             'product' => $product,
-            'form' => $form->createView(),
             'current_page' => 'product'
         ]);
     }
 
     /**
-     * @Route("/{id}", name="product.show")
+     * @Route("/{id}/buy", name="product.buy", methods={"POST"})
      * @param Product $product
      * @return Response
      */
-    public function show(Product $product): Response
+    public function buy(Product $product): Response
     {
-        $pictures = $this->getDoctrine()->getRepository(Picture::class)->findBy(['product' => $product]);
+        // création de la commande
+        $purchase = new Purchase();
+        $purchase->setProduct($product);
+        $purchase->setStatus(0);
+        $purchase->setCoinsEarned($product->getPrice() / 10); // à voir pour le calcul des jetons gagnés
+        $purchase->setRequestDate(new DateTime());
 
-        return $this->render('/product/show.html.twig', [
-            'product' => $product,
-            'pictures' => $pictures,
-            'current_page' => 'product'
-        ]);
-    }
+        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username' => $this->getUser()->getUsername()]);
+        $purchase->setPurchasedBy($user);
 
-    /**
-     * @Route("/{id}/edit", name="product.edit")
-     * @param Request $request
-     * @param Product $product
-     * @return Response
-     */
-    public function edit(Request $request, Product $product): Response
-    {
-        $form = $this->createForm(ProductType::class, $product);
-        $form->handleRequest($request);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($purchase);
+        $entityManager->flush();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        Stripe::setApiKey('sk_test_51IxDjiKgLlknBEgu1oT1wW8OZLC2BPhSAf8buHUczm67oF3kbIWnQFtqkhcPDFsyiNmDz4kNdjuEtKUwgGM5cQJ000bl5uN1ty');
 
-            return $this->redirectToRoute('product.index');
-        }
+        // permt d'afficher les images sur l'onglet de paiement Stripe
+        // à voir lorsque l'application sera déployé sur le serveur
+        // $pictures = $this->getDoctrine()->getRepository(Picture::class)->findBy(['product' => $product]);
 
-        return $this->render('product/edit.html.twig', [
-            'product' => $product,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/delete", name="product.delete", methods={"POST"})
-     * @param Request $request
-     * @param Product $product
-     * @return Response
-     */
-    public function delete(Request $request, Product $product): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($product);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('product.index');
-    }
-
-    /**
-     * @Route("/simulate/v1", name="product.simulate", methods={"GET"})
-     * @param Request $request
-     * @return Response
-     */
-    public function simulate(Request $request): Response
-    {
-        $condition = $request->query->get('condition');
-        $modelId = $request->query->get('model');
-
-        $model = $this->getDoctrine()->getRepository(Model::class)->find($modelId);
-
-        $offer = $this->getDoctrine()->getRepository(Offer::class)->findOneBy([
-            'productCondition' => $condition,
-            'model' => $model
-        ]);
-
-        if ($offer) {
+        // on crée une session de paiement Stripe
+        try {
+            $checkout_session = Session::create([
+                'payment_method_types' => ['card'],
+                'customer_email' => $user->getEmail(),
+                'customer' => $user->getStripeCustomerId(),
+                'line_items' => [[
+                    'price_data' => [
+                        'currency' => 'eur',
+                        'unit_amount' => $product->getPrice() * 100,
+                        'product_data' => [
+                            'name' => $product->getModel()->getName(),
+//                             'images' => [$pictures],
+                        ],
+                    ],
+                    'quantity' => 1,
+                ]],
+                'metadata' => [
+                    'purchase_id' => $purchase->getId()
+                ],
+                'mode' => 'payment',
+                // à changer plus tard
+                'success_url' => $this->getParameter('domain') . '/purchase/',
+                'cancel_url' => $this->getParameter('domain') . '/purchase/',
+            ]);
+        } catch (ApiErrorException $e) {
             return $this->json([
-                'price' => $offer->getAmount()
+                'error' => 'Une erreur est survenue'
             ]);
         }
 
         return $this->json([
-            'error' => 'Nous n\'avons aucun prix correspondant à votre simulation.'
+            'id' => $checkout_session->id
         ]);
     }
 

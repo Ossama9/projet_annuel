@@ -36,13 +36,18 @@ class Purchase
     /**
      * @ORM\Column(type="datetime")
      */
-    private \DateTimeInterface $paymentDate;
+    private \DateTimeInterface $requestDate;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="purchases")
      * @ORM\JoinColumn(nullable=false)
      */
     private $purchasedBy;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $paidDate;
 
     public function getId(): ?int
     {
@@ -85,14 +90,14 @@ class Purchase
         return $this;
     }
 
-    public function getPaymentDate(): ?\DateTimeInterface
+    public function getRequestDate(): ?\DateTimeInterface
     {
-        return $this->paymentDate;
+        return $this->requestDate;
     }
 
-    public function setPaymentDate(\DateTimeInterface $paymentDate): self
+    public function setRequestDate(\DateTimeInterface $requestDate): self
     {
-        $this->paymentDate = $paymentDate;
+        $this->requestDate = $requestDate;
 
         return $this;
     }
@@ -105,6 +110,18 @@ class Purchase
     public function setPurchasedBy(?User $purchasedBy): self
     {
         $this->purchasedBy = $purchasedBy;
+
+        return $this;
+    }
+
+    public function getPaidDate(): ?\DateTimeInterface
+    {
+        return $this->paidDate;
+    }
+
+    public function setPaidDate(?\DateTimeInterface $paidDate): self
+    {
+        $this->paidDate = $paidDate;
 
         return $this;
     }

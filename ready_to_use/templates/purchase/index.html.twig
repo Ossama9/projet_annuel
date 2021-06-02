@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Mes commandes' %}
+
+{% block body %}
+
+    <div class="container mt-4">
+        <h1 class="mb-4">Mes commandes</h1>
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <div class="jumbotron p-4">
+            <p>{{ purchases|length }} commande(s) passée(s)</p>
+            <div class="mt-2">
+                {% for purchase in purchases %}
+                    <div class="media mt-4">
+                        <img src="{{ asset('uploads/pictures/' ~ purchase.product.pictures[0].name) }}" class="mr-3" style="width: 10%" alt="{{ purchase.product.model.name }}">
+                        <div class="media-body">
+                            <h5 class="mt-0">{{ purchase.product.model.name }}</h5>
+                            <p class="my-1">Commande passée le {{ purchase.requestDate|date }}</p>
+                            <p>{{ purchase.product.price }} €</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

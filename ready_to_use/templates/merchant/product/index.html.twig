@@ -28,7 +28,7 @@
                 <td>{{ product.depositDate ? product.depositDate|date('d-m-Y à H:i') : '' }}</td>
                 <td>{% if product.sell.status == 0 %}En attente{% elseif product.sell.status == 1 %}Accepté{% else %}Refusé{% endif %}</td>
                 <td>
-                    <a class="btn btn-primary" href="{{ path('product.show', {'id': product.id}) }}">Voir</a>
+                    <a class="btn btn-primary" href="{{ path('merchant.product.show', {'id': product.id}) }}">Voir</a>
 {#                    <a class="btn btn-secondary" href="{{ path('product.edit', {'id': product.id}) }}">Modifier</a>#}
                 </td>
             </tr>
@@ -40,7 +40,7 @@
         </tbody>
     </table>
 
-    <a class="btn btn-primary" href="{{ path('product.new') }}">Vendre un produit</a>
+    <a class="btn btn-primary" href="{{ path('merchant.product.new') }}">Vendre un produit</a>
     {% else %}
         <p>Vous devez être marchand pour vendre des produits.</p>
         <a class="btn btn-primary" href="{{ path('account.index') }}">Devenir marchand</a>

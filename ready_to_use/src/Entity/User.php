@@ -85,6 +85,11 @@ class User implements UserInterface, \Serializable
      */
     private int $roles;
 
+    /**
+     * @ORM\Column(type="string", length=18, nullable=true)
+     */
+    private ?string $stripe_customer_id;
+
     public function __construct()
     {
         $this->requestingUser = new ArrayCollection();
@@ -361,6 +366,18 @@ class User implements UserInterface, \Serializable
             $this->username,
             $this->password
             ) = unserialize($serialized, ['allowed_classes' => false]);
+    }
+
+    public function getStripeCustomerId(): ?string
+    {
+        return $this->stripe_customer_id;
+    }
+
+    public function setStripeCustomerId(string $stripe_customer_id): self
+    {
+        $this->stripe_customer_id = $stripe_customer_id;
+
+        return $this;
     }
 
 }
