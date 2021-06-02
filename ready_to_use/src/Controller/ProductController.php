@@ -3,9 +3,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Order;
 use DateTime;
 use App\Entity\Product;
-use App\Entity\Purchase;
 use App\Entity\User;
 use Stripe\Checkout\Session;
 use Stripe\Exception\ApiErrorException;
@@ -40,17 +40,16 @@ class ProductController extends AbstractController
     public function buy(Product $product): Response
     {
         // création de la commande
-        $purchase = new Purchase();
-        $purchase->setProduct($product);
-        $purchase->setStatus(0);
-        $purchase->setCoinsEarned($product->getPrice() / 10); // à voir pour le calcul des jetons gagnés
-        $purchase->setRequestDate(new DateTime());
+        $order = new Order();
+        $order->addProduct($product);
+        $order->setStatus(0);
+        $order->setRequestDate(new DateTime());
 
         $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username' => $this->getUser()->getUsername()]);
-        $purchase->setPurchasedBy($user);
+        $order->setOrderedBy($user);
 
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($purchase);
+        $entityManager->persist($order);
         $entityManager->flush();
 
         Stripe::setApiKey('sk_test_51IxDjiKgLlknBEgu1oT1wW8OZLC2BPhSAf8buHUczm67oF3kbIWnQFtqkhcPDFsyiNmDz4kNdjuEtKUwgGM5cQJ000bl5uN1ty');
@@ -77,12 +76,12 @@ class ProductController extends AbstractController
                     'quantity' => 1,
                 ]],
                 'metadata' => [
-                    'purchase_id' => $purchase->getId()
+                    'order_id' => $order->getId()
                 ],
                 'mode' => 'payment',
                 // à changer plus tard
-                'success_url' => $this->getParameter('domain') . '/purchase/',
-                'cancel_url' => $this->getParameter('domain') . '/purchase/',
+                'success_url' => $this->getParameter('domain') . '/order/',
+                'cancel_url' => $this->getParameter('domain') . '/order/',
             ]);
         } catch (ApiErrorException $e) {
             return $this->json([

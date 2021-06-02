@@ -15,7 +15,7 @@
             let model = document.getElementById('admin_product_model').value;
             let price = document.getElementById('estimated-price');
 
-            axios.get(`/product/simulate/v1?condition=${condition}&model=${model}`)
+            axios.get(`/merchant/product/simulate/v1?condition=${condition}&model=${model}`)
                 .then(response => {
                     if (response.data.price) price.innerHTML = response.data.price + '€'
                     else price.innerHTML = response.data.error

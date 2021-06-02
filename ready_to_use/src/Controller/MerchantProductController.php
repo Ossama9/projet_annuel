@@ -100,7 +100,6 @@ class MerchantProductController extends AbstractController
                     $entityManager->persist($picture);
 
                 } catch (FileException $e) {
-                    // s'il y a des exceptions
                 }
 
             }
@@ -132,13 +131,17 @@ class MerchantProductController extends AbstractController
      */
     public function show(Product $product): Response
     {
-        $pictures = $this->getDoctrine()->getRepository(Picture::class)->findBy(['product' => $product]);
+        if ($product->getSell()->getSoldBy() === $this->getUser()) {
 
-        return $this->render('/merchant/product/show.html.twig', [
-            'product' => $product,
-            'pictures' => $pictures,
-            'current_page' => 'product'
-        ]);
+            $pictures = $this->getDoctrine()->getRepository(Picture::class)->findBy(['product' => $product]);
+
+            return $this->render('/merchant/product/show.html.twig', [
+                'product' => $product,
+                'pictures' => $pictures,
+                'current_page' => 'product'
+            ]);
+
+        } else return $this->redirectToRoute('merchant.product.index');
     }
 
     /**
@@ -149,19 +152,23 @@ class MerchantProductController extends AbstractController
      */
     public function edit(Request $request, Product $product): Response
     {
-        $form = $this->createForm(ProductType::class, $product);
-        $form->handleRequest($request);
+        if ($product->getSell()->getSoldBy() === $this->getUser()) {
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $form = $this->createForm(ProductType::class, $product);
+            $form->handleRequest($request);
 
-            return $this->redirectToRoute('merchant.product.index');
-        }
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->getDoctrine()->getManager()->flush();
 
-        return $this->render('/merchant/product/edit.html.twig', [
-            'product' => $product,
-            'form' => $form->createView(),
-        ]);
+                return $this->redirectToRoute('merchant.product.index');
+            }
+
+            return $this->render('/merchant/product/edit.html.twig', [
+                'product' => $product,
+                'form' => $form->createView(),
+            ]);
+
+        } else return $this->redirectToRoute('merchant.product.index');
     }
 
     /**

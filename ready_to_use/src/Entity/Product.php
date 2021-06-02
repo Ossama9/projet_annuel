@@ -52,11 +52,6 @@ class Product
     private $pictures;
 
     /**
-     * @ORM\OneToOne(targetEntity=Purchase::class, mappedBy="product", cascade={"persist", "remove"})
-     */
-    private $purchase;
-
-    /**
      * @ORM\OneToOne(targetEntity=Sell::class, mappedBy="product", cascade={"persist", "remove"})
      */
     private $sell;
@@ -71,9 +66,15 @@ class Product
      */
     private $productCondition;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Order::class, mappedBy="products")
+     */
+    private $orders;
+
     public function __construct()
     {
         $this->pictures = new ArrayCollection();
+        $this->orders = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -159,23 +160,6 @@ class Product
         return $this;
     }
 
-    public function getPurchase(): ?Purchase
-    {
-        return $this->purchase;
-    }
-
-    public function setPurchase(Purchase $purchase): self
-    {
-        // set the owning side of the relation if necessary
-        if ($purchase->getProduct() !== $this) {
-            $purchase->setProduct($this);
-        }
-
-        $this->purchase = $purchase;
-
-        return $this;
-    }
-
     public function getSell(): ?Sell
     {
         return $this->sell;
@@ -213,6 +197,33 @@ class Product
     public function setProductCondition(int $productCondition): self
     {
         $this->productCondition = $productCondition;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Order[]
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders[] = $order;
+            $order->addProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->removeElement($order)) {
+            $order->removeProduct($this);
+        }
 
         return $this;
     }

@@ -41,7 +41,7 @@ class User implements UserInterface, \Serializable
     private string $password;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, unique=true)
      */
     private string $email;
 
@@ -58,7 +58,7 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private string $address;
+    private ?string $address;
 
     /**
      * @ORM\OneToMany(targetEntity=UserVerification::class, mappedBy="requestingUser", orphanRemoval=true)
@@ -69,11 +69,6 @@ class User implements UserInterface, \Serializable
      * @ORM\OneToMany(targetEntity=UserVerification::class, mappedBy="verifiedBy", orphanRemoval=true)
      */
     private $verifiedBy;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Purchase::class, mappedBy="purchasedBy")
-     */
-    private $purchases;
 
     /**
      * @ORM\OneToMany(targetEntity=Sell::class, mappedBy="soldBy")
@@ -90,12 +85,17 @@ class User implements UserInterface, \Serializable
      */
     private ?string $stripe_customer_id;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="orderedBy")
+     */
+    private $orders;
+
     public function __construct()
     {
         $this->requestingUser = new ArrayCollection();
         $this->verifiedBy = new ArrayCollection();
-        $this->purchases = new ArrayCollection();
         $this->sells = new ArrayCollection();
+        $this->orders = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -260,36 +260,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return Collection|Purchase[]
-     */
-    public function getPurchases(): Collection
-    {
-        return $this->purchases;
-    }
-
-    public function addPurchase(Purchase $purchase): self
-    {
-        if (!$this->purchases->contains($purchase)) {
-            $this->purchases[] = $purchase;
-            $purchase->setPurchasedBy($this);
-        }
-
-        return $this;
-    }
-
-    public function removePurchase(Purchase $purchase): self
-    {
-        if ($this->purchases->removeElement($purchase)) {
-            // set the owning side to null (unless already changed)
-            if ($purchase->getPurchasedBy() === $this) {
-                $purchase->setPurchasedBy(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Sell[]
      */
     public function getSells(): Collection
@@ -376,6 +346,36 @@ class User implements UserInterface, \Serializable
     public function setStripeCustomerId(string $stripe_customer_id): self
     {
         $this->stripe_customer_id = $stripe_customer_id;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Order[]
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders[] = $order;
+            $order->setOrderedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->removeElement($order)) {
+            // set the owning side to null (unless already changed)
+            if ($order->getOrderedBy() === $this) {
+                $order->setOrderedBy(null);
+            }
+        }
 
         return $this;
     }

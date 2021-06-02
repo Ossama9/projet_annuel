@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande{% endblock %}
+
+{% block body %}
+    <h3 class="mb-4">Commande n°{{ order.id }}</h3>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ order.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre de produits</th>
+                <td>{{ order.products|length }}</td>
+            </tr>
+            <tr>
+                <th>Prix total</th>
+                <td>{{ order.totalPrice }} €</td>
+            </tr>
+            <tr>
+                <th>Commandé le</th>
+                <td>{{ order.requestDate|date('d-m-Y à H:i') }}</td>
+            </tr>
+            {% if order.paidDate %}
+                <tr>
+                    <th>Payé le </th>
+                    <td>{{ order.paidDate|date('d-m-Y à H:i') }}</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <div class="d-flex">
+        <a href="{{ path('order.invoice', {id: order.id}) }}" class="btn btn-primary text-white mr-2">Générer une facture</a>
+        <a class="btn btn-primary" href="{{ path('order.index') }}">Retour</a>
+    </div>
+{% endblock %}

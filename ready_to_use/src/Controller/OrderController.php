@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Purchase;
+use App\Entity\Order;
+use App\Entity\Picture;
+use App\Entity\Product;
 use App\Entity\User;
 use DateTime;
 use Stripe\Exception\UnexpectedValueException;
@@ -15,33 +17,71 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/purchase")
+ * @Route("/order")
  */
-class PurchaseController extends AbstractController
+class OrderController extends AbstractController
 {
 
     /**
-     * @Route("/", name="purchase.index")
+     * @Route("/", name="order.index")
      * @return Response
      */
     public function index(): Response
     {
-        // on récupère les achats de l'utilisateur
-        $purchases = $this->getDoctrine()->getRepository(Purchase::class)->findBy(['purchasedBy' => $this->getUser()]);
+        // on récupère les commandes de l'utilisateur
+        $orders = $this->getDoctrine()->getRepository(Order::class)->findBy(['orderedBy' => $this->getUser()]);
 
-        return $this->render('/purchase/index.html.twig', [
-            'purchases' => $purchases,
-            'current_page' => 'purchase'
+        return $this->render('/order/index.html.twig', [
+            'orders' => $orders,
+            'current_page' => 'order'
         ]);
     }
 
     /**
+     * @Route("/{id}", name="order.show")
+     * @param Order $order
+     * @return Response
+     */
+    public function show(Order $order): Response
+    {
+        if ($order->getOrderedBy() === $this->getUser()) {
+
+            return $this->render('/order/show.html.twig', [
+                'order' => $order,
+                'current_page' => 'order'
+            ]);
+
+        } else return $this->redirectToRoute('order.index');
+    }
+
+    /**
+     * @Route("/{id}/invoice", name="order.invoice")
+     * @param Order $order
+     * @return Response
+     */
+    public function invoice(Order $order): Response
+    {
+        if ($order->getOrderedBy() === $this->getUser()) {
+
+            $price = 0;
+            foreach ($order->getProducts() as $product) $price += $product->getPrice();
+
+            return $this->render('/order/invoice.html.twig', [
+                'order' => $order,
+                'price' => $price,
+                'current_page' => 'order'
+            ]);
+
+        } else return $this->redirectToRoute('order.index');
+    }
+
+    /**
      * Webhook Stripe pour mettre à jour le statut des commandes
-     * @Route("/webhook", name="purchase.webhook", methods={"POST"})
+     * @Route("/webhook", name="order.webhook", methods={"POST"})
      * @param Request $request
      * @return Response
      */
-    public function purchase_webhook(Request $request): Response
+    public function order_webhook(Request $request): Response
     {
         $data = [];
         $entityManager = $this->getDoctrine()->getManager();
@@ -73,42 +113,42 @@ class PurchaseController extends AbstractController
             return new Response(json_encode($data), Response::HTTP_BAD_REQUEST);
         }
 
-        function fulfill_order($purchase) {
+        function fulfill_order($order) {
             // le paiement a bien été reçu
-            $purchase->setStatus(1);
-            $purchase->setPaidDate(new DateTime());
+            $order->setStatus(1);
+            $order->setPaidDate(new DateTime());
         }
 
         $session = $event->data->object;
-        $purchase = $this->getDoctrine()->getRepository(Purchase::class)->find($session['metadata']['purchase_id']);
+        $order = $this->getDoctrine()->getRepository(Order::class)->find($session['metadata']['order_id']);
 
         switch ($event->type) {
             case 'checkout.session.completed':
                 $data['session'] = $session;
 
-                $user = $purchase->getPurchasedBy();
+                $user = $order->getOrderedBy();
                 if ($user->getStripeCustomerId() === null) $user->setStripeCustomerId($session['customer']);
                 $entityManager->persist($user);
 
                 // on regarde si la commande a bien été payé
                 if ($session->payment_status == 'paid') {
-                    fulfill_order($purchase);
+                    fulfill_order($order);
                 }
 
                 break;
 
             case 'checkout.session.async_payment_succeeded':
                 // paiement bien reçu
-                fulfill_order($purchase);
+                fulfill_order($order);
                 break;
 
             case 'checkout.session.async_payment_failed':
                 // erreur lors du paiement
-                $purchase->setStatus(2);
+                $order->setStatus(2);
                 break;
         }
 
-        $entityManager->persist($purchase);
+        $entityManager->persist($order);
         $entityManager->flush();
         return new Response(json_encode($data), Response::HTTP_OK);
     }
