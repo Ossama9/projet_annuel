@@ -13,9 +13,10 @@ use Doctrine\ORM\Mapping as ORM;
 class Product
 {
     public const CONDITIONS = [
-        'Bon état' => 0,
-        'Très bon état' => 1,
-        'Comme neuf' => 2
+        'Mauvais état',
+        'Bon état',
+        'Très bon état',
+        'Comme neuf'
     ];
 
     /**
@@ -50,11 +51,6 @@ class Product
      * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="product", cascade={"persist", "remove"})
      */
     private $pictures;
-
-    /**
-     * @ORM\OneToOne(targetEntity=Purchase::class, mappedBy="product", cascade={"persist", "remove"})
-     */
-    private $purchase;
 
     /**
      * @ORM\OneToOne(targetEntity=Sell::class, mappedBy="product", cascade={"persist", "remove"})
@@ -159,23 +155,6 @@ class Product
         return $this;
     }
 
-    public function getPurchase(): ?Purchase
-    {
-        return $this->purchase;
-    }
-
-    public function setPurchase(Purchase $purchase): self
-    {
-        // set the owning side of the relation if necessary
-        if ($purchase->getProduct() !== $this) {
-            $purchase->setProduct($this);
-        }
-
-        $this->purchase = $purchase;
-
-        return $this;
-    }
-
     public function getSell(): ?Sell
     {
         return $this->sell;
@@ -217,4 +196,8 @@ class Product
         return $this;
     }
 
+    public function getProductConditionToString(): string
+    {
+        return self::CONDITIONS[$this->productCondition];
+    }
 }

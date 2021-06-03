@@ -31,7 +31,7 @@
         </tr>
         <tr>
             <th>Condition</th>
-            <td>{% if product.productCondition == 0 %}Bon état{% elseif product.productCondition == 1 %}Très bon état{% else %}Comme neuf{% endif %}</td>
+            <td>{{ product.productConditionToString }}</td>
         </tr>
         <tr>
             <th>Prix</th>

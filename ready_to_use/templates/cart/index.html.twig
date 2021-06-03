@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon panier{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Mon panier</h1>
+        {% if cart.products.count > 0 %}
+            <div class="row mt-4">
+                <div class="col-md-8">
+                    {{ form_start(form) }}
+                    <div class="card">
+                        <div class="card-header bg-dark text-white d-flex">
+                            <h5>Produits</h5>
+                            <div class="ml-auto">
+                                {{ form_widget(form.save, {'attr': {'class': 'btn btn-warning'}}) }}
+                                {{ form_widget(form.clear, {'attr': {'class': 'btn btn-light'}}) }}
+                            </div>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            {% for product in form.products %}
+                                <li class="list-group-item d-flex">
+                                    <div class="flex-fill mr-2">
+                                        <img src="https://via.placeholder.com/200x150" width="100" alt="Product image">
+                                    </div>
+                                    <div class="flex-fill mr-2">
+                                        <h5 class="mt-0 mb-0">{{ product.vars.data.product.model.name }}</h5>
+                                        <small>{{ product.vars.data.product.productConditionToString }}</small>
+                                        <div class="form-inline mt-2">
+                                            <div class="form-group mb-0 mr-2">
+                                                {{ form_widget(product.quantity, {
+                                                    'attr': {
+                                                        'class': 'form-control form-control-sm ' ~ (product.quantity.vars.valid ? '' : 'is-invalid')
+                                                    }
+                                                }) }}
+                                                <div class="invalid-feedback">
+                                                    {{ form_errors(product.quantity) }}
+                                                </div>
+                                            </div>
+                                            {{ form_widget(product.remove, {'attr': {'class': 'btn btn-dark btn-sm'}}) }}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-between align-items-end">
+                                        <div>
+                                            <b>{{ product.vars.data.product.price }} €</b>
+                                        </div>
+                                        <div>
+                                            <a class="btn btn-primary" href="{{ path('product.show', {id: product.vars.data.product.id }) }}">Voir</a>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {{ form_end(form, {'render_rest': false}) }}
+                </div>
+                <!-- Summary -->
+                <div class="col-md-4">
+                    <div class="card mt-4 mt-md-0">
+                        <h5 class="card-header bg-dark text-white">Résumé</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <div><b>Total</b></div>
+                                <span><b>{{ cart.total }} €</b></span>
+                            </li>
+                        </ul>
+                        <div class="card-body">
+                            {% if app.user %}
+                                <a id="checkout" class="btn btn-warning w-100">Procéder au paiement</a>
+                            {% else %}
+                                <a href="{{ path('login') }}" class="btn btn-warning w-100">Connectez-vous</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                Votre panier est vide. <a href="{{ path('product.index') }}">Voir la liste des produits</a>.
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://js.stripe.com/v3/"></script>
+    <script type="text/javascript">
+
+        // création d'une instance Stripe à partir de la clé privée
+        let stripe = Stripe("pk_test_51IxDjiKgLlknBEguf5gmqGfkOGybeLhBmXySIZ8s58PyB4uLjT0XCcZzWrnIpZHWOk1UVy3JDG3U07gQ1VMyhoJS00MC9SNMTL")
+        let checkout = document.getElementById('checkout')
+        // on récupère l'id du produit
+
+        // paiement du produit
+        checkout.onclick = () => {
+            axios.post(`/order/checkout`, {
+            }).then(function (response) {
+                // redirection vers l'onglet de paiement Stripe
+                stripe.redirectToCheckout({ sessionId: response.data.id })
+            }).catch(function (error) {
+                console.error("Error: ", error)
+            })
+        }
+
+    </script>
+{% endblock %}

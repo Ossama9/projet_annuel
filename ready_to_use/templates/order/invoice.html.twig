@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Générer une facture' %}
+
+{% block body %}
+    <div id="invoice" class="p-2">
+        <div class="d-flex justify-content-between">
+            <div>
+                <h5>{{ order.orderedBy.firstName }} {{ order.orderedBy.lastName }}</h5>
+                <p class="my-1">{{ order.orderedBy.email }}</p>
+                <p class="my-1">{{ order.orderedBy.address }}</p>
+                <p>le {{ order.paidDate|date('d-m-Y à H:i') }}</p>
+            </div>
+            <div>
+                <h5>Ready to use</h5>
+                <p class="my-1">lorem ipsum dolar</p>
+                <p>45 rue test, 75001 Paris</p>
+            </div>
+        </div>
+        <div class="mt-4">
+            <h5 id="order" data-order-id="{{ order.id }}">Commande n°{{ order.id }}</h5>
+            <p>{{ order.countProducts }} produit(s)</p>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Marque</th>
+                    <th>Modèle</th>
+                    <th>Condition</th>
+                    <th>Quantité</th>
+                    <th>Prix</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for product in order.products %}
+                    <tr>
+                        <td>{{ product.product.model.brand.name }}</td>
+                        <td>{{ product.product.model.name }}</td>
+                        <td>{{ product.product.productConditionToString }}</td>
+                        <td>{{ product.quantity }}</td>
+                        <td>{{ product.total }} €</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <p class="text-right">TOTAL: {{ order.total }} €</p>
+        </div>
+    </div>
+
+    <div class="d-flex">
+        <a id="generate-invoice" class="btn btn-primary text-white mr-2">Télécharger la facture</a>
+        <a href="{{ path('order.show', {id: order.id}) }}" class="btn btn-primary text-white">Retour</a>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script type="text/javascript">
+        window.jsPDF = window.jspdf.jsPDF
+        const doc = new jsPDF({
+            unit: 'px',
+            format: 'a4'
+        });
+
+        let invoice = $('#invoice')
+        let cache_width = invoice.width()
+        let a4 = [595.28, 841.89]
+
+        $('#generate-invoice').on('click', _ => {
+            $('body').scrollTop(0);
+            createPDF();
+        });
+
+        // création du PDF
+        function createPDF() {
+            invoice.width(a4[0] * 1.33333 - 80).css('max-width', 'none');
+            let orderId = $('#order').data('orderId')
+            html2canvas(invoice, {
+                imageTimeout: 2000,
+                removeContainer: true,
+                onrendered: canvas => {
+                    let img = canvas.toDataURL("image/png")
+                    doc.addImage(img, 'JPEG', 20, 20);
+                    doc.save(`invoice-${orderId}.pdf`);
+                    invoice.width(cache_width)
+                }
+            })
+        }
+
+    </script>
+{% endblock %}

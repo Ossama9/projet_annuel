@@ -2,7 +2,7 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}{% endblock %}</title>
+        <title>{% block title %}{% endblock %} - Ready to use</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     {#    {% block stylesheets %}#}
     {#        {{ encore_entry_link_tags('app') }}#}
@@ -15,15 +15,17 @@
 
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav mr-auto">
-{#                    <li class="nav-item"><a class="nav-link {% if current_page is defined and current_page == 'property' %}active{% endif %}" href="{{ path('login') }}">Test</a></li>#}
+                    <li class="nav-item"><a class="nav-link {% if current_page is defined and current_page == 'product' %}active{% endif %}" href="{{ path('product.index') }}">Produits</a></li>
                 </ul>
                 <ul class="navbar-nav">
 {#                    <li><a class="nav-link nav-item {% if current_page is defined and current_page == 'admin' %}active{% endif %}" href="{{ path('login') }}">Panel admin</a></li>#}
+                    <li><a class="nav-link nav-item {% if current_page is defined and current_page == 'cart' %}active{% endif %}" href="{{ path('cart.index') }}">Mon panier</a></li>
                     {% if app.user %}
                         {% if is_granted('ROLE_ADMIN') %}
                             <li><a class="nav-link nav-item {% if current_page is defined and current_page == 'admin' %}active{% endif %}" href="{{ path('admin') }}">Panel administrateur</a></li>
                         {% endif %}
-                        <li><a class="nav-link nav-item {% if current_page is defined and current_page == 'product' %}active{% endif %}" href="{{ path('product.index') }}">Mes produits</a></li>
+                        <li><a class="nav-link nav-item {% if current_page is defined and current_page == 'merchant.product' %}active{% endif %}" href="{{ path('merchant.product.index') }}">Mes produits</a></li>
+                        <li><a class="nav-link nav-item {% if current_page is defined and current_page == 'order' %}active{% endif %}" href="{{ path('order.index') }}">Mes commandes</a></li>
                         <li><a class="nav-link nav-item {% if current_page is defined and current_page == 'account' %}active{% endif %}" href="{{ path('account.index') }}">Mon compte</a></li>
                         <li><a class="nav-link nav-item" href="{{ path('logout') }}">Déconnexion</a></li>
                     {% else %}

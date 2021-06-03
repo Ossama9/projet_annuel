@@ -9,7 +9,7 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        // $product = new Product();
+        // $product = ;
         // $manager->persist($product);
 
         $manager->flush();

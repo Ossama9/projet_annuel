@@ -25,7 +25,7 @@ class ProductType extends AbstractType
                 'label' => 'Prix souhaité'
             ])
             ->add('productCondition', ChoiceType::class, [
-                'choices' => Product::CONDITIONS
+                'choices' => array_flip(Product::CONDITIONS)
             ])
             ->add('model', EntityType::class, [
                 'class' => Model::class,

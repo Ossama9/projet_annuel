@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produit (test){% endblock %}
+
+{% block body %}
+    <h3 class="mb-4">Produit de test</h3>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td id="product" data-id="{{ product.id }}">{{ product.id }}</td>
+        </tr>
+        <tr>
+            <th>Marque</th>
+            <td>{{ product.model.brand.name }}</td>
+        </tr>
+        <tr>
+            <th>Modèle</th>
+            <td>{{ product.model.name }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ product.description }}</td>
+        </tr>
+        <tr>
+            <th>Condition</th>
+            <td>{{ product.productConditionToString }}</td>
+        </tr>
+        <tr>
+            <th>Prix</th>
+            <td>{{ product.price }} €</td>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}
