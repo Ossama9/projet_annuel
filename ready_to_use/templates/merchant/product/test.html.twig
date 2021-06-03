@@ -25,7 +25,7 @@
         </tr>
         <tr>
             <th>Condition</th>
-            <td>{% if product.productCondition == 0 %}Bon état{% elseif product.productCondition == 1 %}Très bon état{% else %}Comme neuf{% endif %}</td>
+            <td>{{ product.productConditionToString }}</td>
         </tr>
         <tr>
             <th>Prix</th>
@@ -33,32 +33,4 @@
         </tr>
         </tbody>
     </table>
-
-    <div class="d-flex">
-        <a id="buy" class="btn btn-secondary text-white mr-2">Acheter</a>
-    </div>
-{% endblock %}
-
-{% block javascripts %}
-    <script src="https://js.stripe.com/v3/"></script>
-    <script type="text/javascript">
-
-        // création d'une instance Stripe à partir de la clé privée
-        let stripe = Stripe("pk_test_51IxDjiKgLlknBEguf5gmqGfkOGybeLhBmXySIZ8s58PyB4uLjT0XCcZzWrnIpZHWOk1UVy3JDG3U07gQ1VMyhoJS00MC9SNMTL")
-        let buy = document.getElementById('buy')
-        // on récupère l'id du produit
-        let productId = document.getElementById('product').dataset['id']
-
-        // paiement du produit
-        buy.onclick = () => {
-            axios.post(`/product/${productId}/buy`, {
-            }).then(function (response) {
-                // redirection vers l'onglet de paiement Stripe
-                stripe.redirectToCheckout({ sessionId: response.data.id })
-            }).catch(function (error) {
-                    console.error("Error:", error)
-            })
-        }
-
-    </script>
 {% endblock %}

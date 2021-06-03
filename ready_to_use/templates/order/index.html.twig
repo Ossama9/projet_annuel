@@ -16,18 +16,18 @@
             <h5>{{ orders|length }} commande(s) passée(s)</h5>
             <div class="mt-2">
                 {% for order in orders %}
-                    <div class="media mt-4" id="test">
+                    <div class="media mt-4">
                         <div class="media-body d-flex justify-content-between">
                             <div>
                                 <h5>Commande n°{{ order.id }}</h5>
-                                <p class="my-1">{{ order.products|length }} produit(s) commandé(s)</p>
+                                <p class="my-1">{{ order.countProducts }} produit(s) commandé(s)</p>
                                 <p class="my-1">Commande passée le {{ order.requestDate|date }}</p>
                                 {% if order.status == 1 %}
                                     <p class="my-1">Payé le {{ order.paidDate|date }}</p>
                                 {% elseif order.status == 2 %}
                                     <p class="my-1">Annulée</p>
                                 {% endif %}
-                                <p>{{ order.totalPrice }} €</p>
+                                <p>{{ order.total }} €</p>
                             </div>
                             <div>
                                 <a href="{{ path('order.show', {id: order.id}) }}" class="btn btn-primary text-white">Détails</a>

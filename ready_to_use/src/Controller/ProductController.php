@@ -4,6 +4,11 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Entity\Picture;
+use App\Form\AddToCartType;
+use App\Manager\CartManager;
+use App\Repository\SellRepository;
+use App\Repository\UserVerificationRepository;
 use DateTime;
 use App\Entity\Product;
 use App\Entity\User;
@@ -11,6 +16,7 @@ use Stripe\Checkout\Session;
 use Stripe\Exception\ApiErrorException;
 use Stripe\Stripe;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,77 +26,60 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProductController extends AbstractController
 {
     /**
-     * @Route("/{id}/test", name="product.test", methods={"GET"})
-     * @param Product $product
+     * @Route("/", name="product.index")
      * @return Response
      */
-    public function test(Product $product): Response
+    public function index(): Response
     {
-        return $this->render('merchant/product/test.html.twig', [
-            'product' => $product,
+        $products = $this->getDoctrine()->getRepository(Product::class)->findAll();
+
+        return $this->render('/product/index.html.twig', [
+            'products' => $products,
             'current_page' => 'product'
         ]);
+
     }
 
     /**
-     * @Route("/{id}/buy", name="product.buy", methods={"POST"})
+     * @Route("/{id}", name="product.show")
      * @param Product $product
+     * @param Request $request
+     * @param CartManager $cartManager
      * @return Response
      */
-    public function buy(Product $product): Response
+    public function show(Product $product, Request $request, CartManager $cartManager): Response
     {
-        // création de la commande
-        $order = new Order();
-        $order->addProduct($product);
-        $order->setStatus(0);
-        $order->setRequestDate(new DateTime());
+        $form = $this->createForm(AddToCartType::class);
 
-        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username' => $this->getUser()->getUsername()]);
-        $order->setOrderedBy($user);
+        $form->handleRequest($request);
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($order);
-        $entityManager->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $item = $form->getData();
+            $condition = $form->get('productCondition')->getData();
+            $product->setProductCondition($condition);
+            $item->setProduct($product);
 
-        Stripe::setApiKey('sk_test_51IxDjiKgLlknBEgu1oT1wW8OZLC2BPhSAf8buHUczm67oF3kbIWnQFtqkhcPDFsyiNmDz4kNdjuEtKUwgGM5cQJ000bl5uN1ty');
+            $cart = $cartManager->getCurrentCart();
+            $cart
+                ->addProduct($item)
+                ->setRequestDate(new \DateTime());
 
-        // permt d'afficher les images sur l'onglet de paiement Stripe
-        // à voir lorsque l'application sera déployé sur le serveur
-        // $pictures = $this->getDoctrine()->getRepository(Picture::class)->findBy(['product' => $product]);
+            $cartManager->save($cart);
 
-        // on crée une session de paiement Stripe
-        try {
-            $checkout_session = Session::create([
-                'payment_method_types' => ['card'],
-                'customer_email' => $user->getEmail(),
-                'customer' => $user->getStripeCustomerId(),
-                'line_items' => [[
-                    'price_data' => [
-                        'currency' => 'eur',
-                        'unit_amount' => $product->getPrice() * 100,
-                        'product_data' => [
-                            'name' => $product->getModel()->getName(),
-//                             'images' => [$pictures],
-                        ],
-                    ],
-                    'quantity' => 1,
-                ]],
-                'metadata' => [
-                    'order_id' => $order->getId()
-                ],
-                'mode' => 'payment',
-                // à changer plus tard
-                'success_url' => $this->getParameter('domain') . '/order/',
-                'cancel_url' => $this->getParameter('domain') . '/order/',
-            ]);
-        } catch (ApiErrorException $e) {
-            return $this->json([
-                'error' => 'Une erreur est survenue'
-            ]);
+            if ($item->getQuantity() > 1) $message = $item->getQuantity(). ' produits ont été ajouté au panier.';
+            else $message = '1 produit a été ajouté au panier.';
+
+            $this->addFlash('success', $message);
+            return $this->redirectToRoute('product.show', ['id' => $product->getId()]);
         }
 
-        return $this->json([
-            'id' => $checkout_session->id
+        $pictures = $this->getDoctrine()->getRepository(Picture::class)->findBy(['product' => $product]);
+
+        return $this->render('/product/show.html.twig', [
+            'product' => $product,
+            'form' => $form->createView(),
+            'pictures' => $pictures,
+            'current_page' => 'product'
         ]);
     }
 

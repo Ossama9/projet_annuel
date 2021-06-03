@@ -45,7 +45,7 @@ class MerchantProductController extends AbstractController
 
         return $this->render('/merchant/product/index.html.twig', [
             'products' => $products,
-            'current_page' => 'product',
+            'current_page' => 'merchant.product',
             'merchant' => $merchant
         ]);
 
@@ -120,7 +120,7 @@ class MerchantProductController extends AbstractController
         return $this->render('/merchant/product/new.html.twig', [
             'product' => $product,
             'form' => $form->createView(),
-            'current_page' => 'product'
+            'current_page' => 'merchant.product'
         ]);
     }
 
@@ -138,7 +138,7 @@ class MerchantProductController extends AbstractController
             return $this->render('/merchant/product/show.html.twig', [
                 'product' => $product,
                 'pictures' => $pictures,
-                'current_page' => 'product'
+                'current_page' => 'merchant.product'
             ]);
 
         } else return $this->redirectToRoute('merchant.product.index');
@@ -166,6 +166,7 @@ class MerchantProductController extends AbstractController
             return $this->render('/merchant/product/edit.html.twig', [
                 'product' => $product,
                 'form' => $form->createView(),
+                'current_page' => 'merchant.product'
             ]);
 
         } else return $this->redirectToRoute('merchant.product.index');

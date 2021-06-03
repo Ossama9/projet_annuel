@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title 'Générer une facture' %}
+
 {% block body %}
     <div id="invoice" class="p-2">
         <div class="d-flex justify-content-between">
@@ -17,7 +19,7 @@
         </div>
         <div class="mt-4">
             <h5 id="order" data-order-id="{{ order.id }}">Commande n°{{ order.id }}</h5>
-            <p>{{ order.products|length }} produit(s)</p>
+            <p>{{ order.countProducts }} produit(s)</p>
 
             <table class="table">
                 <thead>
@@ -25,21 +27,23 @@
                     <th>Marque</th>
                     <th>Modèle</th>
                     <th>Condition</th>
+                    <th>Quantité</th>
                     <th>Prix</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for product in order.products %}
                     <tr>
-                        <td>{{ product.model.brand.name }}</td>
-                        <td>{{ product.model.name }}</td>
-                        <td>{% if product.productCondition == 0 %}Bon état{% elseif product.productCondition == 1 %}Très bon état{% else %}Comme neuf{% endif %}</td>
-                        <td>{{ product.price }} €</td>
+                        <td>{{ product.product.model.brand.name }}</td>
+                        <td>{{ product.product.model.name }}</td>
+                        <td>{{ product.product.productConditionToString }}</td>
+                        <td>{{ product.quantity }}</td>
+                        <td>{{ product.total }} €</td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
-            <p class="text-right">TOTAL: {{ price }} €</p>
+            <p class="text-right">TOTAL: {{ order.total }} €</p>
         </div>
     </div>
 

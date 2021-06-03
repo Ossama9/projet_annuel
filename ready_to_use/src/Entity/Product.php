@@ -13,9 +13,10 @@ use Doctrine\ORM\Mapping as ORM;
 class Product
 {
     public const CONDITIONS = [
-        'Bon état' => 0,
-        'Très bon état' => 1,
-        'Comme neuf' => 2
+        'Mauvais état',
+        'Bon état',
+        'Très bon état',
+        'Comme neuf'
     ];
 
     /**
@@ -66,15 +67,9 @@ class Product
      */
     private $productCondition;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Order::class, mappedBy="products")
-     */
-    private $orders;
-
     public function __construct()
     {
         $this->pictures = new ArrayCollection();
-        $this->orders = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -201,31 +196,8 @@ class Product
         return $this;
     }
 
-    /**
-     * @return Collection|Order[]
-     */
-    public function getOrders(): Collection
+    public function getProductConditionToString(): string
     {
-        return $this->orders;
+        return self::CONDITIONS[$this->productCondition];
     }
-
-    public function addOrder(Order $order): self
-    {
-        if (!$this->orders->contains($order)) {
-            $this->orders[] = $order;
-            $order->addProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOrder(Order $order): self
-    {
-        if ($this->orders->removeElement($order)) {
-            $order->removeProduct($this);
-        }
-
-        return $this;
-    }
-
 }

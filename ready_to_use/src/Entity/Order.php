@@ -13,6 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Order
 {
+    // ce statut signifit que les produits sont encore dans le panier, la commande n'a pas encore été payée
+    public const STATUS_CART = 0;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -23,7 +26,7 @@ class Order
     /**
      * @ORM\Column(type="integer")
      */
-    private $status;
+    private $status = self::STATUS_CART;
 
     /**
      * @ORM\Column(type="datetime")
@@ -46,7 +49,7 @@ class Order
     private $orderedBy;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Product::class, inversedBy="orders")
+     * @ORM\OneToMany(targetEntity=OrderItem::class, mappedBy="orderRef", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $products;
 
@@ -121,34 +124,76 @@ class Order
     }
 
     /**
-     * @return Collection|Product[]
+     * @return Collection|OrderItem[]
      */
     public function getProducts(): Collection
     {
         return $this->products;
     }
 
-    public function addProduct(Product $product): self
+    public function addProduct(OrderItem $item): self
     {
-        if (!$this->products->contains($product)) {
-            $this->products[] = $product;
+        foreach ($this->getProducts() as $existingItem) {
+            // Si le produit est déjà dans le panier, on ne fait rien
+            if ($existingItem->equals($item)) {
+                $existingItem->setQuantity(
+                    $existingItem->getQuantity() + $item->getQuantity()
+                );
+                return $this;
+            }
+        }
+
+        $this->products[] = $item;
+        $item->setOrderRef($this);
+
+        return $this;
+    }
+
+    public function removeProduct(OrderItem $item): self
+    {
+        if ($this->products->removeElement($item)) {
+            // set the owning side to null (unless already changed)
+            if ($item->getOrderRef() === $this) {
+                $item->setOrderRef(null);
+            }
         }
 
         return $this;
     }
 
-    public function removeProduct(Product $product): self
+    public function removeProducts(): self
     {
-        $this->products->removeElement($product);
+        foreach ($this->getProducts() as $product) {
+            $this->removeProduct($product);
+        }
 
         return $this;
     }
 
-    public function getTotalPrice(): ?float
+    /**
+     * Retourne le nombre total de produits dans le panier
+     * @return int
+     */
+    public function countProducts(): int
     {
-        $totalPrice = 0;
-        foreach ($this->getProducts() as $product) $totalPrice += $product->getPrice();
+        $count = 0;
+        foreach ($this->getProducts() as $product) $count += $product->getQuantity();
 
-        return $totalPrice;
+        return $count;
+    }
+
+    /**
+     * Retourne le montant total de la commande
+     * @return float
+     */
+    public function getTotal(): float
+    {
+        $total = 0;
+
+        foreach ($this->getProducts() as $item) {
+            $total += $item->getTotal();
+        }
+
+        return $total;
     }
 }

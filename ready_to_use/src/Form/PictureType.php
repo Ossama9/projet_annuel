@@ -25,6 +25,7 @@ class PictureType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Picture::class,
+            'translation_domain' => 'forms'
         ]);
     }
 }

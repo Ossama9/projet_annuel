@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Commande{% endblock %}
+{% block title %}Commande n°{{ order.id }}{% endblock %}
 
 {% block body %}
     <h3 class="mb-4">Commande n°{{ order.id }}</h3>
@@ -13,11 +13,11 @@
             </tr>
             <tr>
                 <th>Nombre de produits</th>
-                <td>{{ order.products|length }}</td>
+                <td>{{ order.countProducts }}</td>
             </tr>
             <tr>
                 <th>Prix total</th>
-                <td>{{ order.totalPrice }} €</td>
+                <td>{{ order.total }} €</td>
             </tr>
             <tr>
                 <th>Commandé le</th>

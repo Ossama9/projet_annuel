@@ -3,10 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Order;
-use App\Entity\Picture;
-use App\Entity\Product;
 use App\Entity\User;
+use App\Manager\CartManager;
 use DateTime;
+use Stripe\Checkout\Session;
+use Stripe\Exception\ApiErrorException;
 use Stripe\Exception\UnexpectedValueException;
 use Stripe\Exception\SignatureVerificationException;
 use Stripe\Stripe;
@@ -28,8 +29,8 @@ class OrderController extends AbstractController
      */
     public function index(): Response
     {
-        // on récupère les commandes de l'utilisateur
-        $orders = $this->getDoctrine()->getRepository(Order::class)->findBy(['orderedBy' => $this->getUser()]);
+        // on récupère les commandes de l'utilisateur (on ne prend pas en compte la commande dans le panier courant)
+        $orders = $this->getDoctrine()->getRepository(Order::class)->findBy(['orderedBy' => $this->getUser(), 'status' => !Order::STATUS_CART ]);
 
         return $this->render('/order/index.html.twig', [
             'orders' => $orders,
@@ -38,7 +39,7 @@ class OrderController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="order.show")
+     * @Route("/{id}", name="order.show", methods={"GET"})
      * @param Order $order
      * @return Response
      */
@@ -63,12 +64,8 @@ class OrderController extends AbstractController
     {
         if ($order->getOrderedBy() === $this->getUser()) {
 
-            $price = 0;
-            foreach ($order->getProducts() as $product) $price += $product->getPrice();
-
             return $this->render('/order/invoice.html.twig', [
                 'order' => $order,
-                'price' => $price,
                 'current_page' => 'order'
             ]);
 
@@ -127,7 +124,7 @@ class OrderController extends AbstractController
                 $data['session'] = $session;
 
                 $user = $order->getOrderedBy();
-                if ($user->getStripeCustomerId() === null) $user->setStripeCustomerId($session['customer']);
+                if (!$user->getStripeCustomerId()) $user->setStripeCustomerId($session['customer']);
                 $entityManager->persist($user);
 
                 // on regarde si la commande a bien été payé
@@ -151,5 +148,71 @@ class OrderController extends AbstractController
         $entityManager->persist($order);
         $entityManager->flush();
         return new Response(json_encode($data), Response::HTTP_OK);
+    }
+
+    /**
+     * @Route("/checkout", name="order.checkout", methods={"POST"})
+     * @param CartManager $cartManager
+     * @return Response
+     */
+    public function checkout(CartManager $cartManager): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username' => $this->getUser()->getUsername()]);
+
+        // récupération du panier
+        $order = $cartManager->getCurrentCart();
+        $order->setOrderedBy($user);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($order);
+        $em->flush();
+
+        Stripe::setApiKey('sk_test_51IxDjiKgLlknBEgu1oT1wW8OZLC2BPhSAf8buHUczm67oF3kbIWnQFtqkhcPDFsyiNmDz4kNdjuEtKUwgGM5cQJ000bl5uN1ty');
+
+        // permt d'afficher les images sur l'onglet de paiement Stripe
+        // à voir lorsque l'application sera déployé sur le serveur
+        // $pictures = $this->getDoctrine()->getRepository(Picture::class)->findBy(['product' => $product]);
+
+        // ajout des produits pour le paiement via Stripe
+        $line_items = [];
+        foreach ($order->getProducts() as $product) {
+            $line_items[] = [
+                'price_data' => [
+                    'currency' => 'eur',
+                    'unit_amount' => $product->getProduct()->getPrice() * 100,
+                    'product_data' => [
+                        'name' => $product->getProduct()->getModel()->getName()
+                        // 'images' => [$pictures],
+                    ]
+                ],
+                'quantity' => $product->getQuantity()
+            ];
+        }
+
+        // on crée une session de paiement Stripe
+        try {
+            $checkout_session = Session::create([
+                'payment_method_types' => ['card'],
+                'customer_email' => $user->getStripeCustomerId() ? null : $user->getEmail(),
+                'customer' => $user->getStripeCustomerId(),
+                'line_items' => $line_items,
+                'metadata' => [
+                    'order_id' => $order->getId()
+                ],
+                'mode' => 'payment',
+                // à changer plus tard
+                'success_url' => $this->getParameter('domain') . '/order/',
+                'cancel_url' => $this->getParameter('domain') . '/order/',
+            ]);
+        } catch (ApiErrorException $e) {
+            return $this->json([
+                'error' => 'Une erreur est survenue.'
+            ]);
+        }
+
+        return $this->json([
+            'id' => $checkout_session->id
+        ]);
     }
 }
