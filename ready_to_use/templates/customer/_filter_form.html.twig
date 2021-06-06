@@ -1,25 +1,35 @@
-<form method="post" action="{{ path("customer.list") }}">
-    <div class="form-row">
-        <div class="form-group col-md-2">
-            <label for="brand" >Trier par marques</label>
-            <select name="brand" class="form-control">
-                {% for brand in brands %}
-                    <option value="{{ brand.id }}">{{ brand.name }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="form-group col-md-2">
-            <label for="model" >Trier par models</label>
-            <select name="model" class="form-control">
-                {% for model in models %}
-                    <option value="{{ model.id }}">{{ model.name }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="form-group col-md-2">
-            <label for="max_price">Prix Maximum</label>
-            <input class="form-control" type="range" name="max_price" min="0" max="1000">
-        </div>
-    </div>
-    <button type="submit" class="btn btn-success mr-2" >Rechercher</button>
-</form>
+{{ form_start(form, {"action": path("customer.list"), "attr": {"id" : "filter_form"}}) }}
+    {{ form_row(form.brand,{"attr": {"onChange" : "updateFilters()"}}) }}
+    {% if form.model is defined %}
+        {{ form_row(form.model) }}
+    {% endif  %}
+{{ form_end(form) }}
+
+{% block javascripts %}
+    <script>
+        function updateFilters() {
+            const brandId = document.getElementById("filter_brand").value;
+            const maxPrice = document.getElementById("filter_max_price").value;
+            const body = `brand_id=${brandId}&max_price=${maxPrice}`;
+
+            //creating and sending the ajax request
+            const request = new XMLHttpRequest();
+            request.open('POST', '{{ path("customer.ajax") }}');
+            request.onreadystatechange = function () {
+                if (request.readyState === 4) {
+                    const temp = document.createElement('div');
+                    temp.innerHTML  = request.responseText;
+                    const newField = temp.querySelector("#filter_form");
+
+                    console.log(newField);
+
+                    const form = document.getElementById("filter_form");
+                    //parent.append(newField);
+                    form.replaceWith(newField);
+                }
+            };
+            request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            request.send(body);
+        }
+    </script>
+{% endblock %}

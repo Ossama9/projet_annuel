@@ -20,7 +20,7 @@ final class Version20210418180337 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE user CHANGE roles roles INT NOT NULL');
+        $this->addSql('ALTER TABLE user ADD roles INT NOT NULL');
     }
 
     public function down(Schema $schema) : void

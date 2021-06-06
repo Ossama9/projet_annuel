@@ -20,7 +20,7 @@ final class Version20210528204849 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE offer CHANGE model_id model_id INT NOT NULL');
+        $this->addSql('ALTER TABLE offer ADD model_id INT NOT NULL');
     }
 
     public function down(Schema $schema) : void

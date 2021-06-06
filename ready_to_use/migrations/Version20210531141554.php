@@ -20,12 +20,12 @@ final class Version20210531141554 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE order ADD paid_date DATETIME DEFAULT NULL, CHANGE payment_date request_date DATETIME NOT NULL');
+        $this->addSql('ALTER TABLE `order` ADD paid_date DATETIME DEFAULT NULL, CHANGE payment_date request_date DATETIME NOT NULL');
     }
 
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE order DROP paid_date, CHANGE request_date payment_date DATETIME NOT NULL');
+        $this->addSql('ALTER TABLE `order` DROP paid_date, CHANGE request_date payment_date DATETIME NOT NULL');
     }
 }

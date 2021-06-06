@@ -57,6 +57,42 @@ class ProductFixture extends Fixture
         $product->setProductCondition(2);
         $manager->persist($product);
 
+        $brand2 = new Brand();
+        $brand2->setName('Samsung');
+        $brand2->setDescription("Samsung Electronics est une entreprise spécialisée dans la fabrication de produits électroniques. C'est une filiale à 100 % du Groupe Samsung, l'un des principaux chaebols coréens. En 2019, elle emploie 308 745 personnes et est la 13ᵉ plus importante société dans le monde d'après le classement Forbes Global 2000");
+        $brand2->setFoundationDate(new \DateTime('13-01-1969'));
+        $brand2->setLocation('Suwon, Corée du Sud');
+        $manager->persist($brand2);
+
+        $feature2 = new Feature();
+        $feature2->setBattery(500);
+        $feature2->setCamera("64MP");
+        $feature2->setGraphicCard("Mali G78");
+        $feature2->setHardDisk("512GO");
+        $feature2->setOsVersion("Android 11");
+        $feature2->setProcessor("Exynos 2100, 2.9GHz");
+        $feature2->setRam(12);
+        $feature2->setScreenSize('6"2');
+        $feature2->setTactile(true);
+        $manager->persist($feature2);
+
+        $model2 = new Model();
+        $model2->setName('Galaxy S21 Ultra 5G');
+        $model2->setDescription("Dernier sorti de chez Samsung avec la 5G !!!!");
+        $model2->setReleaseDate(new \DateTime('14-01-2021'));
+        $model2->setFeature($feature2);
+        $model2->setBrand($brand2);
+        $manager->persist($model2);
+
+        $product2 = new Product();
+        $product2->setWharehouse($warehouse);
+        $product2->setDescription("Un super portable Samsung, à peine utilisé");
+        $product2->setPrice(1000);
+        $product2->setDepositDate(new \DateTime('06-06-2021'));
+        $product2->setModel($model2);
+        $product2->setProductCondition(1);
+        $manager->persist($product2);
+
         $manager->flush();
 
     }
