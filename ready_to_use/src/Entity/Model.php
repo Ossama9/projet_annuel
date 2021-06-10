@@ -34,7 +34,6 @@ class Model
      */
     private $releaseDate;
 
-
     /**
      * @ORM\ManyToOne(targetEntity=Brand::class, inversedBy="models")
      */
@@ -46,14 +45,59 @@ class Model
     private $offers;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Feature::class, inversedBy="models")
-     */
-    private $feature;
-
-    /**
      * @ORM\OneToMany(targetEntity=Product::class, mappedBy="model")
      */
     private $products;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $showBatteryField;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $showCameraField;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $showGraphicCardField;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $showHardDiskField;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $showOsVersionField;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $showProcessorField;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $showRamField;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $showScreenField;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $showTactileField;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="models")
+     */
+    private $category;
 
     public function __construct()
     {
@@ -182,6 +226,126 @@ class Model
                 $product->setModel(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getShowBatteryField(): ?bool
+    {
+        return $this->showBatteryField;
+    }
+
+    public function setShowBatteryField(bool $showBatteryField): self
+    {
+        $this->showBatteryField = $showBatteryField;
+
+        return $this;
+    }
+
+    public function getShowCameraField(): ?bool
+    {
+        return $this->showCameraField;
+    }
+
+    public function setShowCameraField(bool $showCameraField): self
+    {
+        $this->showCameraField = $showCameraField;
+
+        return $this;
+    }
+
+    public function getShowGraphicCardField(): ?bool
+    {
+        return $this->showGraphicCardField;
+    }
+
+    public function setShowGraphicCardField(bool $showGraphicCardField): self
+    {
+        $this->showGraphicCardField = $showGraphicCardField;
+
+        return $this;
+    }
+
+    public function getShowHardDiskField(): ?bool
+    {
+        return $this->showHardDiskField;
+    }
+
+    public function setShowHardDiskField(bool $showHardDiskField): self
+    {
+        $this->showHardDiskField = $showHardDiskField;
+
+        return $this;
+    }
+
+    public function getShowOsVersionField(): ?bool
+    {
+        return $this->showOsVersionField;
+    }
+
+    public function setShowOsVersionField(bool $showOsVersionField): self
+    {
+        $this->showOsVersionField = $showOsVersionField;
+
+        return $this;
+    }
+
+    public function getShowProcessorField(): ?bool
+    {
+        return $this->showProcessorField;
+    }
+
+    public function setShowProcessorField(bool $showProcessorField): self
+    {
+        $this->showProcessorField = $showProcessorField;
+
+        return $this;
+    }
+
+    public function getShowRamField(): ?bool
+    {
+        return $this->showRamField;
+    }
+
+    public function setShowRamField(bool $showRamField): self
+    {
+        $this->showRamField = $showRamField;
+
+        return $this;
+    }
+
+    public function getShowScreenField(): ?bool
+    {
+        return $this->showScreenField;
+    }
+
+    public function setShowScreenField(bool $showScreenField): self
+    {
+        $this->showScreenField = $showScreenField;
+
+        return $this;
+    }
+
+    public function getShowTactileField(): ?bool
+    {
+        return $this->showTactileField;
+    }
+
+    public function setShowTactileField(bool $showTactileField): self
+    {
+        $this->showTactileField = $showTactileField;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

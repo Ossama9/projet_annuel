@@ -186,7 +186,7 @@ class OrderController extends AbstractController
                         // 'images' => [$pictures],
                     ]
                 ],
-                'quantity' => $product->getQuantity()
+                'quantity' => 1
             ];
         }
 
@@ -207,7 +207,7 @@ class OrderController extends AbstractController
             ]);
         } catch (ApiErrorException $e) {
             return $this->json([
-                'error' => 'Une erreur est survenue.'
+                'error' => $e
             ]);
         }
 

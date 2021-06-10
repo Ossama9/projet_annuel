@@ -27,16 +27,6 @@
                                         <h5 class="mt-0 mb-0">{{ product.vars.data.product.model.name }}</h5>
                                         <small>{{ product.vars.data.product.productConditionToString }}</small>
                                         <div class="form-inline mt-2">
-                                            <div class="form-group mb-0 mr-2">
-                                                {{ form_widget(product.quantity, {
-                                                    'attr': {
-                                                        'class': 'form-control form-control-sm ' ~ (product.quantity.vars.valid ? '' : 'is-invalid')
-                                                    }
-                                                }) }}
-                                                <div class="invalid-feedback">
-                                                    {{ form_errors(product.quantity) }}
-                                                </div>
-                                            </div>
                                             {{ form_widget(product.remove, {'attr': {'class': 'btn btn-dark btn-sm'}}) }}
                                         </div>
                                     </div>

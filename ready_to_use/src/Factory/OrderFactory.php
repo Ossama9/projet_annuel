@@ -38,7 +38,6 @@ class OrderFactory extends AbstractController
     {
         $item = new OrderItem();
         $item->setProduct($product);
-        $item->setQuantity(1);
 
         return $item;
     }

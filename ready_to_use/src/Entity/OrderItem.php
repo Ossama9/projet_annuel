@@ -25,13 +25,6 @@ class OrderItem
     private $product;
 
     /**
-     * @ORM\Column(type="integer")
-     * @Assert\NotBlank()
-     * @Assert\GreaterThanOrEqual(1)
-     */
-    private int $quantity;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Order::class, inversedBy="products")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -50,18 +43,6 @@ class OrderItem
     public function setProduct(?Product $product): self
     {
         $this->product = $product;
-
-        return $this;
-    }
-
-    public function getQuantity(): ?int
-    {
-        return $this->quantity;
-    }
-
-    public function setQuantity(int $quantity): self
-    {
-        $this->quantity = $quantity;
 
         return $this;
     }
@@ -97,6 +78,6 @@ class OrderItem
      */
     public function getTotal(): float
     {
-        return $this->getProduct()->getPrice() * $this->getQuantity();
+        return $this->getProduct()->getPrice();
     }
 }

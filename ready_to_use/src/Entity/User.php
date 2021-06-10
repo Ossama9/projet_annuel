@@ -53,7 +53,7 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private string $iban;
+    private ?string $iban;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
@@ -151,7 +151,7 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getEmail(): ?string
+    public function getEmail(): string
     {
         return $this->email;
     }

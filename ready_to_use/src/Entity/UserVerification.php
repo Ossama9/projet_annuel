@@ -85,12 +85,12 @@ class UserVerification
         return $this;
     }
 
-    public function getRequestingUser(): ?User
+    public function getRequestingUser(): User
     {
         return $this->requestingUser;
     }
 
-    public function setRequestingUser(?User $requestingUser): self
+    public function setRequestingUser(User $requestingUser): self
     {
         $this->requestingUser = $requestingUser;
 

@@ -63,6 +63,19 @@
         {% else %}
             <p>Aucune photo</p>
         {% endif %}
+
+        <h5>Caractéristiques</h5>
+        <ul>
+            <li>Batterie: {{ product.feature.battery }}</li>
+            <li>Caméra: {{ product.feature.camera }}</li>
+            <li>Carte graphique: {{ product.feature.graphicCard }}</li>
+            <li>Disque dur: {{ product.feature.hardDisk }}</li>
+            <li>Version du système: {{ product.feature.osVersion }}</li>
+            <li>Processeur: {{ product.feature.processor }}</li>
+            <li>Mémoire RAM: {{ product.feature.ram }} Go</li>
+            <li>Taille de l'écran: {{ product.feature.screenSize }}</li>
+            <li>Écran tactile: {{ product.feature.tactile ? 'Oui' : 'Non' }}</li>
+        </ul>
     </div>
 
     <div class="d-flex">

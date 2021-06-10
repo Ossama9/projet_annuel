@@ -135,12 +135,7 @@ class Order
     {
         foreach ($this->getProducts() as $existingItem) {
             // Si le produit est déjà dans le panier, on ne fait rien
-            if ($existingItem->equals($item)) {
-                $existingItem->setQuantity(
-                    $existingItem->getQuantity() + $item->getQuantity()
-                );
-                return $this;
-            }
+            if ($existingItem->equals($item)) return $this;
         }
 
         $this->products[] = $item;
@@ -176,10 +171,7 @@ class Order
      */
     public function countProducts(): int
     {
-        $count = 0;
-        foreach ($this->getProducts() as $product) $count += $product->getQuantity();
-
-        return $count;
+        return count($this->getProducts());
     }
 
     /**
@@ -190,9 +182,7 @@ class Order
     {
         $total = 0;
 
-        foreach ($this->getProducts() as $item) {
-            $total += $item->getTotal();
-        }
+        foreach ($this->getProducts() as $item) $total += $item->getTotal();
 
         return $total;
     }
