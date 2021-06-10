@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.asso.InscriptionController">
+   <children>
+      <AnchorPane layoutX="-3.0" prefHeight="458.0" prefWidth="607.0">
+         <children>
+            <Pane prefHeight="462.0" prefWidth="200.0" style="-fx-background-color: RGB(217,234,242) RGB(217,234,242) RGB(217,234,242) RGB(217,234,242) RGB(217,234,242) RGB(217,234,242) RGB(217,234,242) RGB(217,234,242);">
+               <children>
+                  <ImageView fitHeight="130.0" fitWidth="108.0" layoutX="46.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../image/IMG-3034.PNG" />
+                     </image>
+                  </ImageView>
+                  <Button layoutX="20.0" layoutY="157.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="160.0" text="Voir les associations" textAlignment="CENTER" />
+                  <Button layoutX="20.0" layoutY="218.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="160.0" text="Voir les projets" />
+                  <Button layoutX="20.0" layoutY="279.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="160.0" text="Voir mes projets" />
+               </children>
+            </Pane>
+            <Pane layoutX="249.0" layoutY="14.0" prefHeight="401.0" prefWidth="300.0">
+               <children>
+                  <Label layoutX="211.0" layoutY="145.0" text="Label" />
+                  <Label layoutX="29.0" layoutY="145.0" text="Email" />
+                  <Label layoutX="211.0" layoutY="115.0" text="Label" />
+                  <Label layoutX="29.0" layoutY="115.0" text="Green coin" />
+                  <Label layoutX="211.0" layoutY="85.0" text="Label" />
+                  <Label layoutX="29.0" layoutY="85.0" text="Uername" />
+                  <Button fx:id="registerButton" layoutX="74.0" layoutY="299.0" mnemonicParsing="false" onAction="#registerButtonAction" prefHeight="31.0" prefWidth="154.0" text="Creer une association" />
+                  <Label contentDisplay="CENTER" layoutX="118.0" layoutY="14.0" prefHeight="31.0" prefWidth="65.0" text="Profil">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="nameField" layoutX="71.0" layoutY="188.0" promptText="Nom de l'association" />
+                  <TextField fx:id="emailField" layoutX="71.0" layoutY="233.0" promptText="Email de contact" />
+                  <Label fx:id="registrationMessageLabel" layoutX="68.0" layoutY="270.0" text="Votre demande est en cours" textFill="RED">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
