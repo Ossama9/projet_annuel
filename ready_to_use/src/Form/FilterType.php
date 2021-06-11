@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Form;
-
 
 use App\Entity\Brand;
 use App\Entity\Model;
@@ -41,14 +39,14 @@ class FilterType extends AbstractType
             ->add("max_price", RangeType::class, [
                 "attr" => [
                     "min" => 0,
-                    "max" => 1000,
+                    "max" => 1500,
                 ]
             ])
             ->add("submit", SubmitType::class, [
                 "label" => "Rechercher"
             ])
         ;
-/*
+
         $formModifier = function (FormInterface $form, Brand $brand){
             $models = $brand->getModels();
 
@@ -74,7 +72,7 @@ class FilterType extends AbstractType
                 $brand = $event->getForm()->getData();
                 $formModifier($event->getForm()->getParent(), $brand);
             }
-        );*/
+        );
     }
 
 
