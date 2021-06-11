@@ -2,9 +2,13 @@
 
 namespace App\Repository;
 
+use App\Entity\Brand;
+use App\Entity\Feature;
+use App\Entity\Model;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @method Product|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +23,21 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-    // /**
-    //  * @return Product[] Returns an array of Product objects
-    //  */
-    /*
-    public function findByExampleField($value)
+
+    /**
+     * @param $model
+     * @param $maxPrice
+     * @return array
+     */
+    public function findWithFilters($model, $maxPrice): array
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere("p.price < :max_price")
+            ->andWhere("p.model = :model")
+            ->setParameter( "model" , $model)
+            ->setParameter("max_price", $maxPrice)
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Product
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

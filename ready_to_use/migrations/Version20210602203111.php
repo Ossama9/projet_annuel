@@ -20,9 +20,9 @@ final class Version20210602203111 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP TABLE purchase');
-        $this->addSql('ALTER TABLE `order` DROP FOREIGN KEY FK_F5299398A76ED395');
-        $this->addSql('DROP INDEX IDX_F5299398A76ED395 ON `order`');
+        //$this->addSql('DROP TABLE purchase');
+        //$this->addSql('ALTER TABLE `order` DROP FOREIGN KEY FK_F5299398A76ED395');
+        //$this->addSql('DROP INDEX IDX_F5299398A76ED395 ON `order`');
         $this->addSql('ALTER TABLE `order` CHANGE user_id ordered_by_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE `order` ADD CONSTRAINT FK_F529939891FF3C4D FOREIGN KEY (ordered_by_id) REFERENCES user (id)');
         $this->addSql('CREATE INDEX IDX_F529939891FF3C4D ON `order` (ordered_by_id)');

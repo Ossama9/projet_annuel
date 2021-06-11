@@ -12,7 +12,7 @@ use Doctrine\Persistence\ObjectManager;
 class BrandFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
-    {
+    {/*
         $brand = new Brand();
         $brand->setName('Apple');
         $brand->setDescription("Apple est créé le 1 er avril 1976 dans la maison d'enfance de Steve Jobs à Los Altos, puis constituée sous forme de société le 3 janvier 1977.Elle prend diverses facettes coordonnées avec l'évolution du monde informatique qu'elle précède, partant d'un monde sans ordinateur personnel à une société du XXI e siècle interconnectée par l'intermédiaire de terminaux fixes et mobiles.");
@@ -21,7 +21,7 @@ class BrandFixtures extends Fixture
         $manager->persist($brand);
 
         $feature = new Feature();
-        $feature->setBattery(1);
+        $feature->setBattery(250);
         $feature->setCamera("16MP");
         $feature->setGraphicCard("RTX 2080");
         $feature->setHardDisk("256GO");
@@ -52,6 +52,6 @@ class BrandFixtures extends Fixture
         $offer->setModel($model);
         $manager->persist($offer);
 
-        $manager->flush();
+        $manager->flush();*/
     }
 }

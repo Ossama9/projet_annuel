@@ -29,7 +29,7 @@ class OrderFixtures extends Fixture
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
-    {
+    {/*
         $order = new Order();
         $order->setStatus(0);
         $order->setRequestDate(new \DateTime());
@@ -44,5 +44,5 @@ class OrderFixtures extends Fixture
 
         $manager->persist($order);
         $manager->flush();
-    }
+   */ }
 }
