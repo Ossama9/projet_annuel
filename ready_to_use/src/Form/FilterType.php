@@ -48,7 +48,7 @@ class FilterType extends AbstractType
                 "label" => "Rechercher"
             ])
         ;
-
+/*
         $formModifier = function (FormInterface $form, Brand $brand){
             $models = $brand->getModels();
 
@@ -74,26 +74,7 @@ class FilterType extends AbstractType
                 $brand = $event->getForm()->getData();
                 $formModifier($event->getForm()->getParent(), $brand);
             }
-        );
-
-         /*   $data = $form->get("brand")->getData();
-
-            if(isset($data)){
-
-                $brandRepo = $this->entityManager->getRepository(Brand::class);
-                $modelRepo = $this->entityManager->getRepository(Model::class);
-                $brand = $brandRepo->find($data);
-                $models = $modelRepo->findBy(array("brand" => $brand));
-
-                $form->add("model", EntityType::class, [
-                    "class" => Model::class,
-                    "choice_label" => "name",
-
-                    "choices" => $models
-                ]);
-            }
-
-        });*/
+        );*/
     }
 
 
