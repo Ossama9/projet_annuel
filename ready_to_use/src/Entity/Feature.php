@@ -20,9 +20,9 @@ class Feature
     private int $id;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
-    private ?int $battery;
+    private ?string $battery;
 
     /**
      * @ORM\Column(type="string", length=30, nullable=true)
@@ -65,13 +65,14 @@ class Feature
     private ?bool $tactile;
 
     /**
-     * @ORM\OneToMany(targetEntity=Model::class, mappedBy="feature")
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="feature")
      */
-    private $models;
+    private $products;
 
     public function __construct()
     {
         $this->models = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -79,12 +80,12 @@ class Feature
         return $this->id;
     }
 
-    public function getBattery(): ?int
+    public function getBattery(): ?string
     {
         return $this->battery;
     }
 
-    public function setBattery(?int $battery): self
+    public function setBattery(?string $battery): self
     {
         $this->battery = $battery;
 
@@ -211,6 +212,36 @@ class Feature
             // set the owning side to null (unless already changed)
             if ($model->getFeature() === $this) {
                 $model->setFeature(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->setFeature($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getFeature() === $this) {
+                $product->setFeature(null);
             }
         }
 

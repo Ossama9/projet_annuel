@@ -10,6 +10,7 @@ use App\Entity\Sell;
 use App\Entity\Wharehouse;
 use App\Form\AdminProductType;
 use App\Form\ProductType;
+use App\Form\ProductWharehouseType;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -169,4 +170,29 @@ class AdminProductController extends AbstractController
 
         return $this->redirectToRoute('admin.product.show', ['id' => $product->getId()]);
     }
+
+    /**
+     * Permet à un administrateur de changer un produit d'entrepôt
+     * @Route("/{id}/update-wharehouse", name="admin.product.update_wharehouse", methods={"GET", "POST"})
+     * @param Request $request
+     * @param Product $product
+     * @return Response
+     */
+    public function updateWharehouse(Request $request, Product $product): Response
+    {
+        $form = $this->createForm(ProductWharehouseType::class, $product);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('admin.product.show', ['id' => $product->getId()]);
+        }
+
+        return $this->render('admin/product/update_wharehouse.html.twig', [
+            'product' => $product,
+            'form' => $form->createView(),
+        ]);
+    }
+
 }

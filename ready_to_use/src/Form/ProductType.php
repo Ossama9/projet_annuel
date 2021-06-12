@@ -46,7 +46,10 @@ class ProductType extends AbstractType
                     ])
                 ],
             ])
+            ->add('feature', FeatureType::class)
         ;
+
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

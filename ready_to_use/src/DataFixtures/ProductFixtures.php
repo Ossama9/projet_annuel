@@ -12,7 +12,7 @@ use App\Entity\Wharehouse;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class ProductFixture extends Fixture
+class ProductFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {

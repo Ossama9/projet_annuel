@@ -60,7 +60,9 @@ class MerchantProductController extends AbstractController
     public function new(Request $request, SluggerInterface $slugger): Response
     {
         $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
+        $form = $this->createForm(ProductType::class, $product, [
+
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -68,6 +70,7 @@ class MerchantProductController extends AbstractController
             $product->setDepositDate(new DateTime());
             $product->setPrice($product->getPrice());
             $product->setModel($product->getModel());
+            $product->setFeature($product->getFeature());
             $entityManager->persist($product);
 
             // images

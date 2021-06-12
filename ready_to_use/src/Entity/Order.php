@@ -15,6 +15,12 @@ class Order
 {
     // ce statut signifit que les produits sont encore dans le panier, la commande n'a pas encore été payée
     public const STATUS_CART = 0;
+    public const STATUS = [
+        'Dans le panier',
+        'Payé',
+        'Livraison en cours',
+        'Livré'
+    ];
 
     /**
      * @ORM\Id
@@ -73,6 +79,11 @@ class Order
         $this->status = $status;
 
         return $this;
+    }
+
+    public function getStatusToString(): string
+    {
+        return self::STATUS[$this->status];
     }
 
     public function getRequestDate(): ?\DateTimeInterface
@@ -135,12 +146,7 @@ class Order
     {
         foreach ($this->getProducts() as $existingItem) {
             // Si le produit est déjà dans le panier, on ne fait rien
-            if ($existingItem->equals($item)) {
-                $existingItem->setQuantity(
-                    $existingItem->getQuantity() + $item->getQuantity()
-                );
-                return $this;
-            }
+            if ($existingItem->equals($item)) return $this;
         }
 
         $this->products[] = $item;
@@ -176,10 +182,7 @@ class Order
      */
     public function countProducts(): int
     {
-        $count = 0;
-        foreach ($this->getProducts() as $product) $count += $product->getQuantity();
-
-        return $count;
+        return count($this->getProducts());
     }
 
     /**
@@ -190,9 +193,7 @@ class Order
     {
         $total = 0;
 
-        foreach ($this->getProducts() as $item) {
-            $total += $item->getTotal();
-        }
+        foreach ($this->getProducts() as $item) $total += $item->getTotal();
 
         return $total;
     }

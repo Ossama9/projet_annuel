@@ -15,13 +15,7 @@ class AddToCartType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('quantity')
-        ->add('productCondition', ChoiceType::class, [
-            'label' => 'Product condition',
-            'choices' => array_flip(Product::CONDITIONS),
-            'mapped' => false,
-            'required' => true
-        ])
+        $builder
         ->add('add', SubmitType::class, [
             'label' => 'Add to cart'
         ]);

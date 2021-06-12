@@ -67,6 +67,11 @@ class Product
      */
     private $productCondition;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Feature::class, inversedBy="products", cascade={"persist"})
+     */
+    private $feature;
+
     public function __construct()
     {
         $this->pictures = new ArrayCollection();
@@ -199,5 +204,17 @@ class Product
     public function getProductConditionToString(): string
     {
         return self::CONDITIONS[$this->productCondition];
+    }
+
+    public function getFeature(): ?Feature
+    {
+        return $this->feature;
+    }
+
+    public function setFeature(?Feature $feature): self
+    {
+        $this->feature = $feature;
+
+        return $this;
     }
 }

@@ -124,8 +124,6 @@ class ProductController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $item = $form->getData();
-            $condition = $form->get('productCondition')->getData();
-            $product->setProductCondition($condition);
             $item->setProduct($product);
 
             $cart = $cartManager->getCurrentCart();
@@ -135,8 +133,7 @@ class ProductController extends AbstractController
 
             $cartManager->save($cart);
 
-            if ($item->getQuantity() > 1) $message = $item->getQuantity(). ' produits ont été ajouté au panier.';
-            else $message = '1 produit a été ajouté au panier.';
+            $message = 'Le produit a bien été ajouté au panier.';
 
             $this->addFlash('success', $message);
             return $this->redirectToRoute('product.show', ['id' => $product->getId()]);
