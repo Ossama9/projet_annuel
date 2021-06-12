@@ -42,13 +42,20 @@
             <td>{{ product.depositDate ? product.depositDate|date('d-m-Y à H:i') : '' }}</td>
         </tr>
         <tr>
+            <th>Vendu par</th>
+            <td>{{ product.sell.soldBy.email }}</td>
+        </tr>
+        <tr>
             <th>Statut</th>
             <td>{% if product.sell.status == 0 %}En attente{% elseif product.sell.status == 1 %}Accepté{% else %}Refusé{% endif %}</td>
         </tr>
         {% if product.wharehouse %}
             <tr>
                 <th>Entreposé à</th>
-                <td>{{ product.wharehouse.city }}</td>
+                <td>
+                    <p>{{ product.wharehouse.city }}</p>
+                    <a href="{{ path('admin.product.update_wharehouse', {id: product.id}) }}" class="btn btn-primary text-white">Changer</a>
+                </td>
             </tr>
         {% endif %}
         </tbody>

@@ -24,8 +24,8 @@
                                 <p class="my-1">Commande passée le {{ order.requestDate|date }}</p>
                                 {% if order.status == 1 %}
                                     <p class="my-1">Payé le {{ order.paidDate|date }}</p>
-                                {% elseif order.status == 2 %}
-                                    <p class="my-1">Annulée</p>
+                                {% else %}
+                                    {{ order.statusToString }}
                                 {% endif %}
                                 <p>{{ order.total }} €</p>
                             </div>

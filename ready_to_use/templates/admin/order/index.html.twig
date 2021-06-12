@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des commandes{% endblock %}
+
+{% block body %}
+    <h3 class="mb-4">Liste des commandes</h3>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Commandé par</th>
+            <th>Commandé le</th>
+            <th>Statut</th>
+            <th>Prix</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.orderedBy.email }}</td>
+                <td>{{ order.requestDate|date('d-m-Y à H:i') }}</td>
+                <td>{{ order.statusToString }}</td>
+                <td>{{ order.total }} €</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('admin.order.show', {'id': order.id}) }}">Voir</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucune commande</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

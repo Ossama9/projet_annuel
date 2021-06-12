@@ -1,0 +1,18 @@
+<div class="col-md-4">
+    <div class="card mb-4 w-75">
+        <img src="{{ asset('uploads/pictures/' ~ product.pictures[0].name) }}" class="img-fluid" alt="{{ product.pictures[0].name }}">
+        <div class="card-body">
+            <h5 class="card-title">{{ product.model.brand.name }} - {{ product.model.name }}</h5>
+            <p class="card-text">{{ product.description }}</p>
+            <div class="d-flex justify-content-between align-item-center">
+                <div>
+                    <a href="{{ path('product.show', {id: product.id}) }}" class="btn btn-dark">Voir</a>
+                    {% if manageable is defined%}
+                        <a href="{{ path('admin.product.show', {id: product.id}) }}" class="btn btn-primary">Modifier</a>
+                    {% endif %}
+                </div>
+                <span class="h5 mt-auto">{{ product.price }} €</span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Changer le produit d'entrepôt{% endblock %}
+
+{% block body %}
+    <h3 class="mb-4">Changer le produit d'entrepôt</h3>
+
+    <div class="w-25 mb-2">
+        {{ include('admin/wharehouse/_form.html.twig') }}
+        <a class="btn btn-primary mt-2" href="{{ path('admin.wharehouse.new') }}">Créer un nouvel entrepôt</a>
+    </div>
+
+    <a class="btn btn-primary" href="{{ path('admin.wharehouse.index') }}">Retour</a>
+{% endblock %}

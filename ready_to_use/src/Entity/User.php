@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use App\Repository\UserVerificationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -90,12 +91,18 @@ class User implements UserInterface, \Serializable
      */
     private $orders;
 
-    public function __construct()
+    /**
+     * @var UserVerificationRepository
+     */
+    private UserVerificationRepository $userVerificationRepository;
+
+    public function __construct(UserVerificationRepository $userVerificationRepository)
     {
         $this->requestingUser = new ArrayCollection();
         $this->verifiedBy = new ArrayCollection();
         $this->sells = new ArrayCollection();
         $this->orders = new ArrayCollection();
+        $this->userVerificationRepository = $userVerificationRepository;
     }
 
     public function getId(): ?int
@@ -287,6 +294,12 @@ class User implements UserInterface, \Serializable
         }
 
         return $this;
+    }
+
+    public function getIsMerchant(): bool
+    {
+        // to do
+        return true;
     }
 
     /**

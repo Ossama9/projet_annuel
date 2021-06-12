@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Order;
 use App\Entity\User;
 use App\Manager\CartManager;
+use App\Repository\OrderRepository;
 use DateTime;
 use Stripe\Checkout\Session;
 use Stripe\Exception\ApiErrorException;
@@ -25,12 +26,13 @@ class OrderController extends AbstractController
 
     /**
      * @Route("/", name="order.index")
+     * @param OrderRepository $orderRepository
      * @return Response
      */
-    public function index(): Response
+    public function index(OrderRepository $orderRepository): Response
     {
         // on récupère les commandes de l'utilisateur (on ne prend pas en compte la commande dans le panier courant)
-        $orders = $this->getDoctrine()->getRepository(Order::class)->findBy(['orderedBy' => $this->getUser(), 'status' => !Order::STATUS_CART ]);
+        $orders = $orderRepository->findBy(['orderedBy' => $this->getUser(), 'status' => !Order::STATUS_CART ]);
 
         return $this->render('/order/index.html.twig', [
             'orders' => $orders,
@@ -62,7 +64,7 @@ class OrderController extends AbstractController
      */
     public function invoice(Order $order): Response
     {
-        if ($order->getOrderedBy() === $this->getUser()) {
+        if ($order->getOrderedBy() === $this->getUser() || in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
 
             return $this->render('/order/invoice.html.twig', [
                 'order' => $order,

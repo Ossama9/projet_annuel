@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Aperçu d'une commande{% endblock %}
+
+{% block body %}
+    <h3 class="mb-4">Commande n°{{ order.id }}</h3>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ order.id }}</td>
+        </tr>
+        <tr>
+            <th>Statut</th>
+            <td>{{ order.statusToString }}</td>
+        </tr>
+        <tr>
+            <th>Prix payé</th>
+            <td>{{ order.total }} €</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div>
+        <h5 class="mb-4">Liste des produits commandé ({{ order.countProducts }})</h5>
+        <div class="row">
+            {% for product in order.products %}
+                {{ include('/product/_card.html.twig', {product: product.product, manageable: true}) }}
+            {% else %}
+                <p class="ml-3">Aucun produit</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="d-flex">
+        <a href="{{ path('order.invoice', {id: order.id}) }}" class="btn btn-primary text-white mr-2">Générer une facture</a>
+        {{ include('admin/order/_delete_form.html.twig') }}
+        <a class="btn btn-primary ml-2" href="{{ path('admin.order.index') }}">Retour</a>
+    </div>
+{% endblock %}

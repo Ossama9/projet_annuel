@@ -15,6 +15,12 @@ class Order
 {
     // ce statut signifit que les produits sont encore dans le panier, la commande n'a pas encore été payée
     public const STATUS_CART = 0;
+    public const STATUS = [
+        'Dans le panier',
+        'Payé',
+        'Livraison en cours',
+        'Livré'
+    ];
 
     /**
      * @ORM\Id
@@ -73,6 +79,11 @@ class Order
         $this->status = $status;
 
         return $this;
+    }
+
+    public function getStatusToString(): string
+    {
+        return self::STATUS[$this->status];
     }
 
     public function getRequestDate(): ?\DateTimeInterface
