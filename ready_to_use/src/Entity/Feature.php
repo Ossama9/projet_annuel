@@ -248,4 +248,12 @@ class Feature
         return $this;
     }
 
+    public function toArray(): array
+    {
+        $array = array();
+        /*foreach (get_object_vars($this) as $key => $att){
+            $array[$key] = $att;
+        }*/
+        return get_object_vars($this);
+    }
 }

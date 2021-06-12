@@ -1,0 +1,35 @@
+{{ form_start(form, {"action": path("customer.list"), "attr": {"id" : "filter_form"}}) }}
+    {{ form_row(form.brand,{"attr": {"onChange" : "updateFilters()"}}) }}
+    {% if form.model is defined %}
+        {{ form_row(form.model) }}
+    {% endif  %}
+{{ form_end(form) }}
+
+{% block javascripts %}
+    <script>
+        function updateFilters() {
+            const brandId = document.getElementById("filter_brand").value;
+            const maxPrice = document.getElementById("filter_max_price").value;
+            const body = `brand_id=${brandId}&max_price=${maxPrice}`;
+
+            //creating and sending the ajax request
+            const request = new XMLHttpRequest();
+            request.open('POST', '{{ path("customer.ajax") }}');
+            request.onreadystatechange = function () {
+                if (request.readyState === 4) {
+                    const temp = document.createElement('div');
+                    temp.innerHTML  = request.responseText;
+                    const newField = temp.querySelector("#filter_form");
+
+                    console.log(newField);
+
+                    const form = document.getElementById("filter_form");
+                    //parent.append(newField);
+                    form.replaceWith(newField);
+                }
+            };
+            request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            request.send(body);
+        }
+    </script>
+{% endblock %}
