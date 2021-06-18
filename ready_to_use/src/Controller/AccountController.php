@@ -49,8 +49,6 @@ class AccountController extends AbstractController
         $user = $this->getUser();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-        $is_merchant = $this->verificationRepository->findOneBy(['requestingUser' => $user]);
-        $merchant = $is_merchant ? $is_merchant->getStatus() === 1 ? $is_merchant : false : false;
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
@@ -61,7 +59,7 @@ class AccountController extends AbstractController
         return $this->render('account/index.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
-            'merchant' => $merchant,
+            'merchant' => $user->isMerchant(),
             'current_page' => 'account'
         ]);
     }

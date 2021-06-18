@@ -23,7 +23,6 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-
     /**
      * @param $model
      * @param $maxPrice
@@ -40,4 +39,5 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+    
 }

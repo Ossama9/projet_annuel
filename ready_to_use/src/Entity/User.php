@@ -238,6 +238,19 @@ class User implements UserInterface, \Serializable
         return $this->verifiedBy;
     }
 
+    /**
+     * Permet de savoir si un utilisateur est un marchand
+     * @return bool
+     */
+    public function isMerchant(): bool
+    {
+        foreach ($this->getRequestingUser() as $verification)
+            if ($verification->getStatus() === 1)
+                return true;
+
+        return false;
+    }
+
     public function addVerifiedBy(UserVerification $verifiedBy): self
     {
         if (!$this->verifiedBy->contains($verifiedBy)) {
@@ -251,7 +264,6 @@ class User implements UserInterface, \Serializable
     public function removeVerifiedBy(UserVerification $verifiedBy): self
     {
         if ($this->verifiedBy->removeElement($verifiedBy)) {
-            // set the owning side to null (unless already changed)
             if ($verifiedBy->getVerifiedBy() === $this) {
                 $verifiedBy->setVerifiedBy(null);
             }
@@ -281,19 +293,12 @@ class User implements UserInterface, \Serializable
     public function removeSell(Sell $sell): self
     {
         if ($this->sells->removeElement($sell)) {
-            // set the owning side to null (unless already changed)
             if ($sell->getSoldBy() === $this) {
                 $sell->setSoldBy(null);
             }
         }
 
         return $this;
-    }
-
-    public function getIsMerchant(): bool
-    {
-        // to do
-        return true;
     }
 
     /**
