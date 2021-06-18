@@ -21,11 +21,6 @@
     <div>
         <button class="btn btn-success">Ajouter au panier</button>
     </div>
-    {% for key, value in features %}
-        {% if value != null and key != "models" and key != "__isInitialized__" and key != "id" %}
-            <p>{{ key }} : {{ value }}</p>
-        {% endif %}
-    {% endfor %}
 
 
 {% endblock %}

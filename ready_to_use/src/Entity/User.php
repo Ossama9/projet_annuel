@@ -91,18 +91,12 @@ class User implements UserInterface, \Serializable
      */
     private $orders;
 
-    /**
-     * @var UserVerificationRepository
-     */
-    private UserVerificationRepository $userVerificationRepository;
-
-    public function __construct(UserVerificationRepository $userVerificationRepository)
+    public function __construct()
     {
         $this->requestingUser = new ArrayCollection();
         $this->verifiedBy = new ArrayCollection();
         $this->sells = new ArrayCollection();
         $this->orders = new ArrayCollection();
-        $this->userVerificationRepository = $userVerificationRepository;
     }
 
     public function getId(): ?int
