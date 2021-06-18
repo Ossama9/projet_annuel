@@ -1,0 +1,306 @@
+CONFIG FAI
+------------------------------------------------------------
+enable
+configure terminal
+no logging console
+hostname SIEGE
+!
+interface e1/0
+ip address 1.1.1.2 255.255.255.252
+no shutdown
+!
+interface e1/1
+ip address 2.2.2.2 255.255.255.252
+no shutdown
+!
+interface e1/2
+ip address 3.3.3.2 255.255.255.252
+no shutdown
+!
+exit
+do write
+exit
+exit
+
+
+CONFIG NAT - ROUTEUR SIEGE
+------------------------------------------------------------
+enable
+configure terminal
+no logging console
+hostname SIEGE
+!
+interface e0/0
+ip address 192.168.8.254 255.255.255.0
+ip  nat inside
+no shutdown
+!
+interface e1/0
+ip address 1.1.1.1 255.255.255.252
+no shutdown
+ip nat outside
+exit
+!
+ip route 0.0.0.0 0.0.0.0 1.1.1.2
+ip access-list extend ACLNAT
+deny ip 192.168.0.0 0.0.255.255 192.168.0.0 0.0.255.255
+permit ip 192.168.0.0 0.0.255.255 any
+ip nat inside source list ACLNAT interface e1/0 overload
+!
+do write
+exit
+exit
+
+
+CONFIG NAT - ROUTEUR SUCCURSALE1
+-----------------------------------------------------------
+en
+conf t
+no logg cons
+hostn SUCCURSALE1
+!
+int e0/0
+ip addr 192.168.108.254 255.255.255.0
+ip  nat inside
+no sh
+!
+int e1/1
+ip addr 2.2.2.1 255.255.255.252
+no sh
+ip nat outside
+exit
+!
+ip route 0.0.0.0 0.0.0.0 2.2.2.2
+ip access-list extend ACLNAT
+deny ip 192.168.0.0 0.0.255.255 192.168.0.0 0.0.255.255
+permit ip 192.168.0.0 0.0.255.255 any
+ip nat inside source list ACLNAT int e1/1 overload
+!
+do wr
+exit
+exit
+
+
+CONFIG NAT - ROUTEUR SUCCURSALE2
+-----------------------------------------------------------
+en
+conf t
+no logg cons
+hostn SUCCURSALE2
+!
+int e0/0
+ip addr 192.168.208.254 255.255.255.0
+ip  nat inside
+no sh
+!
+int e1/2
+ip addr 3.3.3.1 255.255.255.252
+no sh
+ip nat outside
+exit
+!
+ip route 0.0.0.0 0.0.0.0 3.3.3.2
+ip access-list extend ACLNAT
+deny ip 192.168.0.0 0.0.255.255 192.168.0.0 0.0.255.255
+permit ip 192.168.0.0 0.0.255.255 any
+ip nat inside source list ACLNAT int e1/2 overload
+!
+do wr
+exit
+exit
+
+
+CONFIG DHCP - ROUTEUR SIEGE
+-----------------------------------------------------------
+enable
+configure terminal
+ip dhcp pool LAN-192.168.8.0
+network 192.168.8.0 255.255.255.0
+default-router 192.168.8.254
+dns-server 8.8.8.8 8.8.4.4
+lease 2 0 0
+exit
+do write
+exit
+exit
+
+
+CONFIG DHCP - ROUTEUR SUCCURSALE1
+-----------------------------------------------------------
+enable
+configure terminal
+ip dhcp pool LAN-192.168.108.0
+network 192.168.108.0 255.255.255.0
+default-router 192.168.108.254
+dns-server 8.8.8.8 8.8.4.4
+lease 2 0 0
+exit
+do write
+exit
+exit
+
+
+CONFIG DHCP - ROUTEUR SUCCURSALE2
+-----------------------------------------------------------
+enable
+configure terminal
+ip dhcp pool LAN-192.168.208.0
+network 192.168.208.0 255.255.255.0
+default-router 192.168.208.254
+dns-server 8.8.8.8 8.8.4.4
+lease 2 0 0
+exit
+do write
+exit
+exit
+
+
+
+CONFIG DMVPN phase 2 - ROUTEUR SIEGE
+-----------------------------------------------------------
+enable
+configure terminal
+!
+crypto isakmp policy 1
+authentication pre-share
+crypto isakmp key cisco47 address 0.0.0.0 0.0.0.0
+!
+crypto ipsec transform-set rtu_trans esp-des esp-md5-hmac
+mode transport
+!
+crypto ipsec profile rtu
+set transform-set rtu_trans
+!
+interface Tunnel1
+ip address 10.0.0.1 255.255.255.0
+ip nhrp authentication GROUP8
+ip nhrp map multicast dynamic
+ip nhrp network-id 1
+no ip split-horizon eigrp 1
+no ip next-hop-self eigrp 1
+tunnel source e1/0
+tunnel mode gre multipoint
+tunnel key 1234
+tunnel protection IPsec profile rtu
+exit
+do write
+exit
+exit
+
+
+CONFIG DMVPN phase 2 - ROUTEUR SUCCURSALE1
+-----------------------------------------------------------
+enable
+configure terminal
+!
+crypto isakmp policy 1
+authentication pre-share
+crypto isakmp key cisco47 address 0.0.0.0 0.0.0.0
+!
+crypto ipsec transform-set rtu_trans esp-des esp-md5-hmac 
+mode transport
+!
+crypto ipsec profile rtu
+set transform-set rtu_trans
+!
+interface Tunnel1
+ip address 10.0.0.2 255.255.255.0
+ip nhrp authentication GROUP8
+ip nhrp map 10.0.0.1 1.1.1.1
+ip nhrp map multicast 1.1.1.1
+ip nhrp network-id 1
+ip nhrp nhs 10.0.0.1
+tunnel source e1/1
+tunnel mode gre multipoint
+tunnel key 1234
+tunnel protection ipsec profile rtu shared
+exit
+do write
+exit
+exit
+
+
+CONFIG DMVPN phase 2 - ROUTEUR SUCCURSALE2
+-----------------------------------------------------------
+enable
+configure terminal
+!
+crypto isakmp policy 1
+authentication pre-share
+crypto isakmp key cisco47 address 0.0.0.0 0.0.0.0
+!
+crypto ipsec transform-set rtu_trans esp-des esp-md5-hmac 
+mode transport
+!
+crypto ipsec profile rtu
+set transform-set rtu_trans
+!
+interface Tunnel1
+ip address 10.0.0.3 255.255.255.0
+ip nhrp authentication GROUP8
+ip nhrp map 10.0.0.1 1.1.1.1
+ip nhrp map multicast 1.1.1.1
+ip nhrp network-id 1
+ip nhrp nhs 10.0.0.1
+tunnel source e1/2
+tunnel mode gre multipoint
+tunnel key 1234
+tunnel protection ipsec profile rtu shared
+exit
+do write
+exit
+exit
+
+
+CONFIG EIGRP - ROUTEUR SIEGE
+-----------------------------------------------------------
+enable
+configure terminal
+!
+router eigrp 1
+no auto-summary
+network 10.0.0.0 0.0.0.255
+network 192.168.8.0 0.0.0.255
+!
+exit
+do write
+exit
+exit
+
+
+CONFIG EIGRP - ROUTEUR SUCCURSALE1
+-----------------------------------------------------------
+enable
+configure terminal
+!
+router eigrp 1
+no auto-summary
+network 10.0.0.0 0.0.0.255
+network 192.168.108.0 0.0.0.255
+!
+exit
+do write
+exit
+exit
+
+
+CONFIG EIGRP - ROUTEUR SUCCURSALE2
+-----------------------------------------------------------
+enable
+configure terminal
+!
+router eigrp 1
+no auto-summary
+network 10.0.0.0 0.0.0.255
+network 192.168.208.0 0.0.0.255
+!
+exit
+do write
+exit
+exit
+
+
+
+
+
+
