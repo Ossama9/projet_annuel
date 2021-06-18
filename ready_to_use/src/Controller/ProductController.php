@@ -33,35 +33,14 @@ class ProductController extends AbstractController
 {
     /**
      * @Route("/", name="product.index")
+     * @param Request $request
      * @param BrandRepository $brandRepo
      * @return Response
      */
-    public function index(BrandRepository $brandRepo): Response
+    public function index(Request $request, BrandRepository $brandRepo): Response
     {
         $brands = $brandRepo->findAll();
         $products = $this->getDoctrine()->getRepository(Product::class)->findAll();
-
-        $form = $this->createForm(FilterType::class);
-
-        return $this->render('/product/index.html.twig', [
-            "brands" => $brands,
-            'products' => $products,
-            "form" => $form->createView(),
-            'current_page' => 'product'
-        ]);
-    }
-
-
-    /**
-     * @Route("/list", name="product.list", methods={"POST"})
-     * @param BrandRepository $brandRepo
-     * @param Request $request
-     * @return Response
-     */
-    public function list(   BrandRepository $brandRepo,
-                            Request $request
-    ){
-        $brands = $brandRepo->findAll();
 
         $form = $this->createForm(FilterType::class);
         $form->handleRequest($request);
@@ -71,15 +50,16 @@ class ProductController extends AbstractController
             $maxPrice = $form->get("max_price")->getData();
             $products = $this->getDoctrine()->getRepository(Product::class)->findWithFilters($chosenModel, $maxPrice);
         }
-        else $products = null;
+        else $products = [];
 
-        return $this->render("/product/list.html.twig", [
+        return $this->render('/product/index.html.twig', [
             "brands" => $brands,
-            "products" => $products,
-            "form" => $form->createView()
+            'products' => $products,
+            "form" => $form->createView(),
+            'current_page' => 'product'
         ]);
-    }
 
+    }
 
     /**
      * @Route("", name="product.ajax", methods={"POST"})

@@ -43,7 +43,7 @@ class FilterType extends AbstractType
                 ]
             ])
             ->add("submit", SubmitType::class, [
-                "label" => "Rechercher"
+                "label" => "Search"
             ])
         ;
 
@@ -79,7 +79,8 @@ class FilterType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            "max_price" => 1000
+            'max_price' => 1500,
+            'translation_domain' => 'forms'
         ]);
     }
 }

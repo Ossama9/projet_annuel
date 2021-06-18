@@ -1,4 +1,4 @@
-{{ form_start(form, {"action": path("product.list"), "attr": {"id" : "filter_form"}}) }}
+{{ form_start(form, {"action": path("product.index"), "attr": {"id" : "filter_form"}}) }}
     {{ form_row(form.brand,{"attr": {"onChange" : "updateFilters()"}}) }}
     {% if form.model is defined %}
         {{ form_row(form.model) }}
@@ -7,6 +7,8 @@
 
 {% block javascripts %}
     <script>
+        updateFilters();
+
         function updateFilters() {
             const brandId = document.getElementById("filter_brand").value;
             const maxPrice = document.getElementById("filter_max_price").value;
