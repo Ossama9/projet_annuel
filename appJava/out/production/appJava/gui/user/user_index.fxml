@@ -29,7 +29,7 @@
                   </Text>
                   <Button layoutX="71.0" layoutY="456.0" mnemonicParsing="false" text="Voir les associations" />
                   <Button layoutX="59.0" layoutY="540.0" mnemonicParsing="false" text="Voirs les derniers projets" />
-                  <Button layoutX="98.0" layoutY="375.0" mnemonicParsing="false" text="Mes projets" />
+                  <Button layoutX="97.0" layoutY="376.0" mnemonicParsing="false" text="Mes projets" />
                   <Label layoutX="15.0" layoutY="209.0" text="Coins disponibles :" />
                   <Label layoutX="14.0" layoutY="246.0" text="Coins utlisés :" />
                   <Label layoutX="14.0" layoutY="282.0" text="Nombre de projets :" />
