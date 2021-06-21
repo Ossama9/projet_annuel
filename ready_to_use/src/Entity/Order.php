@@ -15,9 +15,16 @@ class Order
 {
     // ce statut signifit que les produits sont encore dans le panier, la commande n'a pas encore été payée
     public const STATUS_CART = 0;
+    // statut de la commande
     public const STATUS = [
         'Dans le panier',
         'Payé',
+        'Annulé'
+    ];
+
+    // statut de la livraison
+    public const DELIVERY_STATUS = [
+        'Commande en cours de préparation',
         'Livraison en cours',
         'Livré'
     ];
@@ -58,6 +65,16 @@ class Order
      * @ORM\OneToMany(targetEntity=OrderItem::class, mappedBy="orderRef", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $products;
+
+    /**
+     * @ORM\Column(type="string", length=12, nullable=true)
+     */
+    private $deliveryNote;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $deliveryStatus;
 
     public function __construct()
     {
@@ -196,5 +213,34 @@ class Order
         foreach ($this->getProducts() as $item) $total += $item->getTotal();
 
         return $total;
+    }
+
+    public function getDeliveryNote(): ?string
+    {
+        return $this->deliveryNote;
+    }
+
+    public function setDeliveryNote(?string $deliveryNote): self
+    {
+        $this->deliveryNote = $deliveryNote;
+
+        return $this;
+    }
+
+    public function getDeliveryStatus(): ?int
+    {
+        return $this->deliveryStatus;
+    }
+
+    public function getDeliveryStatusToString(): string
+    {
+        return self::DELIVERY_STATUS[$this->deliveryStatus];
+    }
+
+    public function setDeliveryStatus(?int $deliveryStatus): self
+    {
+        $this->deliveryStatus = $deliveryStatus;
+
+        return $this;
     }
 }

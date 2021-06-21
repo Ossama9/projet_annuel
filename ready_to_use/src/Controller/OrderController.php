@@ -112,14 +112,15 @@ class OrderController extends AbstractController
             return new Response(json_encode($data), Response::HTTP_BAD_REQUEST);
         }
 
+        $session = $event->data->object;
+        $order = $this->getDoctrine()->getRepository(Order::class)->find($session['metadata']['order_id']);
+
         function fulfill_order($order) {
             // le paiement a bien été reçu
             $order->setStatus(1);
             $order->setPaidDate(new DateTime());
+            $order->setDeliveryStatus(0);
         }
-
-        $session = $event->data->object;
-        $order = $this->getDoctrine()->getRepository(Order::class)->find($session['metadata']['order_id']);
 
         switch ($event->type) {
             case 'checkout.session.completed':

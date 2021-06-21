@@ -24,7 +24,10 @@
                         {% if is_granted('ROLE_ADMIN') %}
                             <li><a class="nav-link nav-item {% if current_page is defined and current_page == 'admin' %}active{% endif %}" href="{{ path('admin') }}">Panel administrateur</a></li>
                         {% endif %}
-                        <li><a class="nav-link nav-item {% if current_page is defined and current_page == 'merchant.product' %}active{% endif %}" href="{{ path('merchant.product.index') }}">Mes produits</a></li>
+                        {% if app.user.merchant %}
+                            <li><a class="nav-link nav-item {% if current_page is defined and current_page  == 'merchant.product' %}active{% endif %}" href="{{ path('merchant.product.index') }}">Mes produits</a></li>
+                            <li><a class="nav-link nav-item {% if current_page is defined and current_page  == 'merchant.sale' %}active{% endif %}" href="{{ path('merchant.sale.index') }}">Mes ventes</a></li>
+                        {% endif %}
                         <li><a class="nav-link nav-item {% if current_page is defined and current_page == 'order' %}active{% endif %}" href="{{ path('order.index') }}">Mes commandes</a></li>
                         <li><a class="nav-link nav-item {% if current_page is defined and current_page == 'account' %}active{% endif %}" href="{{ path('account.index') }}">Mon compte</a></li>
                         <li><a class="nav-link nav-item" href="{{ path('logout') }}">Déconnexion</a></li>

@@ -11,6 +11,7 @@ use App\Entity\Sell;
 use App\Entity\User;
 use App\Form\ProductType;
 use App\Repository\SellRepository;
+use App\Repository\UserRepository;
 use App\Repository\UserVerificationRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,13 +30,12 @@ class MerchantProductController extends AbstractController
     /**
      * @Route("/", name="merchant.product.index")
      * @param SellRepository $sellRepository
-     * @param UserVerificationRepository $verificationRepository
+     * @param UserRepository $userRepository
      * @return Response
      */
-    public function index(SellRepository $sellRepository, UserVerificationRepository $verificationRepository): Response
+    public function index(SellRepository $sellRepository, UserRepository $userRepository): Response
     {
-        $is_merchant = $verificationRepository->findOneBy(['requestingUser' => $this->getUser()]);
-        $merchant = $is_merchant ? $is_merchant->getStatus() === 1 ? $is_merchant : false : false;
+        $user = $userRepository->findOneBy(['username' => $this->getUser()->getUsername()]);
 
         $products = [];
         $sells = $sellRepository->findBy(['soldBy' => $this->getUser()]);
@@ -46,7 +46,7 @@ class MerchantProductController extends AbstractController
         return $this->render('/merchant/product/index.html.twig', [
             'products' => $products,
             'current_page' => 'merchant.product',
-            'merchant' => $merchant
+            'merchant' => $user->isMerchant()
         ]);
 
     }

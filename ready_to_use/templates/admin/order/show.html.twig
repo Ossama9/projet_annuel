@@ -8,17 +8,36 @@
     <table class="table">
         <tbody>
         <tr>
-            <th>Id</th>
+            <th>Numéro de la commande</th>
             <td>{{ order.id }}</td>
         </tr>
         <tr>
-            <th>Statut</th>
-            <td>{{ order.statusToString }}</td>
+            <th>Commandé par</th>
+            <td>{{ order.orderedBy.email }}</td>
         </tr>
         <tr>
-            <th>Prix payé</th>
+            <th>Montant de la commande</th>
             <td>{{ order.total }} €</td>
         </tr>
+        {% if order.paidDate %}
+            <tr>
+                <th>Payé le </th>
+                <td>{{ order.paidDate|date('d-m-Y à H:i') }}</td>
+            </tr>
+            <tr>
+                <th>Suivi de la livraison</th>
+                <td>
+                    <p>{{ order.deliveryStatusToString }}</p>
+                    <a href="{{ path('admin.order.update_delivery_status', {id: order.id}) }}" class="btn btn-primary text-white">Mettre à jour</a>
+                </td>
+            </tr>
+            {% if order.deliveryStatus != 0 %}
+                <tr>
+                    <th>Bon de livraison</th>
+                    <td>{{ order.deliveryNote|upper }}</td>
+                </tr>
+            {% endif %}
+        {% endif %}
         </tbody>
     </table>
 
