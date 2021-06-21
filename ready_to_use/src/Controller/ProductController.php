@@ -50,7 +50,6 @@ class ProductController extends AbstractController
             $maxPrice = $form->get("max_price")->getData();
             $products = $this->getDoctrine()->getRepository(Product::class)->findWithFilters($chosenModel, $maxPrice);
         }
-        else $products = [];
 
         return $this->render('/product/index.html.twig', [
             "brands" => $brands,

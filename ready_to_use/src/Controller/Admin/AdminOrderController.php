@@ -3,11 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Order;
-use App\Entity\Wharehouse;
-use App\Form\CartType;
-use App\Form\WharehouseType;
+use App\Entity\Product;
+use App\Form\OrderDeliveryStatusType;
+use App\Form\ProductWharehouseType;
 use App\Repository\OrderRepository;
-use App\Repository\WharehouseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -60,5 +59,35 @@ class AdminOrderController extends AbstractController
         }
 
         return $this->redirectToRoute('admin.order.index');
+    }
+
+    /**
+     * Permet à un administrateur de mettre à jour le suivi de livraison d'une commande
+     * @Route("/{id}/update-delivery-status", name="admin.order.update_delivery_status", methods={"GET", "POST"})
+     * @param Request $request
+     * @param Order $order
+     * @return Response
+     */
+    public function updateDeliveryStatus(Request $request, Order $order): Response
+    {
+        $form = $this->createForm(OrderDeliveryStatusType::class, $order);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if ($order->getDeliveryStatus() === 0)
+                $order->setDeliveryNote(null);
+            elseif ($order->getDeliveryStatus() === 1)
+                $order->setDeliveryNote(bin2hex(random_bytes(6)));
+
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('admin.order.show', ['id' => $order->getId()]);
+        }
+
+        return $this->render('admin/order/update_delivery_status.html.twig', [
+            'order' =>$order,
+            'form' => $form->createView(),
+        ]);
     }
 }

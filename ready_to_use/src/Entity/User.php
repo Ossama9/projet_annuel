@@ -91,12 +91,18 @@ class User implements UserInterface, \Serializable
      */
     private $orders;
 
+    /**
+     * @ORM\OneToMany(targetEntity=UserProject::class, mappedBy="user")
+     */
+    private $userProjects;
+
     public function __construct()
     {
         $this->requestingUser = new ArrayCollection();
         $this->verifiedBy = new ArrayCollection();
         $this->sells = new ArrayCollection();
         $this->orders = new ArrayCollection();
+        $this->userProjects = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -386,6 +392,36 @@ class User implements UserInterface, \Serializable
             // set the owning side to null (unless already changed)
             if ($order->getOrderedBy() === $this) {
                 $order->setOrderedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserProject[]
+     */
+    public function getUserProjects(): Collection
+    {
+        return $this->userProjects;
+    }
+
+    public function addUserProject(UserProject $userProject): self
+    {
+        if (!$this->userProjects->contains($userProject)) {
+            $this->userProjects[] = $userProject;
+            $userProject->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserProject(UserProject $userProject): self
+    {
+        if ($this->userProjects->removeElement($userProject)) {
+            // set the owning side to null (unless already changed)
+            if ($userProject->getUser() === $this) {
+                $userProject->setUser(null);
             }
         }
 

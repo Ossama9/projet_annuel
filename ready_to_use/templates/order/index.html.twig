@@ -22,11 +22,16 @@
                                 <h5>Commande n°{{ order.id }}</h5>
                                 <p class="my-1">{{ order.countProducts }} produit(s) commandé(s)</p>
                                 <p class="my-1">Commande passée le {{ order.requestDate|date }}</p>
-                                {% if order.status == 1 %}
-                                    <p class="my-1">Payé le {{ order.paidDate|date }}</p>
-                                {% else %}
-                                    {{ order.statusToString }}
-                                {% endif %}
+                                <p class="my-1">
+                                    {% if order.status == 1 %}
+                                        Payé le {{ order.paidDate|date }}
+                                    {% else %}
+                                        {{ order.statusToString }}
+                                    {% endif %}
+                                </p>
+                                <p class="my-1">
+                                    {{ order.deliveryStatusToString }}
+                                </p>
                                 <p>{{ order.total }} €</p>
                             </div>
                             <div>
