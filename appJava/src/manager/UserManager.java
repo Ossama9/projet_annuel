@@ -17,16 +17,17 @@ public class UserManager {
         String query = "SELECT id, username, password, first_name, last_name, email FROM user WHERE username = \"" + username +"\";";
         ResultSet rs = db.prepareStatement(query).executeQuery();
 
-        while(rs.next()){
-            user.feed(
-                rs.getInt("id"),
-                rs.getString("username"),
-                rs.getString("password"),
-                rs.getString("first_name"),
-                rs.getString("last_name"),
-                rs.getString("email")
-            );
-        }
+        if (!rs.isBeforeFirst() ) { System.out.println("No data"); }
+        rs.next();
+        user.feed(
+            rs.getInt("id"),
+            rs.getString("username"),
+            rs.getString("password"),
+            rs.getString("first_name"),
+            rs.getString("last_name"),
+            rs.getString("email")
+        );
+
         return user;
     }
 

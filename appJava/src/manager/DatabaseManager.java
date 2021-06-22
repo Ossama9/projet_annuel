@@ -29,6 +29,9 @@ public class DatabaseManager {
         return connexion;
     }
 
+
+
+
     public static ObservableList<Asso> getasso(){
 
 

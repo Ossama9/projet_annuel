@@ -33,6 +33,9 @@
                   <Label layoutX="15.0" layoutY="209.0" text="Coins disponibles :" />
                   <Label layoutX="14.0" layoutY="246.0" text="Coins utlisés :" />
                   <Label layoutX="14.0" layoutY="282.0" text="Nombre de projets :" />
+                  <Text fx:id="totalCoinsField" layoutX="187.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10" />
+                  <Text layoutX="187.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10" />
+                  <Text layoutX="187.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10" />
                </children>
             </AnchorPane>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="551.0">
