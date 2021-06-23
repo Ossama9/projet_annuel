@@ -11,6 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import manager.CoinsManager;
 import manager.UserManager;
 import org.mindrot.jbcrypt.BCrypt;
 import persistence.User;
@@ -40,6 +41,11 @@ public class UserConnexionController {
             try{
                 UserManager userManager = new UserManager();
                 User user  = userManager.getByUsername(usernameField.getText());
+
+                CoinsManager coinsManager = new CoinsManager();
+                user.setEarnedCoins(coinsManager.getUserEarnedCoins(user.getId()));
+                user.setUsedCoins(coinsManager.getUserUsedCoins(user.getId()));
+
                 if( BCrypt.checkpw(passwordField.getText(), user.getPassword()) ){
                     try {
                         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/gui/user/user_index.fxml")));

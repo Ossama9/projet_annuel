@@ -8,6 +8,8 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+    private int earnedCoins;
+    private int usedCoins;
 
 
     public void feed(int id, String username, String password, String firstName, String lastName, String email) {
@@ -23,6 +25,9 @@ public class User {
         this.lastName = lastName;
         this.email = email;
     }
+
+
+
 
     public int getId() {
         return id;
@@ -70,5 +75,25 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getEarnedCoins() {
+        return earnedCoins;
+    }
+
+    public void setEarnedCoins(int earnedCoins) {
+        this.earnedCoins = earnedCoins;
+    }
+
+    public int getUsedCoins() {
+        return usedCoins;
+    }
+
+    public void setUsedCoins(int usedCoins) {
+        this.usedCoins = usedCoins;
+    }
+
+    public int getAvailableCoins(){
+        return earnedCoins - usedCoins;
     }
 }
