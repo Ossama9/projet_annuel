@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
+
 public class UserManager {
 
     private final Connection db = new DatabaseManager().getConnexion();

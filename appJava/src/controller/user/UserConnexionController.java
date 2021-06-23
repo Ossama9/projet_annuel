@@ -43,7 +43,8 @@ public class UserConnexionController {
                 User user  = userManager.getByUsername(usernameField.getText());
 
                 CoinsManager coinsManager = new CoinsManager();
-                user.setTotalCoins(coinsManager.geUserCoins(user.getId()));
+                user.setEarnedCoins(coinsManager.getUserEarnedCoins(user.getId()));
+                user.setUsedCoins(coinsManager.getUserUsedCoins(user.getId()));
 
                 if( BCrypt.checkpw(passwordField.getText(), user.getPassword()) ){
                     try {

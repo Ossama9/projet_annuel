@@ -1,7 +1,5 @@
 package persistence;
 
-import manager.CoinsManager;
-
 public class User {
 
     private int id;
@@ -10,7 +8,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
-    private int totalCoins;
+    private int earnedCoins;
     private int usedCoins;
 
 
@@ -79,12 +77,12 @@ public class User {
         this.email = email;
     }
 
-    public int getTotalCoins() {
-        return totalCoins;
+    public int getEarnedCoins() {
+        return earnedCoins;
     }
 
-    public void setTotalCoins(int totalCoins) {
-        this.totalCoins = totalCoins;
+    public void setEarnedCoins(int earnedCoins) {
+        this.earnedCoins = earnedCoins;
     }
 
     public int getUsedCoins() {
@@ -93,5 +91,9 @@ public class User {
 
     public void setUsedCoins(int usedCoins) {
         this.usedCoins = usedCoins;
+    }
+
+    public int getAvailableCoins(){
+        return earnedCoins - usedCoins;
     }
 }
