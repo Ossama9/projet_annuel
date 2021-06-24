@@ -2,15 +2,15 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="mainPane" prefHeight="700.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.asso.AssoPasswordChoiceController">
+<AnchorPane fx:id="mainPane" prefHeight="700.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.asso.AssoIndexController">
    <children>
       <SplitPane dividerPositions="0.29797979797979796" layoutX="266.0" layoutY="136.0" prefHeight="591.0" prefWidth="755.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
@@ -26,27 +26,26 @@
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <Label layoutX="103.0" layoutY="280.0" text="Déja inscrit ?" />
-                  <Button layoutX="101.0" layoutY="298.0" mnemonicParsing="false" onAction="#goToAssoConnexion" text="Connexion" />
-                  <Label layoutX="85.0" layoutY="428.0" text="Vous êtes un client ?" />
-                  <Button layoutX="97.0" layoutY="446.0" mnemonicParsing="false" onAction="#goToUserConnexion" text="Partie Client" />
-                  <Button layoutX="110.0" layoutY="623.0" mnemonicParsing="false" onAction="#goToLandingPage" text="Accueil" />
+                  <Button layoutX="87.0" layoutY="334.0" mnemonicParsing="false" text="Nouveau Projet" />
+                  <Button layoutX="97.0" layoutY="421.0" mnemonicParsing="false" text="Mes Projets" />
+                  <Button layoutX="94.0" layoutY="620.0" mnemonicParsing="false" onAction="#goToLandingPage" style="-fx-background-color: RGB(255,0,0);" text="Deconnexion" />
+                  <Label layoutX="14.0" layoutY="243.0" text="Projets en Cours :" />
+                  <Text fx:id="ongoingProjects" layoutX="140.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" />
                </children>
             </AnchorPane>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="551.0">
                <children>
-                  <Text layoutX="205.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choisir un mot de passe">
+                  <Text layoutX="157.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vous pouvez gérer vos projets ici">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Text>
-                  <Label layoutX="261.0" layoutY="202.0" text="Mot de Passe" />
-                  <PasswordField fx:id="password1Field" layoutX="258.0" layoutY="220.0" />
-                  <Label layoutX="261.0" layoutY="309.0" text="Répeter le mot de passe" />
-                  <PasswordField fx:id="password2Field" layoutX="258.0" layoutY="327.0" />
-                  <Text fx:id="errorMsg" fill="RED" layoutX="265.0" layoutY="398.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-                  <Button layoutX="311.0" layoutY="431.0" mnemonicParsing="false" onAction="#validPassword" style="-fx-background-color: linear-gradient(to right, #00B486, #00B486, #00B486);" text="Valider" />
-                  <Button layoutX="312.0" layoutY="496.0" mnemonicParsing="false" onAction="#goToAssoInscription" style="-fx-background-color: RGB(255,0,0);" text="Retour" />
+                  <Text fx:id="successMsg" fill="#329e32" layoutX="220.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <Pane layoutX="54.0" layoutY="176.0" prefHeight="200.0" prefWidth="556.0" style="-fx-background-color: RGB(175,175,175);" />
+                  <Pane layoutX="54.0" layoutY="438.0" prefHeight="200.0" prefWidth="556.0" style="-fx-background-color: RGB(175,175,175);" />
+                  <Label layoutX="54.0" layoutY="157.0" text="Label" />
+                  <Label layoutX="54.0" layoutY="419.0" text="Label" />
+                  <Text fx:id="validationMsg" fill="#ffa200" layoutX="197.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" />
                </children>
             </AnchorPane>
          </items>

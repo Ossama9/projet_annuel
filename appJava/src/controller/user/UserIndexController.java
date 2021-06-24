@@ -20,7 +20,7 @@ public class UserIndexController extends ControllerOne {
         this.user = user;
 
         if(user == null){
-            goToUserConnexion(usedCoins);
+            goToUserConnexion();
         }
         else {
             availableCoinsField.setText(String.valueOf(user.getAvailableCoins()));

@@ -1,10 +1,23 @@
 package persistence;
 
+
+/**
+ * password hash
+ *  - method : BCrypt
+ *  - salt : 10
+ */
 public class Asso {
 
 
-    private int id, status;
-    private String name, password, email, description, numeroSiren;
+    private int id;
+    private int status;
+    private String name;
+    private String password;
+    private String email;
+    private String description;
+    private String numeroSiren;
+    private int ongoingProject;
+
 
     public Asso(){}
 

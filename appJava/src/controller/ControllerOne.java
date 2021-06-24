@@ -1,5 +1,6 @@
 package controller;
 
+import controller.asso.AssoIndexController;
 import controller.asso.AssoPasswordChoiceController;
 import controller.user.UserIndexController;
 import javafx.event.ActionEvent;
@@ -7,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import persistence.Asso;
 import persistence.User;
@@ -16,11 +18,8 @@ import java.util.Objects;
 
 public class ControllerOne {
 
-    public Object object;
-
-    public void initData(Object object){
-        this.object = object;
-    }
+    @FXML
+    protected AnchorPane mainPane;
 
 
     //generic fonction
@@ -38,11 +37,10 @@ public class ControllerOne {
             e.printStackTrace();
         }
     }
-
-    public void displayStage(String path, String title, Node node){
+    public void displayStage(String path, String title){
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(path)));
-            Stage currentStage = (Stage) node.getScene().getWindow();
+            Stage currentStage = (Stage) mainPane.getScene().getWindow();
 
             currentStage.setScene(new Scene(loader.load()));
             currentStage.setTitle(title);
@@ -61,6 +59,9 @@ public class ControllerOne {
     public void goToLandingPage(ActionEvent event){
         displayStage("/gui/landing_page.fxml", "Accueil", event);
     }
+    public void goToLandingPage(){
+        displayStage("/gui/landing_page.fxml", "Accueil" );
+    }
 
 
     //for user part
@@ -68,9 +69,8 @@ public class ControllerOne {
     public void goToUserConnexion(ActionEvent event){
         displayStage("/gui/user/user_connexion.fxml", "Connexion", event);
     }
-    @FXML
-    public void goToUserConnexion(Node node){
-        displayStage("/gui/user/user_connexion.fxml", "Connexion", node);
+    public void goToUserConnexion(){
+        displayStage("/gui/user/user_connexion.fxml", "Connexion");
     }
 
     public static void goToUserIndex(ActionEvent event, User user){
@@ -111,6 +111,43 @@ public class ControllerOne {
             currentStage.setTitle("Association | Choix du mot de passe");
 
             AssoPasswordChoiceController newController = loader.getController();
+            newController.initData(asso);
+
+            currentStage.show();
+        }
+        catch (IOException e){
+            System.out.println("Erreur de chargement: " + e);
+        }
+    }
+
+    public static void goToAssoIndex(ActionEvent event, Asso asso, String successMsg){
+        try {
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/asso/asso_index.fxml")));
+            Stage currentStage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            currentStage.setScene(scene );
+            currentStage.setTitle(asso.getName());
+
+            AssoIndexController newController = loader.getController();
+            newController.initData(asso);
+            newController.successMsg.setText(successMsg);
+
+            currentStage.show();
+        }
+        catch (IOException e){
+            System.out.println("Erreur de chargement: " + e);
+        }
+    }
+
+    public static void goToAssoIndex(ActionEvent event, Asso asso){
+        try {
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/asso/asso_index.fxml")));
+            Stage currentStage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            currentStage.setScene(scene );
+            currentStage.setTitle(asso.getName());
+
+            AssoIndexController newController = loader.getController();
             newController.initData(asso);
 
             currentStage.show();
