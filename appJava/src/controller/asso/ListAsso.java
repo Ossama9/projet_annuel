@@ -9,6 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import persistence.Asso;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -58,7 +59,7 @@ public class ListAsso implements Initializable {
         col_responsable.setCellValueFactory(new PropertyValueFactory<Asso, String>("users"));
         col_contact.setCellValueFactory(new PropertyValueFactory<Asso, String>("email_contact"));
 
-        listM = DatabaseManager.getasso();
+        //listM = DatabaseManager.getasso();
         table_asso.setItems(listM);
 
     }

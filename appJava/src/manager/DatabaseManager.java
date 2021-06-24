@@ -1,11 +1,10 @@
 package manager;
 
-import controller.asso.Asso;
+import persistence.Asso;
 import controller.projet.Projet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import javax.xml.crypto.Data;
 import java.sql.*;
 
 public class DatabaseManager {
@@ -31,9 +30,7 @@ public class DatabaseManager {
 
 
 
-
-    public static ObservableList<Asso> getasso(){
-
+    /*public static ObservableList<Asso> getasso(){
 
         ObservableList<Asso> list = FXCollections.<Asso>observableArrayList();
 
@@ -58,7 +55,7 @@ public class DatabaseManager {
             e.printStackTrace();
         }
         return list;
-    }
+    }*/
 
     public static ObservableList<Projet> getProjet(){
 

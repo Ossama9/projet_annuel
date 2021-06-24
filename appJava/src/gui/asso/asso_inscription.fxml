@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="700.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.asso.AssoInscriptionController">
+   <children>
+      <SplitPane dividerPositions="0.29797979797979796" layoutX="266.0" layoutY="136.0" prefHeight="591.0" prefWidth="755.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <items>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: RGB(217,234,242) RGB(217,234,242) RGB(217,234,242) RGB(217,234,242) RGB(217,234,242) RGB(217,234,242) RGB(217,234,242) RGB(217,234,242);">
+               <children>
+                  <ImageView fitHeight="130.0" fitWidth="108.0" layoutX="86.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="542.2" AnchorPane.leftAnchor="86.0" AnchorPane.rightAnchor="85.19999999999999" AnchorPane.topAnchor="49.0">
+                     <image>
+                        <Image url="@../../../assets/images/logo.PNG" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="86.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ready To Use" AnchorPane.bottomAnchor="518.682421875" AnchorPane.leftAnchor="85.9033203125" AnchorPane.rightAnchor="85.29667968749999" AnchorPane.topAnchor="156.576171875">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Label layoutX="103.0" layoutY="280.0" text="Déja inscrit ?" />
+                  <Button layoutX="101.0" layoutY="298.0" mnemonicParsing="false" onAction="#goToAssoConnexion" text="Connexion" />
+                  <Label layoutX="85.0" layoutY="428.0" text="Vous êtes un client ?" />
+                  <Button layoutX="97.0" layoutY="446.0" mnemonicParsing="false" onAction="#goToUserConnexion" text="Partie Client" />
+                  <Button layoutX="110.0" layoutY="623.0" mnemonicParsing="false" onAction="#goToLandingPage" text="Accueil" />
+               </children>
+            </AnchorPane>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="551.0">
+               <children>
+                  <Text layoutX="276.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inscription">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="211.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Merci de remplir le formulaire ci-dessous" />
+                  <Label layoutX="84.0" layoutY="156.0" text="Nom :" />
+                  <TextField fx:id="nameField" layoutX="84.0" layoutY="173.0" prefHeight="26.0" prefWidth="263.0" />
+                  <Label layoutX="406.0" layoutY="153.0" text="Numero Siren (9 chiffres) :" />
+                  <TextField fx:id="numeroSirenField" layoutX="406.0" layoutY="170.0" prefWidth="173.0" />
+                  <Label layoutX="80.0" layoutY="242.0" text="Email :" />
+                  <TextField fx:id="emailField" layoutX="80.0" layoutY="260.0" prefHeight="26.0" prefWidth="504.0" />
+                  <Label layoutX="83.0" layoutY="331.0" text="Description (facultatif) :" />
+                  <TextArea fx:id="descriptionField" layoutX="80.0" layoutY="349.0" prefHeight="200.0" prefWidth="504.0" />
+                  <Text fx:id="errorMsg" fill="RED" layoutX="279.0" layoutY="589.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <Button layoutX="304.0" layoutY="615.0" mnemonicParsing="false" onAction="#validAssoInscription" style="-fx-background-color: linear-gradient(to right, #00B486, #00B486, #00B486);" text="Valider" />
+               </children>
+            </AnchorPane>
+         </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

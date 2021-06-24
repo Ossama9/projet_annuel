@@ -32,7 +32,7 @@
                   <Hyperlink layoutX="91.0" layoutY="572.0" text="Visitez notre site" />
                   <Label layoutX="63.0" layoutY="554.0" text="Vous n'êtes pas déjà inscrit ?" />
                   <Text layoutX="67.0" layoutY="283.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vous êtes une association ?" />
-                  <Button layoutX="102.0" layoutY="293.0" mnemonicParsing="false" text="Partie asso" />
+                  <Button layoutX="102.0" layoutY="293.0" mnemonicParsing="false" onAction="#goToAssoConnexion" text="Partie asso" />
                   <Label layoutX="56.0" layoutY="420.0" text="Envie de participer à un projet ?" />
                </children>
             </AnchorPane>

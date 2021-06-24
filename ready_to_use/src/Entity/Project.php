@@ -35,6 +35,11 @@ class Project
     private $endDate;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
+    /**
      * @ORM\ManyToOne(targetEntity=Association::class, inversedBy="projects")
      */
     private $association;
