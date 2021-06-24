@@ -2,10 +2,13 @@ package controller.asso;
 
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
+
 import manager.AssoManager;
+
 import persistence.Asso;
 
 import java.sql.SQLException;
+
 
 public class AssoIndexController extends ControllerAsso {
 
@@ -41,4 +44,6 @@ public class AssoIndexController extends ControllerAsso {
         if( asso.getStatus() == 0 )
             validationMsg.setText( "En attente de validation par un administrateur");
     }
+
+
 }

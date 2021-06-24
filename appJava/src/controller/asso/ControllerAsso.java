@@ -1,7 +1,11 @@
 package controller.asso;
 
 import controller.ControllerOne;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+
 import persistence.Asso;
+
 
 public class ControllerAsso extends ControllerOne {
 
@@ -14,4 +18,17 @@ public class ControllerAsso extends ControllerOne {
         else
             goToLandingPage();
     }
+
+    //redirection button action
+    @FXML
+    public void goToAssoIndex(ActionEvent event){
+        loadAssoIndex(event, asso);
+    }
+
+    @FXML
+    public void goToAssoNewProject(ActionEvent event){
+        ControllerOne.loadAssoNewProjectStage(event, asso);
+    }
+
+
 }

@@ -1,6 +1,5 @@
 package controller.asso;
 
-import controller.ControllerOne;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -35,7 +34,7 @@ public class AssoPasswordChoiceController extends ControllerAsso {
             } catch (SQLException throwable) {
                 throwable.printStackTrace();
             }
-            ControllerOne.goToAssoIndex(event, asso, "Votre association à bien été enregistré");
+            ControllerAsso.loadAssoIndex(event, asso, "Votre association à bien été enregistré");
         }
         else {
             errorMsg.setText("Les mots de passe sont différents");

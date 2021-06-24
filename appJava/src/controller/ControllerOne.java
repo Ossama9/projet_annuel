@@ -1,6 +1,7 @@
 package controller;
 
 import controller.asso.AssoIndexController;
+import controller.asso.AssoNewProjectController;
 import controller.asso.AssoPasswordChoiceController;
 import controller.user.UserIndexController;
 import javafx.event.ActionEvent;
@@ -73,7 +74,7 @@ public class ControllerOne {
         displayStage("/gui/user/user_connexion.fxml", "Connexion");
     }
 
-    public static void goToUserIndex(ActionEvent event, User user){
+    public static void loadUserIndex(ActionEvent event, User user){
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/user/user_index.fxml")));
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -90,8 +91,6 @@ public class ControllerOne {
         }
     }
 
-
-    //for asso part
     @FXML
     public void goToAssoConnexion(ActionEvent event){
         displayStage("/gui/asso/asso_connexion.fxml", "Association | Connexion",event);
@@ -102,7 +101,7 @@ public class ControllerOne {
         displayStage("/gui/asso/asso_inscription.fxml", "Association | Inscription", event);
     }
 
-    public static void goToAssoPaswordChoice(ActionEvent event, Asso asso){
+    public static void loadAssoPaswordChoice(ActionEvent event, Asso asso){
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/asso/asso_password_choice.fxml")));
             Stage currentStage = (Stage)((Node) event.getSource()).getScene().getWindow();
@@ -120,7 +119,25 @@ public class ControllerOne {
         }
     }
 
-    public static void goToAssoIndex(ActionEvent event, Asso asso, String successMsg){
+
+    public static void loadAssoIndex(ActionEvent event, Asso asso){
+        try {
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/asso/asso_index.fxml")));
+            Stage currentStage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            currentStage.setScene(scene );
+            currentStage.setTitle(asso.getName());
+
+            AssoIndexController newController = loader.getController();
+            newController.initData(asso);
+
+            currentStage.show();
+        }
+        catch (IOException e){
+            System.out.println("Erreur de chargement: " + e);
+        }
+    }
+    public static void loadAssoIndex(ActionEvent event, Asso asso, String successMsg){
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/asso/asso_index.fxml")));
             Stage currentStage = (Stage)((Node) event.getSource()).getScene().getWindow();
@@ -139,15 +156,16 @@ public class ControllerOne {
         }
     }
 
-    public static void goToAssoIndex(ActionEvent event, Asso asso){
+
+    public static void loadAssoNewProjectStage(ActionEvent event, Asso asso){
         try {
-            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/asso/asso_index.fxml")));
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/asso/asso_new_project.fxml")));
             Stage currentStage = (Stage)((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(loader.load());
             currentStage.setScene(scene );
-            currentStage.setTitle(asso.getName());
+            currentStage.setTitle(asso.getName() + " | Nouveau Projet");
 
-            AssoIndexController newController = loader.getController();
+            AssoNewProjectController newController = loader.getController();
             newController.initData(asso);
 
             currentStage.show();

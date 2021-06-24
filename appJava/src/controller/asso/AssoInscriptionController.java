@@ -3,17 +3,10 @@ package controller.asso;
 import controller.ControllerOne;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import persistence.Asso;
-
-import java.io.IOException;
-import java.util.Objects;
 
 public class AssoInscriptionController extends ControllerOne {
 
@@ -33,20 +26,24 @@ public class AssoInscriptionController extends ControllerOne {
     @FXML
     public void validAssoInscription(ActionEvent event){
 
-        if( nameVerification() && numeroSirenVerification() && emailVerification() && descriptionVerification()){
-            Asso asso;
-            if( descriptionField.getText() == null )
-                asso = new Asso(0, numeroSirenField.getText(), nameField.getText(), emailField.getText());
-            else
-                asso = new Asso(0, numeroSirenField.getText(), nameField.getText(), emailField.getText(), descriptionField.getText());
-
-            ControllerOne.goToAssoPaswordChoice(event, asso);
+        if( nameVerification()
+            && numeroSirenVerification()
+            && emailVerification()
+            && descriptionVerification()
+        ){
+            Asso asso = new Asso(
+                    0,
+                    numeroSirenField.getText(),
+                    nameField.getText(),
+                    emailField.getText(),
+                    descriptionField.getText()
+            );
+            ControllerAsso.loadAssoPaswordChoice(event, asso);
         }
         else {
             errorMsg.setText("Champs incorrect");
         }
     }
-
 
 
     private boolean nameVerification(){

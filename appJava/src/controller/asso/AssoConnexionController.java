@@ -31,7 +31,7 @@ public class AssoConnexionController extends ControllerOne {
             try {
                 Asso asso = assoManager.getAssoBySiren(sirenField.getText());
 
-                ControllerOne.goToAssoIndex(event, asso);
+                ControllerAsso.loadAssoIndex(event, asso);
             }
             catch (SQLException e){
                 e.printStackTrace();

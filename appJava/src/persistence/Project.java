@@ -1,6 +1,7 @@
 package persistence;
 
 import java.util.Date;
+import java.util.Locale;
 
 public class Project {
 
@@ -12,6 +13,13 @@ public class Project {
     private int assoId;
     private int coinsEarned;
 
+    public Project(String name, Date startDate, Date endDate, String description, int assoId ) {
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.description = description;
+        this.assoId = assoId;
+    }
 
     public Project(int id, String name, Date startDate, Date endDate, String description, int assoId ) {
         this.id = id;

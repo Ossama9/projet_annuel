@@ -21,12 +21,6 @@ public class Asso {
 
     public Asso(){}
 
-    public Asso(int status, String numeroSiren, String name, String email) {
-        this.status = status;
-        this.numeroSiren = numeroSiren;
-        this.name = name;
-        this.email = email;
-    }
 
     public Asso(int status, String numeroSiren, String name, String email, String description) {
         this.status = status;
