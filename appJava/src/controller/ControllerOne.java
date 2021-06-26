@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import persistence.Asso;
+import persistence.Project;
 import persistence.User;
 
 import java.io.IOException;
@@ -21,7 +22,6 @@ public class ControllerOne {
 
     @FXML
     protected AnchorPane mainPane;
-
 
     //generic fonction
     public void displayStage(String path, String title, ActionEvent event){
@@ -42,7 +42,6 @@ public class ControllerOne {
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(path)));
             Stage currentStage = (Stage) mainPane.getScene().getWindow();
-
             currentStage.setScene(new Scene(loader.load()));
             currentStage.setTitle(title);
             currentStage.show();
@@ -77,7 +76,7 @@ public class ControllerOne {
     public static void loadUserIndex(ActionEvent event, User user){
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/user/user_index.fxml")));
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Stage currentStage = (Stage)((Node) event.getSource()).getScene().getWindow();
             currentStage.setScene(new Scene(loader.load()));
             currentStage.setTitle(user.getUsername());
 
@@ -169,6 +168,28 @@ public class ControllerOne {
             newController.initData(asso);
 
             currentStage.show();
+        }
+        catch (IOException e){
+            System.out.println("Erreur de chargement: " + e);
+        }
+    }
+
+
+    //for projects
+    public static void goToProjectIndex(ActionEvent event, Project project){
+
+        try {
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/project/project_index.fxml")));
+            Stage currentStage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            currentStage.setScene(scene );
+
+            /* currentStage.setTitle(project.getName());
+
+            ProjectIndexController newController = loader.getController();
+            newController.initData(project);
+
+            currentStage.show();*/
         }
         catch (IOException e){
             System.out.println("Erreur de chargement: " + e);

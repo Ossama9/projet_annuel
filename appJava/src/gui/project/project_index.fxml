@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="mainPane" prefHeight="700.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.project.ProjectIndexController">
+   <children>
+      <SplitPane dividerPositions="0.29797979797979796" layoutX="266.0" layoutY="136.0" minHeight="0.0" minWidth="0.0" prefHeight="591.0" prefWidth="755.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <items>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="699.0" prefWidth="49.0" style="-fx-background-color: RGB(217,234,242) RGB(217,234,242) RGB(217,234,242) RGB(217,234,242) RGB(217,234,242) RGB(217,234,242) RGB(217,234,242) RGB(217,234,242);">
+               <children>
+                  <ImageView fitHeight="130.0" fitWidth="108.0" layoutX="86.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="542.2" AnchorPane.leftAnchor="86.0" AnchorPane.rightAnchor="85.19999999999999" AnchorPane.topAnchor="49.0">
+                     <image>
+                        <Image url="@../../../assets/images/logo.PNG" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="86.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ready To Use" AnchorPane.bottomAnchor="518.682421875" AnchorPane.leftAnchor="85.9033203125" AnchorPane.rightAnchor="85.29667968749999" AnchorPane.topAnchor="156.576171875">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Label layoutX="56.0" layoutY="420.0" text="Envie de participer à un projet ?" />
+                  <Button layoutX="104.0" layoutY="438.0" mnemonicParsing="false" onAction="#goToUserConnexion" text="Connexion" />
+                  <Label layoutX="63.0" layoutY="554.0" text="Vous n'êtes pas déjà inscrit ?" />
+                  <Hyperlink layoutX="91.0" layoutY="572.0" text="Visitez notre site" />
+               </children>
+            </AnchorPane>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="699.0" prefWidth="681.0" />
+         </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

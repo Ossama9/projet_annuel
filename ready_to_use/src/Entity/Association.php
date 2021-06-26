@@ -20,9 +20,9 @@ class Association
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=9)
+     * @ORM\Column(type="string", length=10)
      */
-    private $numeroSiren;
+    private $numeroRNA;
 
     /**
      * @ORM\Column(type="string", length=255)

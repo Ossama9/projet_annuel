@@ -10,6 +10,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import manager.ProjectManager;
 import persistence.Project;
@@ -40,10 +41,11 @@ public class LandingPageController extends ControllerOne implements Initializabl
             descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
             coinsColumn.setCellValueFactory(new PropertyValueFactory<>("coinsEarned"));
 
-            /*
-            feature -> new SimpleStringProperty(feature.getValue().getDescription())
-            feature -> new SimpleIntegerProperty(feature.getValue().getCoinsEarned()).asObject()
-             */
+            // define a simple boolean cell value for the action column so that the column will only be shown for non-empty rows.
+            buttonColumn.setCellValueFactory(features -> new SimpleBooleanProperty(features.getValue() != null));
+            // create a cell value factory with an add button for each row in the table.
+            buttonColumn.setCellFactory(projectBooleanTableColumn -> new ShowProjectCell((Stage) mainPane.getScene().getWindow(), newProjectsTable));
+
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
