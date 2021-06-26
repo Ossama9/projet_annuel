@@ -28,7 +28,7 @@
                   </Text>
                   <Button layoutX="87.0" layoutY="334.0" mnemonicParsing="false" onAction="#goToAssoNewProject" text="Nouveau Projet" />
                   <Button layoutX="97.0" layoutY="421.0" mnemonicParsing="false" text="Mes Projets" />
-                  <Button layoutX="94.0" layoutY="620.0" mnemonicParsing="false" onAction="#goToLandingPage" style="-fx-background-color: RGB(255,0,0);" text="Deconnexion" />
+                  <Button layoutX="94.0" layoutY="620.0" mnemonicParsing="false" onAction="#goToLandingPage" style="-fx-background-color: RGB(255,0,0);" text="Deconnexion" textFill="WHITE" />
                   <Label layoutX="14.0" layoutY="243.0" text="Projets en Cours :" />
                   <Text fx:id="ongoingProjects" layoutX="140.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" />
                </children>

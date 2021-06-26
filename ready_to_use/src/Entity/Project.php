@@ -25,6 +25,11 @@ class Project
     private $name;
 
     /**
+     * @ORM\Column(type="datetime",  nullable=true)
+     */
+    private $depositDate;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $startDate;

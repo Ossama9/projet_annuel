@@ -8,19 +8,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import persistence.Asso;
 
+import java.sql.Date;
+import java.util.Calendar;
+
 public class AssoInscriptionController extends ControllerOne {
 
 
-    @FXML
-    private TextField nameField;
-    @FXML
-    private TextField numeroSirenField;
-    @FXML
-    private TextField emailField;
-    @FXML
-    private TextArea descriptionField;
-    @FXML
-    private Text errorMsg;
+    @FXML private TextField nameField;
+    @FXML private TextField numeroSirenField;
+    @FXML private TextField emailField;
+    @FXML private TextArea descriptionField;
+    @FXML private Text errorMsg;
 
 
     @FXML
@@ -36,7 +34,8 @@ public class AssoInscriptionController extends ControllerOne {
                     numeroSirenField.getText(),
                     nameField.getText(),
                     emailField.getText(),
-                    descriptionField.getText()
+                    descriptionField.getText(),
+                    new java.sql.Date(new java.util.Date().getTime())
             );
             ControllerAsso.loadAssoPaswordChoice(event, asso);
         }

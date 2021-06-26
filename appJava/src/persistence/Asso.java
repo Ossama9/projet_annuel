@@ -1,6 +1,8 @@
 package persistence;
 
 
+import java.sql.Date;
+
 /**
  * password hash
  *  - method : BCrypt
@@ -11,26 +13,28 @@ public class Asso {
 
     private int id;
     private int status;
+    private String numeroSiren;
     private String name;
     private String password;
     private String email;
     private String description;
-    private String numeroSiren;
+    private Date signupDate;
     private int ongoingProject;
 
 
     public Asso(){}
 
 
-    public Asso(int status, String numeroSiren, String name, String email, String description) {
+    public Asso(int status, String numeroSiren, String name, String email, String description, Date signUpDate) {
         this.status = status;
         this.numeroSiren = numeroSiren;
         this.name = name;
         this.email = email;
         this.description = description;
+        this.signupDate = signUpDate;
     }
 
-    public Asso(int id, int status, String numeroSiren, String password, String name, String email, String description) {
+    public Asso(int id, int status, String numeroSiren, String password, String name, String email, String description, Date signUpDate) {
         this.id = id;
         this.status = status;
         this.numeroSiren = numeroSiren;
@@ -38,6 +42,7 @@ public class Asso {
         this.name = name;
         this.email = email;
         this.description = description;
+        this.signupDate = signUpDate;
     }
 
 
@@ -96,5 +101,21 @@ public class Asso {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getSignupDate() {
+        return signupDate;
+    }
+
+    public void setSignupDate(Date signupDate) {
+        this.signupDate = signupDate;
+    }
+
+    public int getOngoingProject() {
+        return ongoingProject;
+    }
+
+    public void setOngoingProject(int ongoingProject) {
+        this.ongoingProject = ongoingProject;
     }
 }

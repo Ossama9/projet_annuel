@@ -3,8 +3,7 @@ package controller.asso;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 
-import manager.AssoManager;
-
+import manager.ProjectManager;
 import persistence.Asso;
 
 import java.sql.SQLException;
@@ -12,12 +11,9 @@ import java.sql.SQLException;
 
 public class AssoIndexController extends ControllerAsso {
 
-    @FXML
-    public Text successMsg;
-    @FXML
-    public Text validationMsg;
-    @FXML
-    public Text ongoingProjects;
+    @FXML public Text successMsg;
+    @FXML public Text validationMsg;
+    @FXML public Text ongoingProjects;
 
 
 
@@ -28,10 +24,10 @@ public class AssoIndexController extends ControllerAsso {
         else
             goToLandingPage();
 
-        AssoManager assoManager = new AssoManager();
+        ProjectManager projectManager = new ProjectManager();
         if( asso != null && asso.getStatus() != 0 ){
             try {
-                ongoingProjects.setText(String.valueOf(assoManager.getOngoingProject(asso.getId()).size()));
+                ongoingProjects.setText(String.valueOf(projectManager.getAssoProjects(asso.getId()).size()));
             }
              catch (SQLException e) {
                  e.printStackTrace();

@@ -18,16 +18,11 @@ import java.time.ZoneId;
 
 public class AssoNewProjectController extends ControllerAsso {
 
-    @FXML
-    public TextField nameField;
-    @FXML
-    public DatePicker startDateField;
-    @FXML
-    public DatePicker endDateField;
-    @FXML
-    public TextArea descriptionField;
-    @FXML
-    public Text errorMsg;
+    @FXML public TextField nameField;
+    @FXML public DatePicker startDateField;
+    @FXML public DatePicker endDateField;
+    @FXML public TextArea descriptionField;
+    @FXML public Text errorMsg;
 
 
     @FXML
@@ -39,8 +34,9 @@ public class AssoNewProjectController extends ControllerAsso {
         ){
             Project project = new Project(
                 nameField.getText(),
-                Date.from(startDateField.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant() ),
-                Date.from(endDateField.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant() ),
+                new java.sql.Date(new java.util.Date().getTime()),
+                java.sql.Date.valueOf(startDateField.getValue()),
+                java.sql.Date.valueOf(endDateField.getValue()),
                 descriptionField.getText(),
                 asso.getId()
             );
@@ -68,8 +64,6 @@ public class AssoNewProjectController extends ControllerAsso {
         if (startDateField.getValue() == null || endDateField.getValue() == null)
             return false;
         else {
-            System.out.println(LocalDate.now());
-            System.out.println(LocalDate.now().compareTo(endDateField.getValue()));
             return endDateField.getValue().compareTo(startDateField.getValue()) > 0
                     && endDateField.getValue().compareTo(LocalDate.now()) >= 0;
         }

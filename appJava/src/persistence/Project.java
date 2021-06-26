@@ -1,33 +1,52 @@
 package persistence;
 
-import java.util.Date;
-import java.util.Locale;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
+import java.sql.Date;
+
 
 public class Project {
 
     private int id;
     private String name;
+    private Date depositDate;
     private Date startDate;
     private Date endDate;
     private String description;
     private int assoId;
+    private String assoName;
     private int coinsEarned;
 
-    public Project(String name, Date startDate, Date endDate, String description, int assoId ) {
+    public Project(String name, Date depositDate, Date startDate, Date endDate, String description, int assoId ) {
         this.name = name;
+        this.depositDate = depositDate;
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
         this.assoId = assoId;
     }
 
-    public Project(int id, String name, Date startDate, Date endDate, String description, int assoId ) {
+    public Project(int id, String name, Date depositDate, Date startDate, Date endDate, String description, int assoId ) {
         this.id = id;
         this.name = name;
+        this.depositDate = depositDate;
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
         this.assoId = assoId;
+    }
+
+    public Project(int id, String name, Date depositDate, Date startDate, Date endDate, String description, int assoId, String assoName, int coinsEarned ) {
+        this.id = id;
+        this.name = name;
+        this.depositDate = depositDate;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.description = description;
+        this.assoId = assoId;
+        this.assoName = assoName;
+        this.coinsEarned = coinsEarned;
     }
 
 
@@ -39,12 +58,21 @@ public class Project {
         this.id = id;
     }
 
+    private final StringProperty name2 = new SimpleStringProperty(this, "name");
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Date getDepositDate() {
+        return depositDate;
+    }
+
+    public void setDepositDate(Date depositDate) {
+        this.depositDate = depositDate;
     }
 
     public Date getStartDate() {
@@ -77,6 +105,14 @@ public class Project {
 
     public void setAssoId(int assoId) {
         this.assoId = assoId;
+    }
+
+    public String getAssoName() {
+        return assoName;
+    }
+
+    public void setAssoName(String assoName) {
+        this.assoName = assoName;
     }
 
     public int getCoinsEarned() {
