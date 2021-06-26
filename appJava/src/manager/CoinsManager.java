@@ -1,13 +1,9 @@
 package manager;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CoinsManager {
-
-    private final Connection db = new DatabaseManager().getConnexion();
-
+public class CoinsManager extends Manager {
 
     public int getUserEarnedCoins(int userId) throws SQLException {
         String query = """

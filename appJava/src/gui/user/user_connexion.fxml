@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="412.0" prefWidth="669.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.user.UserConnexionController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="412.0" prefWidth="669.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.user.UserConnexionController">
    <children>
       <ImageView fitHeight="483.0" fitWidth="669.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -26,8 +26,9 @@
             </Label>
             <TextField fx:id="usernameField" alignment="TOP_CENTER" layoutX="101.0" layoutY="129.0" promptText="Nom d'utilisateur" />
             <PasswordField fx:id="passwordField" alignment="TOP_CENTER" layoutX="101.0" layoutY="201.0" promptText="Mot de passe" />
-            <Button fx:id="btnLogin" layoutX="133.0" layoutY="301.0" mnemonicParsing="false" onAction="#valid" style="-fx-background-color: linear-gradient(to right, #00B486, #00B486, #00B486);" text="Se connecter" textFill="WHITE" wrapText="true" />
+            <Button layoutX="134.0" layoutY="273.0" mnemonicParsing="false" onAction="#valid" style="-fx-background-color: linear-gradient(to right, #00B486, #00B486, #00B486);" text="Se connecter" textFill="WHITE" wrapText="true" />
             <Text fx:id="errorMsg" fill="RED" layoutX="79.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+            <Button layoutX="147.0" layoutY="329.0" mnemonicParsing="false" onAction="#goToLandingPage" style="-fx-background-color: RGB(255,0,0);" text="Annuler" textFill="WHITE" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="77.0" layoutY="105.0" prefHeight="200.0" prefWidth="200.0">

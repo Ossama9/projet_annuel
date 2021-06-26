@@ -1,11 +1,9 @@
 package manager;
 
-import controller.asso.Asso;
-import controller.projet.Projet;
+import persistence.Project;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import javax.xml.crypto.Data;
 import java.sql.*;
 
 public class DatabaseManager {
@@ -31,9 +29,7 @@ public class DatabaseManager {
 
 
 
-
-    public static ObservableList<Asso> getasso(){
-
+    /*public static ObservableList<Asso> getasso(){
 
         ObservableList<Asso> list = FXCollections.<Asso>observableArrayList();
 
@@ -60,9 +56,9 @@ public class DatabaseManager {
         return list;
     }
 
-    public static ObservableList<Projet> getProjet(){
+    public static ObservableList<Project> getProjet(){
 
-        ObservableList<Projet> list = FXCollections.<Projet>observableArrayList();
+        ObservableList<Project> list = FXCollections.<Project>observableArrayList();
 
         try {
             String myUrl = "jdbc:mysql://localhost:3306/ready_to_use";
@@ -76,7 +72,7 @@ public class DatabaseManager {
                 ResultSet rs_name = ps_name.executeQuery();
 
                 while (rs_name.next()){
-                    list.add(new Projet(Integer.parseInt(rs.getString("id")), Integer.parseInt(rs.getString("tarif")), rs.getString("nameProjet"), rs.getString("descriptif"), rs_name.getString("nameAsso")));
+                    list.add(new Project(Integer.parseInt(rs.getString("id")), Integer.parseInt(rs.getString("tarif")), rs.getString("nameProjet"), rs.getString("descriptif"), rs_name.getString("nameAsso")));
                 }
             }
         }
@@ -85,7 +81,7 @@ public class DatabaseManager {
             e.printStackTrace();
         }
         return list;
-    }
+    }*/
 
 //    public static ObservableList<Projet> getProjet(){
 //

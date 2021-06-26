@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="mainPane" prefHeight="700.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.asso.AssoConnexionController">
+   <children>
+      <SplitPane dividerPositions="0.29797979797979796" layoutX="266.0" layoutY="136.0" prefHeight="591.0" prefWidth="755.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <items>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: RGB(217,234,242) RGB(217,234,242) RGB(217,234,242) RGB(217,234,242) RGB(217,234,242) RGB(217,234,242) RGB(217,234,242) RGB(217,234,242);">
+               <children>
+                  <ImageView fitHeight="130.0" fitWidth="108.0" layoutX="86.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="542.2" AnchorPane.leftAnchor="86.0" AnchorPane.rightAnchor="85.19999999999999" AnchorPane.topAnchor="49.0">
+                     <image>
+                        <Image url="@../../../assets/images/logo.PNG" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="86.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ready To Use" AnchorPane.bottomAnchor="518.682421875" AnchorPane.leftAnchor="85.9033203125" AnchorPane.rightAnchor="85.29667968749999" AnchorPane.topAnchor="156.576171875">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Label layoutX="81.0" layoutY="279.0" text="Pas encore inscrit ?" />
+                  <Button layoutX="101.0" layoutY="298.0" mnemonicParsing="false" onAction="#goToAssoInscription" text="Inscription" />
+                  <Label layoutX="79.0" layoutY="427.0" text="Vous êtes un client ?" />
+                  <Button layoutX="97.0" layoutY="446.0" mnemonicParsing="false" onAction="#goToUserConnexion" text="Partie Client" />
+                  <Button layoutX="110.0" layoutY="623.0" mnemonicParsing="false" onAction="#goToLandingPage" text="Accueil" />
+               </children>
+            </AnchorPane>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="551.0">
+               <children>
+                  <Text layoutX="275.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Connexion">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="errorMsg" fill="RED" layoutX="223.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <Label layoutX="256.0" layoutY="230.0" text="Numero Siren" />
+                  <TextField fx:id="sirenField" layoutX="256.0" layoutY="249.0" />
+                  <Label layoutX="256.0" layoutY="340.0" text="Mot de Passe" />
+                  <PasswordField fx:id="passwordField" layoutX="257.0" layoutY="358.0" />
+                  <Button layoutX="304.0" layoutY="472.0" mnemonicParsing="false" onAction="#validConnection" style="-fx-background-color: linear-gradient(to right, #00B486, #00B486, #00B486);" text="Valider" />
+               </children></AnchorPane>
+         </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
