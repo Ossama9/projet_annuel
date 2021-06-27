@@ -1,67 +1,105 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Produit{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+
+
+    <link rel="stylesheet" href="{{ asset('css/product.css') }}">
+{% endblock %}
 
 {% block body %}
-    <h3 class="mb-4">Produit</h3>
+    <body class="body_home">
+        <div class="container mt-4">
+            <h3 class="mb-4">Produit</h3>
+            <div class="row_product">
+                <div class="col-sm-6">
+                    <section class="gallery">
+                        {% if pictures %}
+                            {% for picture in pictures %}
+                                <div class="gallery__item">
+                                    <input type="radio" id="img-1" checked name="gallery" class="gallery__selector"/>
+                                    <img class="gallery__img" src="{{ asset('uploads/pictures/' ~ picture.name) }}" alt=""/>
+                                    <label for="img-1" class="gallery__thumb"><img src="{{ asset('uploads/pictures/' ~ picture.name) }}" alt=""/></label>
+                                </div>
+                            {% endfor %}
+                            <div class="gallery__item">
+                                <input type="radio" id="img-2" name="gallery" class="gallery__selector"/>
+                                <img class="gallery__img" src="https://fhox.com.br/wp-content/uploads/2020/10/pro-max-camera.jpg" alt=""/>
+                                <label for="img-2" class="gallery__thumb"><img src="https://fhox.com.br/wp-content/uploads/2020/10/pro-max-camera.jpg" alt=""/></label>
+                            </div>
+                            <div class="gallery__item">
+                                <input type="radio" id="img-3" name="gallery" class="gallery__selector"/>
+                                <img class="gallery__img" src="https://www.presse-citron.net/app/uploads/2020/10/iphone12-pro.jpg" alt=""/>
+                                <label for="img-3" class="gallery__thumb"><img src="https://www.presse-citron.net/app/uploads/2020/10/iphone12-pro.jpg" alt=""/></label>
+                            </div>
+                            <div class="gallery__item">
+                                <input type="radio" id="img-4" name="gallery" class="gallery__selector"/>
+                                <img class="gallery__img" src="https://www.cnet.com/a/img/MkcUezYr9RSI3Pghy-FV7BF0IKc=/940x0/2020/10/13/ef3f808f-df87-4a36-aecc-4e59d1d022be/iphone-12-pro-and-iphone-12-pro-max-apple-google-chrome-13-10-2020-19-47-14-2.png" alt=""/>
+                                <label for="img-4" class="gallery__thumb"><img src="https://www.cnet.com/a/img/MkcUezYr9RSI3Pghy-FV7BF0IKc=/940x0/2020/10/13/ef3f808f-df87-4a36-aecc-4e59d1d022be/iphone-12-pro-and-iphone-12-pro-max-apple-google-chrome-13-10-2020-19-47-14-2.png" alt=""/></label>
+                            </div>
+                        {% else %}
+                            <p>Aucune photo</p>
+                        {% endif %}
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ product.id }}</td>
-            </tr>
-            <tr>
-                <th>Marque</th>
-                <td>{{ product.model.brand.name }}</td>
-            </tr>
-            <tr>
-                <th>Modèle</th>
-                <td>{{ product.model.name }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ product.description }}</td>
-            </tr>
-            <tr>
-                <th>Condition</th>
-                <td>{{ product.productConditionToString }}</td>
-            </tr>
-            <tr>
-                <th>Prix</th>
-                <td>{{ product.price }} €</td>
-            </tr>
-            <tr>
-                <th>Date de dépôt</th>
-                <td>{{ product.depositDate ? product.depositDate|date('d-m-Y à H:i') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Statut</th>
-                <td>{% if product.sell.status == 0 %}En attente{% elseif product.sell.status == 1 %}Accepté{% else %}Refusé{% endif %}</td>
-            </tr>
+                    </section>
+
+                    </div>
+                <div class="col-md-6 tst" style="color: white;">
+                    <p>- Statut - <strong>{% if product.sell.status == 0 %}En attente{% elseif product.sell.status == 1 %}Accepté{% else %}Refusé{% endif %}</strong></p>
+                    <p>- Date de dépôt - {{ product.depositDate ? product.depositDate|date('d-m-Y à H:i') : '' }}  </p>
+                    <p>- ID: {{ product.id }} - {{ product.model.brand.name }} - {{ product.model.name }}</p>
+                    <p>
+                        - Description: {{ product.description }}
+                    </p>
+
+
+                    <p>
+                        - Prix:
+                        {{ product.price }} €
+                    </p>
+                    <p>
+                        - Condition:
+                        {{ product.productConditionToString }}
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="flex">
+
+                <div class="flex-div">
+
+                    <a class="btn btn-secondary mr-2" href="{{ path('merchant.product.edit', {'id': product.id}) }}">Modifier</a>
+                </div>
+
+                    {{ include('merchant/product/_delete_form.html.twig') }}
+                <div class="flex-div">
+
+                    <a class="btn btn-primary" href="{{ path('merchant.product.index') }}">Retour</a>
+
+                </div>
+            </div>
+        </div>
+
+        <hr style="color: white">
+
+        <div class="container" style="color: white">
+
             {% if product.sell.voucher %}
-                <tr>
-                    <th>Bon de suivi colissimo</th>
-                    <td>{{ product.sell.voucher|upper }}</td>
-                </tr>
+                <h4>
+                    Bon de suivi colissimo
+                    {{ product.sell.voucher|upper }}
+                </h4>
+
             {% endif %}
-        </tbody>
-    </table>
 
-    <div class="w-50 my-4">
-        <h5>Photos du produit</h5>
-        {% if pictures %}
-            {% for picture in pictures %}
-                <img src="{{ asset('uploads/pictures/' ~ picture.name) }}" class="w-25" alt="Produit">
-            {% endfor %}
-        {% else %}
-            <p>Aucune photo</p>
-        {% endif %}
-    </div>
+        </div>
+{#        <script type="text/javascript" src="{{ asset('js/product.js') }}"></script>#}
 
-    <div class="d-flex">
-        <a class="btn btn-secondary mr-2" href="{{ path('merchant.product.edit', {'id': product.id}) }}">Modifier</a>
-        {{ include('merchant/product/_delete_form.html.twig') }}
-        <a class="btn btn-primary" href="{{ path('merchant.product.index') }}">Retour</a>
-    </div>
+    </body>
+
 {% endblock %}

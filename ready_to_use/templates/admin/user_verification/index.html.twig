@@ -3,41 +3,52 @@
 {% block title %}Liste des demandes pour devenir marchand{% endblock %}
 
 {% block body %}
-    <h3 class="mb-4">Liste des demandes pour devenir marchand</h3>
+    <div class="container mt-4">
+        <h3 class="mb-4">Liste des demandes pour devenir marchand</h3>
+        <table class="table">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Statut</th>
-                <th>Demande effectué par</th>
-                <th>Date de la demande</th>
-                <th>Date de la vérification</th>
-                <th>Vérifié par</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user_verification in user_verifications %}
-            <tr>
-                <td>{{ user_verification.id }}</td>
-                <td>{% if user_verification.status == 0 %}En attente{% elseif user_verification.status == 1 %}Vérifié{% else %}Refusé{% endif %}</td>
-                <td>{{ user_verification.requestingUser.email }}</td>
-                <td>{{ user_verification.requestDate ? user_verification.requestDate|date('d-m-Y à H:i') : '' }}</td>
-                <td>{{ user_verification.validationDate ? user_verification.validationDate|date('d-m-Y à H:i') : '' }}</td>
-                <td>{{ user_verification.verifiedBy ? user_verification.verifiedBy.email : '' }}</td>
-                <td>
-                    <a class="btn btn-primary" href="{{ path('admin.user.verification.show', {'id': user_verification.id}) }}">Voir</a>
-                    <a class="btn btn-secondary" href="{{ path('admin.user.verification.edit', {'id': user_verification.id}) }}">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">Aucune demande</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <a class="btn btn-primary" href="{{ path('admin.user.verification.new') }}">Ajouter une demande</a>
+            <thead>
+                <tr>
+
+                    <th class="p-4">Id</th>
+                    <th class="p-4">Statut</th>
+                    <th class="p-4">Demande effectué par</th>
+                    <th class="p-4">Date de la demande</th>
+                    <th class="p-4">Date de la vérification</th>
+                    <th class="p-4">Vérifié par</th>
+                    <th class="p-4">Voir</th>
+                    <th class="p-4">Modifier</th>
+
+                </tr>
+            </thead>
+            <tbody>
+            {% for user_verification in user_verifications %}
+                <tr>
+
+                    <td class="p-4">{{ user_verification.id }}</td>
+                    <td class="p-4">{% if user_verification.status == 0 %}En attente{% elseif user_verification.status == 1 %}Vérifié{% else %}Refusé{% endif %}</td>
+                    <td class="p-4">{{ user_verification.requestingUser.email }}</td>
+                    <td class="p-4">{{ user_verification.requestDate ? user_verification.requestDate|date('d-m-Y à H:i') : '' }}</td>
+                    <td class="p-4">{{ user_verification.validationDate ? user_verification.validationDate|date('d-m-Y à H:i') : '' }}</td>
+                    <td class="p-4">{{ user_verification.verifiedBy ? user_verification.verifiedBy.email : '' }}</td>
+                    <td class="p-2">
+                        <a id="button"  href="{{ path('admin.user.verification.show', {'id': user_verification.id}) }}">Voir</a>
+                    </td><td class="p-2">
+                        <a id="button"  href="{{ path('admin.user.verification.edit', {'id': user_verification.id}) }}">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Aucune demande</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div id="div">
+
+            <a id="button" href="{{ path('admin.user.verification.new') }}">Ajouter une demande</a>
+        </div>
+    </div>
+
 {% endblock %}

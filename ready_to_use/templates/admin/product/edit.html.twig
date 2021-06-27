@@ -3,12 +3,21 @@
 {% block title %}Éditer un produit{% endblock %}
 
 {% block body %}
+
+<body class="body_home">
+
+    <div class="container mt-4">
     <h3 class="mb-4">Éditer un produit</h3>
 
-    {{ include('admin/product/_form.html.twig', {'button_label': 'Vendre'}) }}
+    <div class="flex-div">
 
-    {{ include('admin/product/_delete_form.html.twig') }}
+        {{ include('admin/product/_form.html.twig', {'button_label': 'Vendre'}) }}
 
-    <a class="btn btn-primary mt-2" href="{{ path('product.index') }}">Retour</a>
+        {{ include('admin/product/_delete_form.html.twig') }}
 
+        <a class="btn btn-primary mt-2" href="{{ path('product.index') }}">Retour</a>
+    </div>
+
+</div>
+</body>
 {% endblock %}

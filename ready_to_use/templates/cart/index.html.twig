@@ -65,8 +65,11 @@
                 </div>
             </div>
         {% else %}
-            <div class="alert alert-info">
-                Votre panier est vide. <a href="{{ path('product.index') }}">Voir la liste des produits</a>.
+            <div class="jumbotron p-4">
+                <div id="panier-container">
+
+                    <p>Votre panier est vide. <a id="href" href="{{ path('product.index') }}">Voir la liste des produits</a></p>
+                </div>
             </div>
         {% endif %}
     </div>

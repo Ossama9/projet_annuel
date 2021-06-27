@@ -3,39 +3,47 @@
 {% block title %}Aperçu d'un entrepôt{% endblock %}
 
 {% block body %}
-    <h3 class="mb-4">Entrepôt de {{ wharehouse.city }}</h3>
 
-    <table class="table">
-        <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ wharehouse.id }}</td>
-        </tr>
-        <tr>
-            <th>Adresse</th>
-            <td>{{ wharehouse.address }}</td>
-        </tr>
-        <tr>
-            <th>Ville</th>
-            <td>{{ wharehouse.city }}</td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="container mt-4">
+        <h3 class="mb-4">Entrepôt de {{ wharehouse.city }}</h3>
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ wharehouse.id }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ wharehouse.address }}</td>
+            </tr>
+            <tr>
+                <th>Ville</th>
+                <td>{{ wharehouse.city }}</td>
+            </tr>
+            </tbody>
+        </table>
 
-    <div>
-        <h5 class="mb-4">Liste des produits entreposé à {{ wharehouse.city }} ({{ wharehouse.products.count }})</h5>
-        <div class="row">
-            {% for product in wharehouse.products %}
-                {{ include('/product/_card.html.twig', {product: product, manageable: true}) }}
-            {% else %}
-                <p class="ml-3">Aucun produit</p>
-            {% endfor %}
+        <div>
+            <h5 class="mb-4">Liste des produits entreposé à {{ wharehouse.city }} ({{ wharehouse.products.count }})</h5>
+            <div class="row">
+                {% for product in wharehouse.products %}
+                    {{ include('/product/_card.html.twig', {product: product, manageable: true}) }}
+                {% else %}
+                    <p class="ml-3">Aucun produit</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="flex">
+            <div class="flex-div">
+                <a id="button" class="btn btn-secondary mr-2" href="{{ path('admin.wharehouse.edit', {'id': wharehouse.id}) }}">Modifier</a>
+            </div>
+            {{ include('admin/wharehouse/_delete_form.html.twig') }}
+            <div class="flex-div">
+                <a id="button" class="btn btn-primary mr-2" href="{{ path('admin.wharehouse.index') }}">Retour</a>
+            </div>
         </div>
     </div>
 
-    <div class="d-flex">
-        <a class="btn btn-secondary mr-2" href="{{ path('admin.wharehouse.edit', {'id': wharehouse.id}) }}">Modifier</a>
-        {{ include('admin/wharehouse/_delete_form.html.twig') }}
-        <a class="btn btn-primary mr-2" href="{{ path('admin.wharehouse.index') }}">Retour</a>
-    </div>
+
 {% endblock %}
