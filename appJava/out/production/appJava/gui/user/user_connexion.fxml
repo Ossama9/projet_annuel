@@ -14,7 +14,7 @@
    <children>
       <ImageView fitHeight="483.0" fitWidth="669.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../assets/images/bg.png" />
+            <Image url="@../../assets/images/bg.png" />
          </image>
       </ImageView>
       <AnchorPane fx:id="textLabel" layoutX="305.0" layoutY="11.0" prefHeight="387.0" prefWidth="338.0">
@@ -35,7 +35,7 @@
          <children>
             <ImageView fitHeight="246.0" fitWidth="238.0" layoutX="-14.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../assets/images/avatar.png" />
+                  <Image url="@../../assets/images/avatar.png" />
                </image>
             </ImageView>
          </children>

@@ -7,6 +7,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -18,7 +19,7 @@
                <children>
                   <ImageView fitHeight="130.0" fitWidth="108.0" layoutX="86.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="542.2" AnchorPane.leftAnchor="86.0" AnchorPane.rightAnchor="85.19999999999999" AnchorPane.topAnchor="49.0">
                      <image>
-                        <Image url="@../../../assets/images/logo.PNG" />
+                        <Image url="@../../assets/images/logo.PNG" />
                      </image>
                   </ImageView>
                   <Text layoutX="86.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ready To Use" AnchorPane.bottomAnchor="518.682421875" AnchorPane.leftAnchor="85.9033203125" AnchorPane.rightAnchor="85.29667968749999" AnchorPane.topAnchor="156.576171875">
@@ -26,13 +27,40 @@
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <Label layoutX="56.0" layoutY="420.0" text="Envie de participer à un projet ?" />
-                  <Button layoutX="104.0" layoutY="438.0" mnemonicParsing="false" onAction="#goToUserConnexion" text="Connexion" />
-                  <Label layoutX="63.0" layoutY="554.0" text="Vous n'êtes pas déjà inscrit ?" />
-                  <Hyperlink layoutX="91.0" layoutY="572.0" text="Visitez notre site" />
+                  <Text layoutX="47.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="coins remporté :" />
+                  <Text fx:id="earnedCoins" layoutX="168.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10" />
+                  <Button fx:id="supprBtn" layoutX="107.0" layoutY="405.0" mnemonicParsing="false" style="-fx-background-color: RGB(255,0,0); visibility: false;" text="Supprimer" />
+                  <Pane fx:id="connection" layoutX="47.0" layoutY="465.0" style="visibility: false;">
+                     <children>
+                        <Label text="Envie de participer à un projet ?" />
+                        <Button layoutX="53.0" layoutY="25.0" mnemonicParsing="false" onAction="#goToUserConnexion" text="Connexion" />
+                        <Label layoutX="6.0" layoutY="91.0" text="Vous n'êtes pas déjà inscrit ?" />
+                        <Hyperlink layoutX="38.0" layoutY="107.0" text="Visitez notre site" />
+                     </children>
+                  </Pane>
+                  <Button fx:id="deconexion" layoutX="93.0" layoutY="623.0" mnemonicParsing="false" onAction="#goToLandingPage" style="-fx-background-color: RGB(255,0,0); visibility: true;" text="Deconnexion" textFill="WHITE" />
                </children>
             </AnchorPane>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="699.0" prefWidth="681.0" />
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="699.0" prefWidth="681.0">
+               <children>
+                  <Text fx:id="title" layoutX="274.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="title">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Text>
+                  <Label layoutX="50.0" layoutY="161.0" text="Déposé le : " />
+                  <Text fx:id="depositDate" layoutX="131.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="date" />
+                  <Label layoutX="382.0" layoutY="161.0" text="Par : " />
+                  <Text fx:id="associationName" layoutX="436.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="association" />
+                  <Label layoutX="50.0" layoutY="220.0" text="Date de début :" />
+                  <Text fx:id="startDate" layoutX="155.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="date" />
+                  <Label layoutX="382.0" layoutY="220.0" text="Date de fin :" />
+                  <Text fx:id="endDate" layoutX="472.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="date" />
+                  <Label layoutX="50.0" layoutY="313.0" text="Description :" />
+                  <Text fx:id="description" layoutX="50.0" layoutY="362.0" strokeType="OUTSIDE" strokeWidth="0.0" text="description" />
+                  <Button fx:id="payBtn" layoutX="315.0" layoutY="625.0" mnemonicParsing="false" onAction="#createPopup" style="-fx-background-color: RGB(50,200,50); visibility: true;" text="Donner" />
+                  <Text fx:id="successMsg" fill="#18e71f" layoutX="274.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="successMsg" />
+               </children></AnchorPane>
          </items>
       </SplitPane>
    </children>

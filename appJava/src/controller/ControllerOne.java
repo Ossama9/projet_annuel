@@ -3,6 +3,7 @@ package controller;
 import controller.asso.AssoIndexController;
 import controller.asso.AssoNewProjectController;
 import controller.asso.AssoPasswordChoiceController;
+import controller.project.ProjectIndexController;
 import controller.user.UserIndexController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -184,12 +185,32 @@ public class ControllerOne {
             Scene scene = new Scene(loader.load());
             currentStage.setScene(scene );
 
-            /* currentStage.setTitle(project.getName());
+            currentStage.setTitle(project.getName());
 
             ProjectIndexController newController = loader.getController();
             newController.initData(project);
 
-            currentStage.show();*/
+            currentStage.show();
+        }
+        catch (IOException e){
+            System.out.println("Erreur de chargement: " + e);
+        }
+    }
+
+    public static void goToProjectIndex(ActionEvent event, Project project, User user){
+
+        try {
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/project/project_index.fxml")));
+            Stage currentStage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            currentStage.setScene(scene );
+
+            currentStage.setTitle(project.getName());
+
+            ProjectIndexController newController = loader.getController();
+            newController.initData(project, user);
+
+            currentStage.show();
         }
         catch (IOException e){
             System.out.println("Erreur de chargement: " + e);

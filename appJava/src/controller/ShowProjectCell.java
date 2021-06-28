@@ -11,6 +11,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import persistence.Project;
+import persistence.User;
 
 public class ShowProjectCell extends TableCell<Project, Boolean> {
 
@@ -31,6 +32,17 @@ public class ShowProjectCell extends TableCell<Project, Boolean> {
         showBtn.setOnAction(event -> {
             Project project = table.getItems().get(ShowProjectCell.this.getIndex());
             ControllerOne.goToProjectIndex(event, project);
+        });
+    }
+
+    public ShowProjectCell(Stage stage, TableView<Project> table, User user) {
+
+        paddedBtn.setPadding(new Insets(3));
+        paddedBtn.getChildren().add(showBtn);
+
+        showBtn.setOnAction(event -> {
+            Project project = table.getItems().get(ShowProjectCell.this.getIndex());
+            ControllerOne.goToProjectIndex(event, project, user);
         });
     }
 

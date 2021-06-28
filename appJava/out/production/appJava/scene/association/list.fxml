@@ -18,7 +18,7 @@
                <children>
                   <ImageView fitHeight="130.0" fitWidth="108.0" layoutX="46.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../assets/images/logo.PNG" />
+                        <Image url="@../../assets/images/logo.PNG" />
                      </image>
                   </ImageView>
                   <Button layoutX="20.0" layoutY="157.0" mnemonicParsing="false" onAction="#Update" prefHeight="26.0" prefWidth="160.0" text="Valider" textAlignment="CENTER" />

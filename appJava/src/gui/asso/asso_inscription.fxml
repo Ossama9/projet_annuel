@@ -19,7 +19,7 @@
                <children>
                   <ImageView fitHeight="130.0" fitWidth="108.0" layoutX="86.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="542.2" AnchorPane.leftAnchor="86.0" AnchorPane.rightAnchor="85.19999999999999" AnchorPane.topAnchor="49.0">
                      <image>
-                        <Image url="@../../../assets/images/logo.PNG" />
+                        <Image url="@../../assets/images/logo.PNG" />
                      </image>
                   </ImageView>
                   <Text layoutX="86.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ready To Use" AnchorPane.bottomAnchor="518.682421875" AnchorPane.leftAnchor="85.9033203125" AnchorPane.rightAnchor="85.29667968749999" AnchorPane.topAnchor="156.576171875">

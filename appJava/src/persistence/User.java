@@ -10,6 +10,7 @@ public class User {
     private String email;
     private int earnedCoins;
     private int usedCoins;
+    private int projects;
 
 
     public void feed(int id, String username, String password, String firstName, String lastName, String email) {
@@ -95,5 +96,13 @@ public class User {
 
     public int getAvailableCoins(){
         return earnedCoins - usedCoins;
+    }
+
+    public int getProjects() {
+        return projects;
+    }
+
+    public void setProjects(int projects) {
+        this.projects = projects;
     }
 }
