@@ -1,8 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Produit{% endblock %}
-{% block stylesheets %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -89,19 +90,37 @@
                     Bon de suivi colissimo
                     {{ product.sell.voucher|upper }}
                 </h4>
+                <div class="loader" style="margin: 50px">
+                    <div id="loader">
+                        <div class="dots"></div>
+                        <div class="dots"></div>
+                        <div class="dots"></div>
+                        <div class="dots"></div>
+                        <div class="dots"></div>
+                    </div>
+                </div>
 
             {% endif %}
+
 
         </div>
 {#        <script type="text/javascript" src="{{ asset('js/product.js') }}"></script>#}
 
-    <div class="d-flex">
+    <div class="flex">
         {% if is_editable %}
             <a class="btn btn-secondary mr-2" href="{{ path('merchant.product.edit', {'id': product.id}) }}">Modifier</a>
         {% endif %}
         {{ include('merchant/product/_delete_form.html.twig') }}
-        <a class="btn btn-primary" href="{{ path('merchant.product.index') }}">Retour</a>
+        <div>
+            <a id="button" class="btn btn-primary " href="{{ path('merchant.product.index') }}">Retour</a>
+        </div>
     </div>
+    <div>
+
+
+
+    </div>
+    <script type="module" src="{{ asset('js/ready_to_use/js') }}"></script>
     </body>
 
 {% endblock %}

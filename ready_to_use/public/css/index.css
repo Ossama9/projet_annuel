@@ -642,10 +642,29 @@ a:hover{
     display: none!important;
 }
 
-.required{
-    display: none!important;
+/*.required{*/
+/*    display: none!important;*/
+/*}*/
+
+#filter_model{
+    margin: 0px!important;
+}
+#filter_max_price{
+    margin: 0px!important;
+}
+#filter_brand{
+    margin: 0px!important;
+}
+body > div.test > div.login-content > form > div:nth-child(2) > div.div > div > label{
+        display: none!important;
 }
 
+body > div.test > div.login-content > form > div:nth-child(3) > div.div > div > label{
+    display: none!important;
+}
+body > div.test > div.login-content > form > div.input-div.pass > div.div > div > label{
+    display: none!important;
+}
 .content-form{
     display: flex;
     flex-direction: column;
@@ -666,14 +685,15 @@ a:hover{
 #avatar{
     margin: 30px;
 }
-.content-form{
-    flex-direction: row!important;
+.content-form {
+    flex-direction: row !important;
     flex-wrap: nowrap;
     justify-content: space-around;
-
-
 }
-.button{
+
+
+
+.button-div{
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -681,6 +701,14 @@ a:hover{
     justify-content: center;
     margin-top: 50px!important;
 }
+/*.button{*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: stretch;*/
+/*    flex-wrap: nowrap;*/
+/*    justify-content: center;*/
+/*    margin-top: 50px!important;*/
+/*}*/
 .entete{
     display: flex;
     flex-direction: column;
@@ -705,6 +733,19 @@ body > div > div > div > a{
 }
 
 #button {
+    background-image: linear-gradient(to right, #00B486, #00B486, #00B486)!important;
+    border-radius: 25px!important;
+    color: #fff!important;
+    padding: 10px 17px;
+    text-align: center;
+    text-decoration: none;
+    display: block!important;
+    font-size: 20px;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif!important;
+}
+.button {
     background-image: linear-gradient(to right, #00B486, #00B486, #00B486)!important;
     border-radius: 25px!important;
     color: #fff!important;
@@ -1038,3 +1079,21 @@ div > img{
     flex-direction: row;
     align-content: center;
 }
+.wh{
+    overflow: auto;
+    text-align: justify;
+    height: 200px!important;
+    width: 500px!important;
+
+}
+.tr-tab{
+    height: 200px!important;
+}
+.cm{
+    overflow: auto;
+
+    width: 200px;
+    text-align: justify;
+
+}
+
