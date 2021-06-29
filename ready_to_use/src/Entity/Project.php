@@ -25,6 +25,11 @@ class Project
     private $name;
 
     /**
+     * @ORM\Column(type="datetime",  nullable=true)
+     */
+    private $depositDate;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $startDate;
@@ -33,6 +38,11 @@ class Project
      * @ORM\Column(type="datetime")
      */
     private $endDate;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
 
     /**
      * @ORM\ManyToOne(targetEntity=Association::class, inversedBy="projects")

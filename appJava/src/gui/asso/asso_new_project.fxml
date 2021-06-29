@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="mainPane" prefHeight="700.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.asso.AssoNewProjectController">
+   <children>
+      <SplitPane dividerPositions="0.29797979797979796" layoutX="266.0" layoutY="136.0" prefHeight="591.0" prefWidth="755.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <items>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: RGB(217,234,242) RGB(217,234,242) RGB(217,234,242) RGB(217,234,242) RGB(217,234,242) RGB(217,234,242) RGB(217,234,242) RGB(217,234,242);">
+               <children>
+                  <ImageView fitHeight="130.0" fitWidth="108.0" layoutX="86.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="542.2" AnchorPane.leftAnchor="86.0" AnchorPane.rightAnchor="85.19999999999999" AnchorPane.topAnchor="49.0">
+                     <image>
+                        <Image url="@../../../assets/images/logo.PNG" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="86.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ready To Use" AnchorPane.bottomAnchor="518.682421875" AnchorPane.leftAnchor="85.9033203125" AnchorPane.rightAnchor="85.29667968749999" AnchorPane.topAnchor="156.576171875">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Button layoutX="97.0" layoutY="298.0" mnemonicParsing="false" text="Mes Projets" />
+                  <Button layoutX="110.0" layoutY="621.0" mnemonicParsing="false" onAction="#goToAssoIndex" style="-fx-background-color: RGB(255,0,0);" text="Annuler" textFill="WHITE" />
+               </children>
+            </AnchorPane>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="551.0">
+               <children>
+                  <Text layoutX="187.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Déposer un nouveau projet">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="225.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remplissez le formulaire ci-dessous" />
+                  <Label layoutX="96.0" layoutY="169.0" text="Intitulé :" />
+                  <TextField fx:id="nameField" layoutX="182.0" layoutY="165.0" prefHeight="26.0" prefWidth="398.0" />
+                  <Label layoutX="63.0" layoutY="232.0" text="Date de début" />
+                  <DatePicker fx:id="startDateField" layoutX="64.0" layoutY="250.0" />
+                  <Label layoutX="394.0" layoutY="232.0" text="Date de fin" />
+                  <DatePicker fx:id="endDateField" layoutX="394.0" layoutY="250.0" />
+                  <Label layoutX="62.0" layoutY="312.0" text="Description" />
+                  <TextArea fx:id="descriptionField" layoutX="63.0" layoutY="330.0" prefHeight="262.0" prefWidth="551.0" />
+                  <Button layoutX="313.0" layoutY="637.0" mnemonicParsing="false" onAction="#validProject" style="-fx-background-color: linear-gradient(to right, #00B486, #00B486, #00B486);" text="Valider" textFill="WHITE" />
+                  <Text fx:id="errorMsg" fill="RED" layoutX="293.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+               </children>
+            </AnchorPane>
+         </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

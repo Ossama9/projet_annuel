@@ -1,0 +1,79 @@
+package manager;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import persistence.Project;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class ProjectManager extends Manager{
+
+
+    public void insertProject(Project project) throws SQLException {
+        String query = "INSERT INTO project (name, deposit_date, start_date, end_date, description, association_id) VALUES (?, ?, ?, ?, ?, ?);";
+
+        PreparedStatement stmt = db.prepareStatement(query);
+        stmt.setString(1, project.getName());
+        stmt.setDate(2, project.getDepositDate());
+        stmt.setDate(3, project.getStartDate());
+        stmt.setDate(4, project.getEndDate());
+        stmt.setString(5, project.getDescription());
+        stmt.setInt(6, project.getAssoId());
+
+        stmt.executeUpdate();
+    }
+
+
+
+    public ObservableList<Project> getAssoProjects(int assoId) throws SQLException {
+        ObservableList<Project> list = FXCollections.observableArrayList();
+
+        String query = "SELECT id, name, deposit_date, start_date, end_date, description, association_id FROM project WHERE association_id = " + assoId + ";";
+        ResultSet rs = db.prepareStatement(query).executeQuery();
+
+        while ( rs.next() ){
+            list.add( new Project(
+                    rs.getInt("id"  ),
+                    rs.getString("name"),
+                    rs.getDate("deposit_date"),
+                    rs.getDate("start_date"),
+                    rs.getDate("end_date"),
+                    rs.getString("description"),
+                    rs.getInt("association_id")
+            ));
+        }
+        return list;
+    }
+
+    public ObservableList<Project> getRecentsProjects() throws SQLException {
+        ObservableList<Project> list = FXCollections.observableArrayList();
+
+        String query = """
+                SELECT project.id, project.name, project.deposit_date, project.start_date, project.end_date, project.description, project.association_id, association.name AS association_name, COALESCE(SUM( user_project.amount ), 0) AS coins
+                FROM project
+                INNER JOIN association ON association.id = project.association_id
+                LEFT JOIN user_project ON user_project.project_id = project.id
+                GROUP BY project.id
+                ORDER BY deposit_date
+                LIMIT 50;
+                """;
+        ResultSet rs = db.prepareStatement(query).executeQuery();
+
+        while ( rs.next() ){
+            list.add( new Project(
+                    rs.getInt("id"  ),
+                    rs.getString("name"),
+                    rs.getDate("deposit_date"),
+                    rs.getDate("start_date"),
+                    rs.getDate("end_date"),
+                    rs.getString("description"),
+                    rs.getInt("association_id"),
+                    rs.getString("association_name"),
+                    rs.getInt("coins")
+            ));
+        }
+        return list;
+    }
+}

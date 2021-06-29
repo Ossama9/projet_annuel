@@ -20,12 +20,12 @@ class Association
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=9)
      */
-    private $login;
+    private $numeroSiren;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=255)
      */
     private $password;
 
@@ -35,9 +35,24 @@ class Association
     private $name;
 
     /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $email;
+
+    /**
      * @ORM\Column(type="integer")
      */
     private $status;
+
+    /**
+     * @ORM\Column(type="datetime",  nullable=true)
+     */
+    private $signupDate;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
 
     /**
      * @ORM\OneToMany(targetEntity=Project::class, mappedBy="association")
@@ -52,18 +67,6 @@ class Association
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getLogin(): ?string
-    {
-        return $this->login;
-    }
-
-    public function setLogin(string $login): self
-    {
-        $this->login = $login;
-
-        return $this;
     }
 
     public function getPassword(): ?string
