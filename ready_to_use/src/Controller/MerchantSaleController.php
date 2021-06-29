@@ -38,18 +38,34 @@ class MerchantSaleController extends AbstractController
      */
     public function index(OrderRepository $orderRepository, SellRepository $sellRepository,ProductRepository $productRepository): Response
     {
-        $sell = $sellRepository->findBy(['soldBy' => $this->getUser()]);
-        $products = $productRepository->findBy(['sell' => $sell]);
-        $sells = $orderRepository->findBy(['status' => !Order::STATUS_CART, 'products' => $products]);
-        foreach ($sells as $sell) {
-            $products[] = $sell->getProducts();
+        $orders = $orderRepository->findBy(['status' => !Order::STATUS_CART ]);
+        $sells = $sellRepository->findBy(['soldBy' => $this->getUser()]);
+
+
+        $productsSold = [];
+        // montant des ventes total
+        $total = 0;
+        $i = 0;
+
+        foreach ($orders as $order) {
+            foreach ($sells as $sell) {
+                foreach ($order->getProducts() as $orderItem) {
+                    if ($orderItem->getProduct() === $sell->getProduct()) {
+                        $productsSold[$i] = [
+                            0 => $sell->getProduct(),
+                            1 => $order->getPaidDate()
+                        ];
+                        $total += $sell->getProduct()->getPrice();
+                        $i++;
+                    }
+                }
+            }
         }
 
-        dump($products);
-
         return $this->render('/merchant/sale/index.html.twig', [
-            'products' => $products,
-            'current_page' => 'merchant.product'
+            'productsSold' => $productsSold,
+            'total' => $total,
+            'current_page' => 'merchant.sale'
         ]);
 
     }

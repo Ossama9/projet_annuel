@@ -42,6 +42,9 @@
                                         </div>
 
                                         <div>
+                                            <b>{{ product.vars.data.product.priceWithMargin }} €</b>
+                                        </div>
+                                        <div>
                                             <a class="btn btn-primary" href="{{ path('product.show', {id: product.vars.data.product.id }) }}">Voir</a>
                                         </div>
                                     </div>
@@ -98,7 +101,7 @@
 
         // paiement du produit
         checkout.onclick = () => {
-            axios.post(`/order/checkout`, {
+            axios.post(`{{ path('order.checkout') }}`, {
             }).then(function (response) {
                 // redirection vers l'onglet de paiement Stripe
                 stripe.redirectToCheckout({ sessionId: response.data.id })

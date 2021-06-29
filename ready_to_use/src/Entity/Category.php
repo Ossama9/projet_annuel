@@ -98,4 +98,17 @@ class Category
 
         return $this;
     }
+
+    public function getBrands(): ArrayCollection
+    {
+        $brands = new ArrayCollection();
+
+        foreach ($this->getModels() as $model)
+        {
+            if (!$brands->contains($model->getBrand()))
+                $brands[] = $model->getBrand();
+        }
+
+        return $brands;
+    }
 }

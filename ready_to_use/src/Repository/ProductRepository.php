@@ -6,6 +6,7 @@ use App\Entity\Brand;
 use App\Entity\Feature;
 use App\Entity\Model;
 use App\Entity\Product;
+use App\Entity\Sell;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
@@ -23,7 +24,6 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-
     /**
      * @param $model
      * @param $maxPrice
@@ -40,4 +40,19 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+    /**
+     * Retourne la liste des produits vendu par des marchands dont l'offre a été acceptée
+     * @return array
+     */
+    public function findAcceptedProducts(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.sell', 's', 'WITH', 's.status = 1')
+            ->andWhere('p.id = s.product')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 }

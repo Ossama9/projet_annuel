@@ -95,6 +95,13 @@
         </div>
 {#        <script type="text/javascript" src="{{ asset('js/product.js') }}"></script>#}
 
+    <div class="d-flex">
+        {% if is_editable %}
+            <a class="btn btn-secondary mr-2" href="{{ path('merchant.product.edit', {'id': product.id}) }}">Modifier</a>
+        {% endif %}
+        {{ include('merchant/product/_delete_form.html.twig') }}
+        <a class="btn btn-primary" href="{{ path('merchant.product.index') }}">Retour</a>
+    </div>
     </body>
 
 {% endblock %}

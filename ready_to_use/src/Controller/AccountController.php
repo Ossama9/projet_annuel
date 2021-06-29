@@ -41,16 +41,16 @@ class AccountController extends AbstractController
     /**
      * @Route("/account", name="account.index")
      * @param Request $request
+     * @param UserVerificationRepository $userVerificationRepository
      * @return Response
      */
-    public function index(Request $request): Response
+    public function index(Request $request, UserVerificationRepository $userVerificationRepository): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
+        $merchant = $userVerificationRepository->findOneBy(['requestingUser' => $user]);
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-        $is_merchant = $this->verificationRepository->findOneBy(['requestingUser' => $user]);
-        $merchant = $is_merchant ? $is_merchant->getStatus() === 1 ? $is_merchant : false : false;
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
@@ -62,6 +62,7 @@ class AccountController extends AbstractController
             'user' => $user,
             'form' => $form->createView(),
             'merchant' => $merchant,
+            'is_merchant' => $user->isMerchant(),
             'current_page' => 'account'
         ]);
     }

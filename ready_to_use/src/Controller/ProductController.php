@@ -40,7 +40,7 @@ class ProductController extends AbstractController
     public function index(Request $request, BrandRepository $brandRepo): Response
     {
         $brands = $brandRepo->findAll();
-        $products = $this->getDoctrine()->getRepository(Product::class)->findAll();
+        $products = $this->getDoctrine()->getRepository(Product::class)->findAcceptedProducts();
 
         $form = $this->createForm(FilterType::class);
         $form->handleRequest($request);
@@ -50,7 +50,6 @@ class ProductController extends AbstractController
             $maxPrice = $form->get("max_price")->getData();
             $products = $this->getDoctrine()->getRepository(Product::class)->findWithFilters($chosenModel, $maxPrice);
         }
-        else $products = [];
 
         return $this->render('/product/index.html.twig', [
             "brands" => $brands,

@@ -28,6 +28,16 @@
                     <th>Payé le </th>
                     <td>{{ order.paidDate|date('d-m-Y à H:i') }}</td>
                 </tr>
+                <tr>
+                    <th>Statut de la livraison </th>
+                    <td>{{ order.deliveryStatusToString }}</td>
+                </tr>
+                {% if order.deliveryStatus != 0 %}
+                    <tr>
+                        <th>Bon de livraison</th>
+                        <td>{{ order.deliveryNote }}</td>
+                    </tr>
+                {% endif %}
             {% endif %}
         </tbody>
     </table>
