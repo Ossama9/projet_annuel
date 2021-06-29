@@ -62,10 +62,13 @@
                   <Text fx:id="associationName" layoutX="436.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="association" />
                   <Label layoutX="50.0" layoutY="220.0" text="Date de début :" />
                   <Text fx:id="startDate" layoutX="155.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="date" />
+                  <Button fx:id="modifyStartDate" layoutX="50.0" layoutY="238.0" mnemonicParsing="false" onAction="#startDatePopup" style="visibility: true;" text="Modifier" />
                   <Label layoutX="382.0" layoutY="220.0" text="Date de fin :" />
                   <Text fx:id="endDate" layoutX="472.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="date" />
+                  <Button fx:id="modifyEndDate" layoutX="380.0" layoutY="238.0" mnemonicParsing="false" onAction="#endDatePopup" style="visibility: true;" text="Modifier" />
                   <Label layoutX="50.0" layoutY="313.0" text="Description :" />
                   <Text fx:id="description" layoutX="50.0" layoutY="362.0" strokeType="OUTSIDE" strokeWidth="0.0" text="description" />
+                  <Button fx:id="modifyDescription" layoutX="142.0" layoutY="301.0" mnemonicParsing="false" onAction="#descriptionPopup" style="visibility: true;" text="Modifier" />
                   <Button fx:id="payBtn" layoutX="315.0" layoutY="625.0" mnemonicParsing="false" onAction="#createPopup" style="-fx-background-color: RGB(50,200,50); visibility: true;" text="Donner" />
                   <Text fx:id="successMsg" fill="#18e71f" layoutX="274.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" />
                </children></AnchorPane>

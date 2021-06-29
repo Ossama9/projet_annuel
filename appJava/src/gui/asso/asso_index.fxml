@@ -44,11 +44,10 @@
                   <Text fx:id="validationMsg" fill="#ffa200" layoutX="197.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" />
                   <TableView fx:id="assoProjectsTable" layoutX="28.0" layoutY="165.0" prefHeight="499.0" prefWidth="608.0">
                      <columns>
-                        <TableColumn fx:id="associationColumn" prefWidth="95.19995307922363" text="Association" />
                         <TableColumn fx:id="nameColumn" prefWidth="163.99999237060547" text="Nom" />
-                        <TableColumn fx:id="descriptionColumn" prefWidth="238.40005493164062" text="Description" />
-                        <TableColumn fx:id="coinsColumn" minWidth="0.0" prefWidth="42.4000244140625" text="coins" />
-                        <TableColumn fx:id="buttonColumn" prefWidth="75.0" />
+                        <TableColumn fx:id="descriptionColumn" prefWidth="324.0000915527344" text="Description" />
+                        <TableColumn fx:id="coinsColumn" minWidth="0.0" prefWidth="47.9998779296875" text="coins" />
+                        <TableColumn fx:id="buttonColumn" prefWidth="72.7999267578125" />
                      </columns>
                   </TableView>
                   <Label layoutX="28.0" layoutY="140.0" text="Mes projet :" />

@@ -8,13 +8,14 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+    private int roles;
     private int earnedCoins;
     private int usedCoins;
     private int projects;
 
     public User(){}
 
-    public User(int id, String username, String password, String firstName, String lastName, String email) {
+    public User(int id, String username, String password, String firstName, String lastName, String email, int roles) {
         this.id = id;
         this.username = username;
 
@@ -26,6 +27,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.roles = roles;
     }
 
 
@@ -81,6 +83,14 @@ public class User {
         return earnedCoins;
     }
 
+    public int getRoles() {
+        return roles;
+    }
+
+    public void setRoles(int roles) {
+        this.roles = roles;
+    }
+
     public void setEarnedCoins(int earnedCoins) {
         this.earnedCoins = earnedCoins;
     }
@@ -104,4 +114,6 @@ public class User {
     public void setProjects(int projects) {
         this.projects = projects;
     }
+
+
 }

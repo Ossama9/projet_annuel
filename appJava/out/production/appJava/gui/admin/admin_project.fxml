@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="mainPane" prefHeight="700.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.project.ProjectIndexController">
+<AnchorPane fx:id="mainPane" prefHeight="700.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.admin.AdminProjectController">
    <children>
       <SplitPane dividerPositions="0.29797979797979796" layoutX="266.0" layoutY="136.0" minHeight="0.0" minWidth="0.0" prefHeight="591.0" prefWidth="755.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
@@ -27,26 +25,10 @@
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <Pane fx:id="givenText" layoutX="45.0" layoutY="214.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="coins donnés" wrappingWidth="96.15885162353516" />
-                        <Text fx:id="givenCoins" layoutX="119.0" layoutY="0.6302032470703125" strokeType="OUTSIDE" strokeWidth="0.0" />
-                     </children>
-                  </Pane>
-                  <Text layoutX="47.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="coins remporté :" />
-                  <Text fx:id="earnedCoins" layoutX="168.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10" />
-                  <Button fx:id="giveUpBtn" layoutX="105.0" layoutY="311.0" mnemonicParsing="false" onAction="#giveUp" text="Se retirer" />
-                  <Button fx:id="supprBtn" layoutX="107.0" layoutY="405.0" mnemonicParsing="false" style="-fx-background-color: RGB(255,0,0); visibility: false;" text="Supprimer" />
-                  <Pane fx:id="connection" layoutX="47.0" layoutY="465.0" style="visibility: false;">
-                     <children>
-                        <Label text="Envie de participer à un projet ?" />
-                        <Button layoutX="53.0" layoutY="25.0" mnemonicParsing="false" onAction="#goToUserConnexion" text="Connexion" />
-                        <Label layoutX="6.0" layoutY="91.0" text="Vous n'êtes pas déjà inscrit ?" />
-                        <Hyperlink layoutX="38.0" layoutY="107.0" text="Visitez notre site" />
-                     </children>
-                  </Pane>
-                  <Button fx:id="deconexion" layoutX="93.0" layoutY="654.0" mnemonicParsing="false" onAction="#goToLandingPage" style="-fx-background-color: RGB(255,0,0); visibility: true;" text="Deconnexion" textFill="WHITE" />
-                  <Button fx:id="goBack" layoutX="114.0" layoutY="620.0" mnemonicParsing="false" onAction="#goBack" text="Retour" />
+                  <Button fx:id="deconexion" layoutX="93.0" layoutY="637.0" mnemonicParsing="false" onAction="#goToLandingPage" style="-fx-background-color: RGB(255,0,0); visibility: true;" text="Deconnexion" textFill="WHITE" />
+                  <Button fx:id="goBack" layoutX="110.0" layoutY="554.0" mnemonicParsing="false" onAction="#goBack" text="Retour" />
+                  <Button layoutX="100.0" layoutY="337.0" mnemonicParsing="false" onAction="#supprProject" style="-fx-background-color: RGB(255,0,0);" text="supprimer" textFill="WHITE" />
+                  <Button layoutX="110.0" layoutY="280.0" mnemonicParsing="false" onAction="#validateProject" style="-fx-background-color: RGB(70,200,70);" text="Valider" />
                </children>
             </AnchorPane>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="699.0" prefWidth="681.0">
@@ -62,16 +44,12 @@
                   <Text fx:id="associationName" layoutX="436.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="association" />
                   <Label layoutX="50.0" layoutY="220.0" text="Date de début :" />
                   <Text fx:id="startDate" layoutX="155.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="date" />
-                  <Button fx:id="modifyStartDate" layoutX="50.0" layoutY="238.0" mnemonicParsing="false" onAction="#startDatePopup" style="visibility: true;" text="Modifier" />
                   <Label layoutX="382.0" layoutY="220.0" text="Date de fin :" />
                   <Text fx:id="endDate" layoutX="472.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="date" />
-                  <Button fx:id="modifyEndDate" layoutX="380.0" layoutY="238.0" mnemonicParsing="false" onAction="#endDatePopup" style="visibility: true;" text="Modifier" />
                   <Label layoutX="50.0" layoutY="313.0" text="Description :" />
                   <Text fx:id="description" layoutX="50.0" layoutY="362.0" strokeType="OUTSIDE" strokeWidth="0.0" text="description" />
-                  <Button fx:id="modifyDescription" layoutX="142.0" layoutY="301.0" mnemonicParsing="false" onAction="#descriptionPopup" style="visibility: true;" text="Modifier" />
-                  <Button fx:id="payBtn" layoutX="315.0" layoutY="625.0" mnemonicParsing="false" onAction="#createPopup" style="-fx-background-color: RGB(50,200,50); visibility: true;" text="Donner" />
-                  <Text fx:id="successMsg" fill="#18e71f" layoutX="274.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-               </children></AnchorPane>
+               </children>
+            </AnchorPane>
          </items>
       </SplitPane>
    </children>
