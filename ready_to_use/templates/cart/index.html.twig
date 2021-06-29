@@ -10,15 +10,24 @@
         {% if cart.products.count > 0 %}
             <div class="row mt-4">
                 {{ form_start(form) }}
-                <div class="">
-                    <div class="">
                         <div class="card-header bg-dark text-white d-flex">
-                            <h5>Produits</h5>
-                            <div class="ml-auto">
-                                {{ form_widget(form.save, {'attr': {'class': 'btn btn-warning'}}) }}
-                                {{ form_widget(form.clear, {'attr': {'class': 'btn btn-light'}}) }}
+                <div class="">
+
+                            <div class="ml-auto div-container">
+                                <div>
+
+                                    <h5>Produits: </h5>
+                                </div>
+                                <div>
+                                   {{ form_widget(form.save, {'attr': {'class': 'btn btn-warning'}}) }}
+                                </div>
+                                <div>
+
+
+                                    {{ form_widget(form.clear, {'attr': {'class': 'btn btn-light'}}) }}
+                                </div>
                             </div>
-                        </div>
+
                         <div class="list-group list-group-flush">
                             {% for product in form.products %}
                                 <div class=" group-flex">
@@ -46,22 +55,22 @@
                 </div>
                 <!-- Summary -->
                 <div class="div-total">
-                    <div class="card mt-4 mt-md-0" style="width: 502px;">
-                        <h5 class="card-header bg-dark text-white">Résumé</h5>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between">
-                                <div><b>Total</b></div>
-                                <span><b>{{ cart.total }} €</b></span>
-                            </li>
-                        </ul>
-                        <div class="card-body">
-                            {% if app.user %}
-                                <a id="checkout" class="btn btn-warning w-100">Procéder au paiement</a>
-                            {% else %}
-                                <a href="{{ path('login') }}" class="btn btn-warning w-100">Connectez-vous</a>
-                            {% endif %}
-                        </div>
+                    <div class="div-resume mt-4">
+
+
+                            <h5 class="h5">Résumé</h5>
+
+                            <b>Total</b>
+
+                            <span><b>{{ cart.total }} €</b></span>
+
+                        {% if app.user %}
+                            <a id="checkout" class="btn btn-warning w-100">Procéder au paiement</a>
+                        {% else %}
+                            <a href="{{ path('login') }}" class="btn btn-warning w-100">Connectez-vous</a>
+                        {% endif %}
                     </div>
+
                 </div>
             </div>
         {% else %}
