@@ -4,9 +4,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import persistence.Project;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class ProjectManager extends Manager{
 
@@ -26,12 +28,59 @@ public class ProjectManager extends Manager{
     }
 
 
+    public void updateStartDate(LocalDate date, int projectId) throws SQLException {
+        String query = """
+                UPDATE project
+                SET start_date = ?
+                WHERE id = ?
+                """;
+        PreparedStatement statement = db.prepareStatement(query);
+        statement.setDate(1, Date.valueOf(date));
+        statement.setInt(2, projectId);
 
-    public ObservableList<Project> getAssoProjects(int assoId) throws SQLException {
+        statement.executeUpdate();
+    }
+
+    public void updateEndDate(LocalDate date, int projectId) throws SQLException {
+        String query = """
+                UPDATE project
+                SET end_date = ?
+                WHERE id = ?
+                """;
+        PreparedStatement statement = db.prepareStatement(query);
+        statement.setDate(1, Date.valueOf(date));
+        statement.setInt(2, projectId);
+
+        statement.executeUpdate();
+    }
+
+    public void updateDescription(String description, int projectId) throws SQLException {
+        String query = """
+                UPDATE project
+                SET description = ?
+                WHERE id = ?
+                """;
+        PreparedStatement statement = db.prepareStatement(query);
+        statement.setString(1, description);
+        statement.setInt(2, projectId);
+
+        statement.executeUpdate();
+    }
+
+
+    public ObservableList<Project> getAssoProjects(int assoId, String assoName) throws SQLException {
         ObservableList<Project> list = FXCollections.observableArrayList();
 
-        String query = "SELECT id, name, deposit_date, start_date, end_date, description, association_id FROM project WHERE association_id = " + assoId + ";";
-        ResultSet rs = db.prepareStatement(query).executeQuery();
+        String query = """
+        SELECT project.id, project.name, project.deposit_date, project.start_date, project.end_date, project.description, COALESCE(SUM( user_project.amount ), 0) AS coins
+        FROM project
+        INNER JOIN user_project ON user_project.project_id = project.id
+        WHERE association_id = ?
+        GROUP BY project.id
+        """;
+        PreparedStatement statement = db.prepareStatement(query);
+        statement.setInt(1, assoId);
+        ResultSet rs = statement.executeQuery();
 
         while ( rs.next() ){
             list.add( new Project(
@@ -41,7 +90,9 @@ public class ProjectManager extends Manager{
                     rs.getDate("start_date"),
                     rs.getDate("end_date"),
                     rs.getString("description"),
-                    rs.getInt("association_id")
+                    assoId,
+                    assoName,
+                    rs.getInt("coins")
             ));
         }
         return list;

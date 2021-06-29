@@ -27,15 +27,15 @@
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <Text layoutX="46.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="coins remporté :" />
-                  <Text fx:id="earnedCoins" layoutX="167.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10" />
-                  <Pane layoutX="47.0" layoutY="289.0">
+                  <Pane fx:id="givenText" layoutX="45.0" layoutY="214.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="coins données :" />
-                        <Text fx:id="givenCoins" layoutX="116.0" layoutY="1.630218505859375" strokeType="OUTSIDE" strokeWidth="0.0" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="coins donnés" wrappingWidth="96.15885162353516" />
+                        <Text fx:id="givenCoins" layoutX="119.0" layoutY="0.6302032470703125" strokeType="OUTSIDE" strokeWidth="0.0" />
                      </children>
                   </Pane>
-                  <Button fx:id="giveUpBtn" layoutX="105.0" layoutY="334.0" mnemonicParsing="false" onAction="#giveUp" text="Se retirer" />
+                  <Text layoutX="47.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="coins remporté :" />
+                  <Text fx:id="earnedCoins" layoutX="168.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10" />
+                  <Button fx:id="giveUpBtn" layoutX="105.0" layoutY="311.0" mnemonicParsing="false" onAction="#giveUp" text="Se retirer" />
                   <Button fx:id="supprBtn" layoutX="107.0" layoutY="405.0" mnemonicParsing="false" style="-fx-background-color: RGB(255,0,0); visibility: false;" text="Supprimer" />
                   <Pane fx:id="connection" layoutX="47.0" layoutY="465.0" style="visibility: false;">
                      <children>

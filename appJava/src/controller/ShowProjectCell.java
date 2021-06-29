@@ -10,6 +10,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import persistence.Asso;
 import persistence.Project;
 import persistence.User;
 
@@ -43,6 +44,17 @@ public class ShowProjectCell extends TableCell<Project, Boolean> {
         showBtn.setOnAction(event -> {
             Project project = table.getItems().get(ShowProjectCell.this.getIndex());
             ControllerOne.goToProjectIndex(event, project, user);
+        });
+    }
+
+    public ShowProjectCell(Stage stage, TableView<Project> table, Asso asso) {
+
+        paddedBtn.setPadding(new Insets(3));
+        paddedBtn.getChildren().add(showBtn);
+
+        showBtn.setOnAction(event -> {
+            Project project = table.getItems().get(ShowProjectCell.this.getIndex());
+            ControllerOne.goToProjectIndex(stage, project, asso);
         });
     }
 

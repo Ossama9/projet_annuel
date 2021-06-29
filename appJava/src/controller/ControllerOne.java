@@ -217,4 +217,24 @@ public class ControllerOne {
             System.out.println("Erreur de chargement: " + e);
         }
     }
+
+    public static void goToProjectIndex(Stage currentStage, Project project, Asso asso){
+
+        try {
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/project/project_index.fxml")));
+            //Stage currentStage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            currentStage.setScene(scene );
+
+            currentStage.setTitle(project.getName());
+
+            ProjectIndexController newController = loader.getController();
+            newController.initData(project, asso);
+
+            currentStage.show();
+        }
+        catch (IOException e){
+            System.out.println("Erreur de chargement: " + e);
+        }
+    }
 }
