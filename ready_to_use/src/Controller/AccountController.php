@@ -41,12 +41,14 @@ class AccountController extends AbstractController
     /**
      * @Route("/account", name="account.index")
      * @param Request $request
+     * @param UserVerificationRepository $userVerificationRepository
      * @return Response
      */
-    public function index(Request $request): Response
+    public function index(Request $request, UserVerificationRepository $userVerificationRepository): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
+        $merchant = $userVerificationRepository->findOneBy(['requestingUser' => $user]);
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -59,7 +61,8 @@ class AccountController extends AbstractController
         return $this->render('account/index.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
-            'merchant' => $user->isMerchant(),
+            'merchant' => $merchant,
+            'is_merchant' => $user->isMerchant(),
             'current_page' => 'account'
         ]);
     }

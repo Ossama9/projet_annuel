@@ -12,7 +12,7 @@
             </div>
         {% endfor %}
         <div class="jumbotron">
-            {% if merchant %}
+            {% if is_merchant %}
                 <p>Vous êtes inscrit en tant que marchand depuis le {{ merchant.requestDate|date('d-m-Y à H:i') }}.</p>
             {% endif %}
             {{ form_start(form) }}
@@ -33,7 +33,7 @@
                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}">
                     <button class="btn btn-danger">Supprimer mon compte</button>
                 </form>
-                {% if not merchant %}
+                {% if not is_merchant %}
                 <form method="post" action="{{ path('account.merchant') }}" onsubmit="return confirm('Voulez-vous vraiment faire une demande pour devenir marchand ?');">
                     <input type="hidden" name="_token" value="{{ csrf_token('request' ~ app.user.id) }}">
                     <button class="btn btn-primary">Devenir marchand</button>

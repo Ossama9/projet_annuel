@@ -183,7 +183,7 @@ class OrderController extends AbstractController
             $line_items[] = [
                 'price_data' => [
                     'currency' => 'eur',
-                    'unit_amount' => $product->getProduct()->getPrice() * 100,
+                    'unit_amount' => $product->getProduct()->getPriceWithMargin() * 100,
                     'product_data' => [
                         'name' => $product->getProduct()->getModel()->getName()
                         // 'images' => [$pictures],
