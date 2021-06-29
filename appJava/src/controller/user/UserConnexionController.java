@@ -41,7 +41,10 @@ public class UserConnexionController extends ControllerOne {
                 user.setUsedCoins(coinsManager.getUserUsedCoins(user.getId()));
 
                 if( BCrypt.checkpw(passwordField.getText(), user.getPassword()) ){
-                    ControllerOne.loadUserIndex(event, user);
+                    if( user.getRoles() == 1 )
+                        ControllerOne.loadAdminIndex(event, user);
+                    else
+                        ControllerOne.loadUserIndex(event, user);
                 }
                 else {
                     errorMsg.setText("identifiant ou mot de passe incorrect");

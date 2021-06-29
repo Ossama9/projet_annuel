@@ -1,5 +1,6 @@
 package controller;
 
+import controller.admin.AdminIndexController;
 import controller.asso.AssoIndexController;
 import controller.asso.AssoNewProjectController;
 import controller.asso.AssoPasswordChoiceController;
@@ -175,10 +176,32 @@ public class ControllerOne {
         }
     }
 
+    //for admin part
+    public static void loadAdminIndex(ActionEvent event, User admin){
+        try {
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/admin/admin_index.fxml")));
+            Stage currentStage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            currentStage.setScene(new Scene(loader.load()));
+            currentStage.setTitle("Admin | " + admin.getUsername());
+
+            AdminIndexController newController = loader.getController();
+            newController.initData(admin);
+
+            currentStage.show();
+        }
+        catch (IOException e){
+            System.out.println("Erreur de chargement: " + e);
+        }
+    }
+
+    public static void loadAdminProject(ActionEvent event, Project project, User admin){
+
+    }
+
 
 
     //for projects
-    public static void goToProjectIndex(ActionEvent event, Project project){
+    public static void loadProjectIndex(ActionEvent event, Project project){
 
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/project/project_index.fxml")));
@@ -198,7 +221,7 @@ public class ControllerOne {
         }
     }
 
-    public static void goToProjectIndex(ActionEvent event, Project project, User user){
+    public static void loadProjectIndex(ActionEvent event, Project project, User user){
 
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/project/project_index.fxml")));
@@ -218,7 +241,7 @@ public class ControllerOne {
         }
     }
 
-    public static void goToProjectIndex(Stage currentStage, Project project, Asso asso){
+    public static void loadProjectIndex(Stage currentStage, Project project, Asso asso){
 
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/project/project_index.fxml")));

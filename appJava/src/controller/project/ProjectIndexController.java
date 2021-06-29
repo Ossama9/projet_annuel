@@ -65,6 +65,10 @@ public class ProjectIndexController extends ControllerOne {
         deconexion.setVisible(false);
         givenText.setVisible(false);
 
+        modifyStartDate.setVisible(false);
+        modifyEndDate.setVisible(false);
+        modifyDescription.setVisible(false);
+
         if( asso != null ){
             supprBtn.setVisible(true);
             //this.asso = asso;
@@ -93,6 +97,10 @@ public class ProjectIndexController extends ControllerOne {
             this.user = user;
         else
             connection.setVisible(true);
+
+        modifyStartDate.setVisible(false);
+        modifyEndDate.setVisible(false);
+        modifyDescription.setVisible(false);
 
         this.project = project;
 
@@ -130,9 +138,7 @@ public class ProjectIndexController extends ControllerOne {
         deconexion.setVisible(false);
         givenText.setVisible(false);
 
-        modifyStartDate.setVisible(true);
-        modifyEndDate.setVisible(true);
-        modifyDescription.setVisible(true);
+
 
         earnedCoins.setText(String.valueOf(project.getCoinsEarned()));
 
@@ -246,7 +252,11 @@ public class ProjectIndexController extends ControllerOne {
         validate.setStyle("-fx-background-color: #08f008");
         validate.setAlignment(Pos.BOTTOM_LEFT);
 
-        EventHandler<ActionEvent> eventValidate = e -> modifyStartDate(datePicker.getValue());
+        EventHandler<ActionEvent> eventValidate = e -> {
+            modifyStartDate(datePicker.getValue());
+            popup.hide();
+            startDate.setText(datePicker.getValue().toString());
+        };
 
         validate.setOnAction(eventValidate);
 
@@ -284,7 +294,11 @@ public class ProjectIndexController extends ControllerOne {
         validate.setStyle("-fx-background-color: #08f008");
         validate.setAlignment(Pos.BOTTOM_LEFT);
 
-        EventHandler<ActionEvent> eventValidate = e -> modifyEndDate(datePicker.getValue());
+        EventHandler<ActionEvent> eventValidate = e -> {
+            modifyEndDate(datePicker.getValue());
+            popup.hide();
+            endDate.setText(datePicker.getValue().toString());
+        };
 
         validate.setOnAction(eventValidate);
 
@@ -324,7 +338,11 @@ public class ProjectIndexController extends ControllerOne {
         validate.setStyle("-fx-background-color: #08f008");
         validate.setAlignment(Pos.BOTTOM_LEFT);
 
-        EventHandler<ActionEvent> eventValidate = e -> modifyDescription(textArea.getText());
+        EventHandler<ActionEvent> eventValidate = e -> {
+            modifyDescription(textArea.getText());
+            popup.hide();
+            description.setText(textArea.getText());
+        };
 
         validate.setOnAction(eventValidate);
 

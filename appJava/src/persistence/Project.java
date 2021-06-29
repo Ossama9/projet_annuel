@@ -17,6 +17,7 @@ public class Project {
     private int assoId;
     private String assoName;
     private int coinsEarned;
+    private int status;
 
     public Project(String name, Date depositDate, Date startDate, Date endDate, String description, int assoId ) {
         this.name = name;
@@ -37,9 +38,23 @@ public class Project {
         this.assoId = assoId;
     }
 
-    public Project(int id, String name, Date depositDate, Date startDate, Date endDate, String description, int assoId, String assoName, int coinsEarned ) {
+    public Project(int id, String name, int status, Date depositDate, Date startDate, Date endDate, String description, int assoId, String assoName  ) {
         this.id = id;
         this.name = name;
+        this.status = status;
+        this.depositDate = depositDate;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.description = description;
+        this.assoId = assoId;
+        this.assoName = assoName;
+
+    }
+
+    public Project(int id, String name, int status, Date depositDate, Date startDate, Date endDate, String description, int assoId, String assoName, int coinsEarned  ) {
+        this.id = id;
+        this.name = name;
+        this.status = status;
         this.depositDate = depositDate;
         this.startDate = startDate;
         this.endDate = endDate;

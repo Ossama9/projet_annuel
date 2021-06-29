@@ -14,7 +14,7 @@ public class ProjectManager extends Manager{
 
 
     public void insertProject(Project project) throws SQLException {
-        String query = "INSERT INTO project (name, deposit_date, start_date, end_date, description, association_id) VALUES (?, ?, ?, ?, ?, ?);";
+        String query = "INSERT INTO project (name, deposit_date, start_date, end_date, description, association_id, status) VALUES (?, ?, ?, ?, ?, ?, 0);";
 
         PreparedStatement stmt = db.prepareStatement(query);
         stmt.setString(1, project.getName());
@@ -72,7 +72,7 @@ public class ProjectManager extends Manager{
         ObservableList<Project> list = FXCollections.observableArrayList();
 
         String query = """
-        SELECT project.id, project.name, project.deposit_date, project.start_date, project.end_date, project.description, COALESCE(SUM( user_project.amount ), 0) AS coins
+        SELECT project.id, project.name, project.deposit_date, project.start_date, project.end_date, project.description, project.status, COALESCE(SUM( user_project.amount ), 0) AS coins
         FROM project
         INNER JOIN user_project ON user_project.project_id = project.id
         WHERE association_id = ?
@@ -86,6 +86,7 @@ public class ProjectManager extends Manager{
             list.add( new Project(
                     rs.getInt("id"  ),
                     rs.getString("name"),
+                    rs.getInt("status"),
                     rs.getDate("deposit_date"),
                     rs.getDate("start_date"),
                     rs.getDate("end_date"),
@@ -102,7 +103,7 @@ public class ProjectManager extends Manager{
         ObservableList<Project> list = FXCollections.observableArrayList();
 
         String query = """
-                SELECT project.id, project.name, project.deposit_date, project.start_date, project.end_date, project.description, project.association_id, association.name AS association_name,\s
+                SELECT project.id, project.name, project.deposit_date, project.start_date, project.end_date, project.description, project.association_id, project.status, association.name AS association_name,\s
                 COALESCE(SUM( user_project.amount ), 0) AS coins
                 FROM user_project t
                 INNER JOIN project ON project.id = t.project_id
@@ -119,6 +120,7 @@ public class ProjectManager extends Manager{
             list.add( new Project(
                     rs.getInt("id"  ),
                     rs.getString("name"),
+                    rs.getInt("status"),
                     rs.getDate("deposit_date"),
                     rs.getDate("start_date"),
                     rs.getDate("end_date"),
@@ -135,7 +137,7 @@ public class ProjectManager extends Manager{
         ObservableList<Project> list = FXCollections.observableArrayList();
 
         String query = """
-                SELECT project.id, project.name, project.deposit_date, project.start_date, project.end_date, project.description, project.association_id, association.name AS association_name, COALESCE(SUM( user_project.amount ), 0) AS coins
+                SELECT project.id, project.name, project.deposit_date, project.start_date, project.end_date, project.description, project.association_id, project.status, association.name AS association_name, COALESCE(SUM( user_project.amount ), 0) AS coins
                 FROM project
                 INNER JOIN association ON association.id = project.association_id
                 LEFT JOIN user_project ON user_project.project_id = project.id
@@ -149,6 +151,7 @@ public class ProjectManager extends Manager{
             list.add( new Project(
                     rs.getInt("id"  ),
                     rs.getString("name"),
+                    rs.getInt("status"),
                     rs.getDate("deposit_date"),
                     rs.getDate("start_date"),
                     rs.getDate("end_date"),
@@ -156,6 +159,35 @@ public class ProjectManager extends Manager{
                     rs.getInt("association_id"),
                     rs.getString("association_name"),
                     rs.getInt("coins")
+
+            ));
+        }
+        return list;
+    }
+
+    public ObservableList<Project> getProjectsToValidate() throws SQLException {
+        ObservableList<Project> list = FXCollections.observableArrayList();
+
+        String query = """
+                SELECT project.id, project.name, project.deposit_date, project.start_date, project.end_date, project.description, project.association_id, project.status, association.name AS association_name
+                FROM project
+                INNER JOIN association ON association.id = project.association_id
+                WHERE project.status = 0
+                """;
+        ResultSet rs = db.prepareStatement(query).executeQuery();
+
+        while ( rs.next() ){
+            list.add( new Project(
+                    rs.getInt("id"  ),
+                    rs.getString("name"),
+                    rs.getInt("status"),
+                    rs.getDate("deposit_date"),
+                    rs.getDate("start_date"),
+                    rs.getDate("end_date"),
+                    rs.getString("description"),
+                    rs.getInt("association_id"),
+                    rs.getString("association_name")
+
             ));
         }
         return list;

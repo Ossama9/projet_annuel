@@ -12,10 +12,16 @@ import java.sql.SQLException;
 public class UserManager extends Manager{
 
     public User getByUsername(String username) throws SQLException {
-        User user = new User();
+        User user;
 
-        String query = "SELECT id, username, password, first_name, last_name, email FROM user WHERE username = \"" + username +"\";";
-        ResultSet rs = super.db.prepareStatement(query).executeQuery();
+        String query = """
+                SELECT id, username, password, first_name, last_name, email, roles
+                FROM user
+                WHERE username = ? ;
+                """;
+        PreparedStatement statement = db.prepareStatement(query);
+        statement.setString(1, username);
+        ResultSet rs = statement.executeQuery();
 
         if (!rs.isBeforeFirst() )
             return new User();
@@ -27,7 +33,8 @@ public class UserManager extends Manager{
                     rs.getString("password"),
                     rs.getString("first_name"),
                     rs.getString("last_name"),
-                    rs.getString("email")
+                    rs.getString("email"),
+                    rs.getInt("roles")
             );
         }
 
@@ -36,8 +43,8 @@ public class UserManager extends Manager{
 
     public int getUserProjects(int userId) throws SQLException {
         String query = """
-                SELECT COALESCE(SUM( user_project.id ), 0) AS projects 
-                FROM user_project 
+                SELECT COALESCE(SUM( user_project.id ), 0) AS projects
+                FROM user_project
                 WHERE user_project.id = ? ;
                 """;
         PreparedStatement statement = db.prepareStatement(query);

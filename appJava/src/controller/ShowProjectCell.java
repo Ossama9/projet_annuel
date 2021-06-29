@@ -1,8 +1,5 @@
 package controller;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
@@ -32,7 +29,7 @@ public class ShowProjectCell extends TableCell<Project, Boolean> {
 
         showBtn.setOnAction(event -> {
             Project project = table.getItems().get(ShowProjectCell.this.getIndex());
-            ControllerOne.goToProjectIndex(event, project);
+            ControllerOne.loadProjectIndex(event, project);
         });
     }
 
@@ -43,7 +40,10 @@ public class ShowProjectCell extends TableCell<Project, Boolean> {
 
         showBtn.setOnAction(event -> {
             Project project = table.getItems().get(ShowProjectCell.this.getIndex());
-            ControllerOne.goToProjectIndex(event, project, user);
+            if( user.getRoles() == 1 )
+                ControllerOne.loadAdminProject(event, project, user);
+            else
+                ControllerOne.loadProjectIndex(event, project, user);
         });
     }
 
@@ -54,7 +54,7 @@ public class ShowProjectCell extends TableCell<Project, Boolean> {
 
         showBtn.setOnAction(event -> {
             Project project = table.getItems().get(ShowProjectCell.this.getIndex());
-            ControllerOne.goToProjectIndex(stage, project, asso);
+            ControllerOne.loadProjectIndex(stage, project, asso);
         });
     }
 
