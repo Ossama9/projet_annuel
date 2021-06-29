@@ -3,40 +3,75 @@
 {% block title %}{{ product.model.name }}{% endblock %}
 
 {% block body %}
-    <div class="container">
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-success">
-                <a href="{{ path('cart.index') }}">{{ message }}</a>
-            </div>
-        {% endfor %}
-        <div class="row mt-3 mb-4">
-            <div class="col-md-4">
-                <img src="{{ asset('uploads/pictures/' ~ product.pictures[0].name) }}" class="img-fluid" alt="{{ product.pictures[0].name }}">
-            </div>
-            <div class="jumbotron col-md-8 p-4">
-                <h1 class="mt-4 mt-md-0">{{ product.model.brand.name }} - {{ product.model.name }}</h1>
-                <h2>{{ product.price }} €</h2>
-                <hr>
-                <div class="mt-4">
-                    <h5>Description</h5>
-                    <p>{{ product.description }}</p>
-                    <h5>Caractéristiques</h5>
-                    <ul>
-                        <li>Batterie: {{ product.feature.battery }}</li>
-                        <li>Caméra: {{ product.feature.camera }}</li>
-                        <li>Carte graphique: {{ product.feature.graphicCard }}</li>
-                        <li>Disque dur: {{ product.feature.hardDisk }}</li>
-                        <li>Version du système: {{ product.feature.osVersion }}</li>
-                        <li>Processeur: {{ product.feature.processor }}</li>
-                        <li>Mémoire RAM: {{ product.feature.ram }} Go</li>
-                        <li>Taille de l'écran: {{ product.feature.screenSize }}</li>
-                        <li>Écran tactile: {{ product.feature.tactile ? 'Oui' : 'Non' }}</li>
-                    </ul>
+    <body class="body_home">
+
+        <div class="container mt-4">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    <a id="href" href="{{ path('cart.index') }}">{{ message }}</a>
                 </div>
+            {% endfor %}
+            <div class="row_product">
+                <div class="col-sm-6">
+                    <section class="gallery">
+
+                        <div class="gallery__item">
+                            <input type="radio" id="img-1" checked name="gallery" class="gallery__selector"/>
+                            <img class="gallery__img" src="{{ asset('uploads/pictures/' ~ product.pictures[0].name) }}" alt=""/>
+                            <label for="img-1" class="gallery__thumb">
+                                <img src="{{ asset('uploads/pictures/' ~ product.pictures[0].name) }}" class="img-fluid" alt="{{ product.pictures[0].name }}">
+                            </label>
+                        </div>
+                        <div class="gallery__item">
+                            <input type="radio" id="img-2" name="gallery" class="gallery__selector"/>
+                            <img class="gallery__img" src="https://fhox.com.br/wp-content/uploads/2020/10/pro-max-camera.jpg" alt=""/>
+                            <label for="img-2" class="gallery__thumb"><img src="https://fhox.com.br/wp-content/uploads/2020/10/pro-max-camera.jpg" alt=""/></label>
+                        </div>
+                        <div class="gallery__item">
+                            <input type="radio" id="img-3" name="gallery" class="gallery__selector"/>
+                            <img class="gallery__img" src="https://www.presse-citron.net/app/uploads/2020/10/iphone12-pro.jpg" alt=""/>
+                            <label for="img-3" class="gallery__thumb"><img src="https://www.presse-citron.net/app/uploads/2020/10/iphone12-pro.jpg" alt=""/></label>
+                        </div>
+                        <div class="gallery__item">
+                            <input type="radio" id="img-4" name="gallery" class="gallery__selector"/>
+                            <img class="gallery__img" src="https://www.cnet.com/a/img/MkcUezYr9RSI3Pghy-FV7BF0IKc=/940x0/2020/10/13/ef3f808f-df87-4a36-aecc-4e59d1d022be/iphone-12-pro-and-iphone-12-pro-max-apple-google-chrome-13-10-2020-19-47-14-2.png" alt=""/>
+                            <label for="img-4" class="gallery__thumb"><img src="https://www.cnet.com/a/img/MkcUezYr9RSI3Pghy-FV7BF0IKc=/940x0/2020/10/13/ef3f808f-df87-4a36-aecc-4e59d1d022be/iphone-12-pro-and-iphone-12-pro-max-apple-google-chrome-13-10-2020-19-47-14-2.png" alt=""/></label>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-md-6 tst" style="color: white;">
+                    <h1 class="mt-4 mt-md-0">{{ product.model.brand.name }} - {{ product.model.name }}</h1>
+                    <h2>{{ product.price }} €</h2>
+                    <hr>
+                    <div class="mt-4">
+                        <h5>Description</h5>
+                        <p>{{ product.description }}</p>
+                        <h5>Caractéristiques</h5>
+                        <ul>
+                            <li>Batterie: {{ product.feature.battery }}</li>
+                            <li>Caméra: {{ product.feature.camera }}</li>
+                            <li>Carte graphique: {{ product.feature.graphicCard }}</li>
+                            <li>Disque dur: {{ product.feature.hardDisk }}</li>
+                            <li>Version du système: {{ product.feature.osVersion }}</li>
+                            <li>Processeur: {{ product.feature.processor }}</li>
+                            <li>Mémoire RAM: {{ product.feature.ram }} Go</li>
+                            <li>Taille de l'écran: {{ product.feature.screenSize }}</li>
+                            <li>Écran tactile: {{ product.feature.tactile ? 'Oui' : 'Non' }}</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+            <div style="margin: 30px;">
+
+            </div>
+            <div class="flex">
+
                 {{ form_start(form) }}
-                {{ form_widget(form.add, {'attr': {'class': 'btn btn-warning w-25'}}) }}
+                {{ form_widget(form.add, {'attr': {'id' : 'button'} }) }}
                 {{ form_end(form) }}
             </div>
         </div>
-    </div>
+    </body>
 {% endblock %}
