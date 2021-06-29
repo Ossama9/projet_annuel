@@ -34,6 +34,15 @@ public class Asso {
         this.signupDate = signUpDate;
     }
 
+    public Asso(String numeroRNA, int id, String name, String email, String description, Date signUpDate) {
+        this.numeroRNA = numeroRNA;
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.description = description;
+        this.signupDate = signUpDate;
+    }
+
     public Asso(int id, int status, String numeroRNA, String password, String name, String email, String description, Date signUpDate) {
         this.id = id;
         this.status = status;

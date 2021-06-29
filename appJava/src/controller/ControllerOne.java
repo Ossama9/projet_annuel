@@ -1,5 +1,6 @@
 package controller;
 
+import controller.admin.AdminAssoController;
 import controller.admin.AdminIndexController;
 import controller.admin.AdminProjectController;
 import controller.asso.AssoIndexController;
@@ -204,6 +205,23 @@ public class ControllerOne {
 
             AdminProjectController newController = loader.getController();
             newController.initData(project, admin);
+
+            currentStage.show();
+        }
+        catch (IOException e){
+            System.out.println("Erreur de chargement: " + e);
+        }
+    }
+
+    public static void loadAdminAsso(ActionEvent event, Asso asso, User admin){
+        try {
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/admin/admin_asso.fxml")));
+            Stage currentStage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            currentStage.setScene(new Scene(loader.load()));
+            currentStage.setTitle("Admin | " + admin.getUsername());
+
+            AdminAssoController newController = loader.getController();
+            newController.initData(asso, admin);
 
             currentStage.show();
         }

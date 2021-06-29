@@ -18,7 +18,7 @@ public class ShowProjectCell extends TableCell<Project, Boolean> {
 
 
     /**
-     * AddPersonCell constructor
+     * ShowProjectCell constructor
      * @param stage the stage in which the table is placed.
      * @param table the table where to place the button.
      */

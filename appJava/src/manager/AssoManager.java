@@ -1,5 +1,8 @@
 package manager;
 
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import persistence.Asso;
 
 import java.sql.PreparedStatement;
@@ -21,6 +24,30 @@ public class AssoManager extends Manager{
         stmt.setString(6, asso.getDescription());
 
         stmt.executeUpdate();
+    }
+
+
+    public void updateStatus(int assoId) throws SQLException {
+        String query = """
+                UPDATE association
+                SET status = 1
+                WHERE id = ?
+                """;
+        PreparedStatement statement = db.prepareStatement(query);
+        statement.setInt(1, assoId);
+        System.out.println(statement);
+        statement.executeUpdate();
+    }
+
+
+    public void deleteAsso(int assoId) throws SQLException {
+        String query = """
+                DELETE FROM association
+                WHERE id = ?
+                """;
+        PreparedStatement statement = db.prepareStatement(query);
+        statement.setInt(1, assoId);
+        statement.executeUpdate();
     }
 
 
@@ -52,5 +79,41 @@ public class AssoManager extends Manager{
     }
 
 
+    public ObservableList<Asso> getAssoToValidate() throws SQLException {
+        ObservableList<Asso> list = FXCollections.observableArrayList();
 
+        String query = """
+                SELECT id, name,description, numero_rna, email, signup_date
+                FROM association
+                WHERE status = 0
+                """;
+        ResultSet rs = db.prepareStatement(query).executeQuery();
+
+        while (rs.next()){
+            list.add(
+              new Asso(
+                      rs.getString("numero_rna"),
+                      rs.getInt("id"),
+                      rs.getString("name"),
+                      rs.getString("email"),
+                      rs.getString("description"),
+                      rs.getDate("signup_date")
+              )
+            );
+        }
+
+        return list;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+

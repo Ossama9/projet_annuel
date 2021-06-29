@@ -42,8 +42,8 @@
                      <columns>
                         <TableColumn fx:id="associationColumn" prefWidth="95.19995307922363" text="Association" />
                         <TableColumn fx:id="projectNameColumn" prefWidth="163.99999237060547" text="Nom" />
-                        <TableColumn fx:id="projectDescriptionColumn" prefWidth="292.7999572753906" text="Description" />
-                        <TableColumn fx:id="projectButtonColumn" prefWidth="55.2000732421875" />
+                        <TableColumn fx:id="projectDescriptionColumn" prefWidth="285.6000061035156" text="Description" />
+                        <TableColumn fx:id="projectButtonColumn" prefWidth="63.199951171875" />
                      </columns>
                   </TableView>
                   <Label layoutX="31.0" layoutY="417.0" text="Les dernières association:" />
@@ -51,8 +51,8 @@
                      <columns>
                         <TableColumn fx:id="nraColumn" prefWidth="95.19995307922363" text="n° NRA" />
                         <TableColumn fx:id="assoNameColumn" prefWidth="163.99999237060547" text="Nom" />
-                        <TableColumn fx:id="assoDescriptionColumn" prefWidth="288.8000793457031" text="Description" />
-                        <TableColumn fx:id="assoButtonColumn" prefWidth="60.7999267578125" />
+                        <TableColumn fx:id="assoDescriptionColumn" prefWidth="283.1999816894531" text="Description" />
+                        <TableColumn fx:id="assoButtonColumn" prefWidth="67.2000732421875" />
                      </columns>
                   </TableView>
                </children>

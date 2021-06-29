@@ -17,14 +17,11 @@ public class AdminProjectController extends ControllerAdmin{
     private Project project;
 
     @FXML private Text title;
-    @FXML private Text successMsg;
     @FXML private Text depositDate;
     @FXML private Text associationName;
     @FXML private Text startDate;
     @FXML private Text endDate;
     @FXML private Text description;
-
-    @FXML private Button supprButon;
 
     public void initData(Project project, User user){
 
@@ -76,8 +73,5 @@ public class AdminProjectController extends ControllerAdmin{
         }
     }
 
-    @FXML
-    public void goBack(ActionEvent event){
-        ControllerOne.loadAdminIndex(event, admin);
-    }
+
 }
