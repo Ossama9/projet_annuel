@@ -45,3 +45,17 @@ Products: Produits
 Max price: Prix maximum
 Search: Rechercher
 Delivery status: Statut de la livraison
+Name: Nom
+Release date: Date de sortie
+Category: Catégorie
+Show battery field: Afficher le champ "batterie"
+Show camera field: Afficher le champ "caméra"
+Show graphic card field: Afficher le champ "carte graphique"
+Show hard disk field: Afficher le champ "disque dur"
+Show os version field: Afficher le champ "version du système"
+Show processor field: Afficher le champ "processeur"
+Show ram field: Afficher le champ "mémoire RAM"
+Show screen field: Afficher le champ "écran"
+Show tactile field: Afficher le champ "écran tactile"
+Foundation date: Date de fondation
+Location: Siège

@@ -1,0 +1,14 @@
+<div class="col-md-4">
+    <div class="card mb-4 w-75">
+        <div class="card-body">
+            <h5 class="card-title">{{ model.name }}</h5>
+            <p class="card-text">Modèle sortie le {{ model.releaseDate|date('d-m-Y') }}</p>
+            <div class="d-flex justify-content-between align-item-center">
+                <div>
+                    <a href="{{ path('admin.model.show', {id: model.id}) }}" class="btn btn-dark">Voir</a>
+                    <a href="{{ path('admin.model.edit', {id: model.id}) }}" class="btn btn-primary">Modifier</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

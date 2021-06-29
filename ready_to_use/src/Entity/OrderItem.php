@@ -78,6 +78,6 @@ class OrderItem
      */
     public function getTotal(): float
     {
-        return $this->getProduct()->getPrice();
+        return $this->getProduct()->getPriceWithMargin();
     }
 }

@@ -6,6 +6,7 @@ use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use http\Encoding\Stream\Deflate;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
@@ -94,6 +95,10 @@ class Product
         return $this;
     }
 
+    /**
+     * Prix de vente sans la marge de 30% (montant que le marchand reçoit)
+     * @return float|null
+     */
     public function getPrice(): ?float
     {
         return $this->price;
@@ -104,6 +109,15 @@ class Product
         $this->price = $price;
 
         return $this;
+    }
+
+    /**
+     * Prix de vente affiché aux clients avec la marge de 30%
+     * @return float|null
+     */
+    public function getPriceWithMargin(): ?float
+    {
+        return round($this->price * 1.3, 0);
     }
 
     public function getDepositDate(): ?\DateTimeInterface
@@ -216,5 +230,14 @@ class Product
         $this->feature = $feature;
 
         return $this;
+    }
+
+    /**
+     * Permet de rendre un produit modifiable ou non, par un marchand
+     * @return bool
+     */
+    public function isEditable(): bool
+    {
+        return $this->getSell()->getStatus() !== 1;
     }
 }
