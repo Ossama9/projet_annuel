@@ -12,8 +12,9 @@ public class User {
     private int usedCoins;
     private int projects;
 
+    public User(){}
 
-    public void feed(int id, String username, String password, String firstName, String lastName, String email) {
+    public User(int id, String username, String password, String firstName, String lastName, String email) {
         this.id = id;
         this.username = username;
 
@@ -26,8 +27,6 @@ public class User {
         this.lastName = lastName;
         this.email = email;
     }
-
-
 
 
     public int getId() {

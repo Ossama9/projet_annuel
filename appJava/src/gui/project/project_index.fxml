@@ -60,7 +60,7 @@
                   <Label layoutX="50.0" layoutY="313.0" text="Description :" />
                   <Text fx:id="description" layoutX="50.0" layoutY="362.0" strokeType="OUTSIDE" strokeWidth="0.0" text="description" />
                   <Button fx:id="payBtn" layoutX="315.0" layoutY="625.0" mnemonicParsing="false" onAction="#createPopup" style="-fx-background-color: RGB(50,200,50); visibility: true;" text="Donner" />
-                  <Text fx:id="successMsg" fill="#18e71f" layoutX="274.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="successMsg" />
+                  <Text fx:id="successMsg" fill="#18e71f" layoutX="274.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" />
                </children></AnchorPane>
          </items>
       </SplitPane>

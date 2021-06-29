@@ -32,13 +32,17 @@ public class CoinsManager extends Manager {
         return rs.getInt("coins");
     }
 
-    public int getProjectTotalCoins(int projectId) throws SQLException {
+    public int getGivenCoins(int projectId, int userId) throws SQLException {
         String query = """
             SELECT COALESCE(SUM( user_project.amount ), 0) AS coins
             FROM user_project
-            WHERE project_id =
-             """ + projectId + ";";
-        ResultSet rs = db.prepareStatement(query).executeQuery();
+            WHERE project_id = ? AND user_id = ?;
+            """;
+        PreparedStatement stmt = db.prepareStatement(query);
+        stmt.setInt(1, projectId);
+        stmt.setInt(2, userId);
+
+        ResultSet rs = stmt.executeQuery();
 
         rs.next();
         return rs.getInt("coins");
@@ -75,5 +79,17 @@ public class CoinsManager extends Manager {
         statement.setInt(3, projectId);
 
         statement.executeUpdate();
+    }
+
+    public int supprDonnation(int userId, int projectId) throws SQLException {
+        String query = """
+                DELETE FROM user_project
+                WHERE project_id = ? AND user_id = ?;
+                """;
+        PreparedStatement stmt = db.prepareStatement(query);
+        stmt.setInt(1, projectId);
+        stmt.setInt(2, userId);
+
+        return stmt.executeUpdate();
     }
 }

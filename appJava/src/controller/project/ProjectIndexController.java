@@ -29,6 +29,7 @@ import java.sql.SQLException;
 public class ProjectIndexController extends ControllerOne {
 
     @FXML private Text earnedCoins;
+    @FXML private Text givenCoins;
     @FXML private Text title;
     @FXML private Text successMsg;
     @FXML private Text depositDate;
@@ -37,6 +38,7 @@ public class ProjectIndexController extends ControllerOne {
     @FXML private Text endDate;
     @FXML private Text description;
     @FXML private Pane connection;
+    @FXML private Button giveUpBtn;
     @FXML private Button supprBtn;
     @FXML private Button payBtn;
     @FXML private Button deconexion;
@@ -49,9 +51,11 @@ public class ProjectIndexController extends ControllerOne {
         if( project == null )
             goToLandingPage();
 
+        giveUpBtn.setVisible(false);
         connection.setVisible(true);
         payBtn.setVisible(false);
         deconexion.setVisible(false);
+        givenCoins.setVisible(false);
 
         if( asso != null ){
             supprBtn.setVisible(true);
@@ -84,7 +88,15 @@ public class ProjectIndexController extends ControllerOne {
 
         this.project = project;
 
+        CoinsManager cm = new CoinsManager();
         earnedCoins.setText(String.valueOf(project.getCoinsEarned()));
+        try {
+            assert user != null;
+            givenCoins.setText(String.valueOf(cm.getGivenCoins(project.getId(), user.getId())));
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+
 
         title.setText(project.getName());
         title.setTextAlignment(TextAlignment.CENTER);
@@ -166,6 +178,21 @@ public class ProjectIndexController extends ControllerOne {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    private void giveUp(ActionEvent event){
+        CoinsManager coinManager = new CoinsManager();
+        try{
+            if( coinManager.supprDonnation(user.getId(), project.getId()) != 0 ) {
+                successMsg.setText("Vous avez retiré votre soutient à ce projet ...");
+                successMsg.setTextAlignment(TextAlignment.CENTER);
+                givenCoins.setText("0");
+            }
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
     }
 }

@@ -47,6 +47,39 @@ public class ProjectManager extends Manager{
         return list;
     }
 
+    public ObservableList<Project> getUserProjects(int userId) throws SQLException {
+        ObservableList<Project> list = FXCollections.observableArrayList();
+
+        String query = """
+                SELECT project.id, project.name, project.deposit_date, project.start_date, project.end_date, project.description, project.association_id, association.name AS association_name,\s
+                COALESCE(SUM( user_project.amount ), 0) AS coins
+                FROM user_project t
+                INNER JOIN project ON project.id = t.project_id
+                INNER JOIN association ON association.id = project.association_id
+                LEFT JOIN user_project ON user_project.project_id = project.id
+                WHERE t.user_id = ?
+                GROUP BY t.id
+                """;
+        PreparedStatement statement = db.prepareStatement(query);
+        statement.setInt(1, userId);
+        ResultSet rs = statement.executeQuery();
+
+        while ( rs.next() ){
+            list.add( new Project(
+                    rs.getInt("id"  ),
+                    rs.getString("name"),
+                    rs.getDate("deposit_date"),
+                    rs.getDate("start_date"),
+                    rs.getDate("end_date"),
+                    rs.getString("description"),
+                    rs.getInt("association_id"),
+                    rs.getString("association_name"),
+                    rs.getInt("coins")
+            ));
+        }
+        return list;
+    }
+
     public ObservableList<Project> getRecentsProjects() throws SQLException {
         ObservableList<Project> list = FXCollections.observableArrayList();
 
