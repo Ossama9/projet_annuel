@@ -5,7 +5,7 @@ import persistence.User;
 
 public class ControllerAdmin extends ControllerOne {
 
-    User admin;
+    public User admin;
 
     public void initData(User admin){
         if( admin != null )

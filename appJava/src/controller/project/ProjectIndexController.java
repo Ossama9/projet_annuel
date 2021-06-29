@@ -1,22 +1,17 @@
 package controller.project;
 
 import controller.ControllerOne;
-import controller.user.ControllerUser;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Popup;
-import javafx.stage.Stage;
 import manager.CoinsManager;
 import manager.ProjectManager;
 import persistence.Asso;

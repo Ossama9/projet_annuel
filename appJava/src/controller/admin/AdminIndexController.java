@@ -23,7 +23,8 @@ public class AdminIndexController extends ControllerAdmin {
     @FXML private TableColumn<Project, String> projectDescriptionColumn;
     @FXML private TableColumn<Project, Boolean> projectButtonColumn;
 
-    public void initData(User Admin){
+    @Override
+    public void initData(User admin){
         super.initData(admin);
 
         //projects tab

@@ -35,11 +35,9 @@ public class UserConnexionController extends ControllerOne {
                 UserManager userManager = new UserManager();
                 User user  = userManager.getByUsername(usernameField.getText());
                 user.setProjects(userManager.getUserProjects(user.getId()));
-
                 CoinsManager coinsManager = new CoinsManager();
                 user.setEarnedCoins(coinsManager.getUserEarnedCoins(user.getId()));
                 user.setUsedCoins(coinsManager.getUserUsedCoins(user.getId()));
-
                 if( BCrypt.checkpw(passwordField.getText(), user.getPassword()) ){
                     if( user.getRoles() == 1 )
                         ControllerOne.loadAdminIndex(event, user);

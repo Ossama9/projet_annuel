@@ -67,6 +67,29 @@ public class ProjectManager extends Manager{
         statement.executeUpdate();
     }
 
+    public void updateStatus(int projectId) throws SQLException {
+        String query = """
+                UPDATE project
+                SET status = 1
+                WHERE id = ?
+                """;
+        PreparedStatement statement = db.prepareStatement(query);
+        statement.setInt(1, projectId);
+
+        statement.executeUpdate();
+    }
+
+
+    public void deleteProject(int projectId) throws SQLException {
+        String query = """
+                DELETE FROM project
+                WHERE id = ?
+                """;
+        PreparedStatement statement = db.prepareStatement(query);
+        statement.setInt(1, projectId);
+        statement.executeUpdate();
+
+    }
 
     public ObservableList<Project> getAssoProjects(int assoId, String assoName) throws SQLException {
         ObservableList<Project> list = FXCollections.observableArrayList();
@@ -141,6 +164,7 @@ public class ProjectManager extends Manager{
                 FROM project
                 INNER JOIN association ON association.id = project.association_id
                 LEFT JOIN user_project ON user_project.project_id = project.id
+                WHERE project.status = 1
                 GROUP BY project.id
                 ORDER BY deposit_date
                 LIMIT 50;

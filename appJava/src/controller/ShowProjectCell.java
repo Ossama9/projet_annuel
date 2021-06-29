@@ -40,8 +40,9 @@ public class ShowProjectCell extends TableCell<Project, Boolean> {
 
         showBtn.setOnAction(event -> {
             Project project = table.getItems().get(ShowProjectCell.this.getIndex());
-            if( user.getRoles() == 1 )
+            if( user.getRoles() == 1 ){
                 ControllerOne.loadAdminProject(event, project, user);
+            }
             else
                 ControllerOne.loadProjectIndex(event, project, user);
         });
