@@ -3,10 +3,11 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -18,7 +19,7 @@
                <children>
                   <ImageView fitHeight="130.0" fitWidth="108.0" layoutX="86.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="542.2" AnchorPane.leftAnchor="86.0" AnchorPane.rightAnchor="85.19999999999999" AnchorPane.topAnchor="49.0">
                      <image>
-                        <Image url="@../../../assets/images/logo.PNG" />
+                        <Image url="@../../assets/images/logo.PNG" />
                      </image>
                   </ImageView>
                   <Text layoutX="86.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ready To Use" AnchorPane.bottomAnchor="518.682421875" AnchorPane.leftAnchor="85.9033203125" AnchorPane.rightAnchor="85.29667968749999" AnchorPane.topAnchor="156.576171875">
@@ -27,7 +28,6 @@
                      </font>
                   </Text>
                   <Button layoutX="87.0" layoutY="334.0" mnemonicParsing="false" onAction="#goToAssoNewProject" text="Nouveau Projet" />
-                  <Button layoutX="97.0" layoutY="421.0" mnemonicParsing="false" text="Mes Projets" />
                   <Button layoutX="94.0" layoutY="620.0" mnemonicParsing="false" onAction="#goToLandingPage" style="-fx-background-color: RGB(255,0,0);" text="Deconnexion" textFill="WHITE" />
                   <Label layoutX="14.0" layoutY="243.0" text="Projets en Cours :" />
                   <Text fx:id="ongoingProjects" layoutX="140.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" />
@@ -41,11 +41,17 @@
                      </font>
                   </Text>
                   <Text fx:id="successMsg" fill="#329e32" layoutX="220.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-                  <Pane layoutX="54.0" layoutY="176.0" prefHeight="200.0" prefWidth="556.0" style="-fx-background-color: RGB(175,175,175);" />
-                  <Pane layoutX="54.0" layoutY="438.0" prefHeight="200.0" prefWidth="556.0" style="-fx-background-color: RGB(175,175,175);" />
-                  <Label layoutX="54.0" layoutY="157.0" text="Label" />
-                  <Label layoutX="54.0" layoutY="419.0" text="Label" />
                   <Text fx:id="validationMsg" fill="#ffa200" layoutX="197.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <TableView fx:id="assoProjectsTable" layoutX="28.0" layoutY="165.0" prefHeight="499.0" prefWidth="608.0">
+                     <columns>
+                        <TableColumn fx:id="associationColumn" prefWidth="95.19995307922363" text="Association" />
+                        <TableColumn fx:id="nameColumn" prefWidth="163.99999237060547" text="Nom" />
+                        <TableColumn fx:id="descriptionColumn" prefWidth="238.40005493164062" text="Description" />
+                        <TableColumn fx:id="coinsColumn" minWidth="0.0" prefWidth="42.4000244140625" text="coins" />
+                        <TableColumn fx:id="buttonColumn" prefWidth="75.0" />
+                     </columns>
+                  </TableView>
+                  <Label layoutX="28.0" layoutY="140.0" text="Mes projet :" />
                </children>
             </AnchorPane>
          </items>

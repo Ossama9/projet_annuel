@@ -19,7 +19,7 @@
                <children>
                   <ImageView fitHeight="130.0" fitWidth="108.0" layoutX="86.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="542.2" AnchorPane.leftAnchor="86.0" AnchorPane.rightAnchor="85.19999999999999" AnchorPane.topAnchor="49.0">
                      <image>
-                        <Image url="@../../../assets/images/logo.PNG" />
+                        <Image url="@../../assets/images/logo.PNG" />
                      </image>
                   </ImageView>
                   <Text layoutX="86.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ready To Use" AnchorPane.bottomAnchor="518.682421875" AnchorPane.leftAnchor="85.9033203125" AnchorPane.rightAnchor="85.29667968749999" AnchorPane.topAnchor="156.576171875">
@@ -44,8 +44,8 @@
                   <Text layoutX="211.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Merci de remplir le formulaire ci-dessous" />
                   <Label layoutX="84.0" layoutY="156.0" text="Nom :" />
                   <TextField fx:id="nameField" layoutX="84.0" layoutY="173.0" prefHeight="26.0" prefWidth="263.0" />
-                  <Label layoutX="406.0" layoutY="153.0" text="Numero Siren (9 chiffres) :" />
-                  <TextField fx:id="numeroSirenField" layoutX="406.0" layoutY="170.0" prefWidth="173.0" />
+                  <Label layoutX="406.0" layoutY="153.0" text="Numero RNA :" />
+                  <TextField fx:id="numeroRNAField" layoutX="406.0" layoutY="170.0" prefWidth="173.0" />
                   <Label layoutX="80.0" layoutY="242.0" text="Email :" />
                   <TextField fx:id="emailField" layoutX="80.0" layoutY="260.0" prefHeight="26.0" prefWidth="504.0" />
                   <Label layoutX="83.0" layoutY="331.0" text="Description (facultatif) :" />

@@ -13,7 +13,7 @@ public class Asso {
 
     private int id;
     private int status;
-    private String numeroSiren;
+    private String numeroRNA;
     private String name;
     private String password;
     private String email;
@@ -25,19 +25,19 @@ public class Asso {
     public Asso(){}
 
 
-    public Asso(int status, String numeroSiren, String name, String email, String description, Date signUpDate) {
+    public Asso(int status, String numeroRNA, String name, String email, String description, Date signUpDate) {
         this.status = status;
-        this.numeroSiren = numeroSiren;
+        this.numeroRNA = numeroRNA;
         this.name = name;
         this.email = email;
         this.description = description;
         this.signupDate = signUpDate;
     }
 
-    public Asso(int id, int status, String numeroSiren, String password, String name, String email, String description, Date signUpDate) {
+    public Asso(int id, int status, String numeroRNA, String password, String name, String email, String description, Date signUpDate) {
         this.id = id;
         this.status = status;
-        this.numeroSiren = numeroSiren;
+        this.numeroRNA = numeroRNA;
         this.password = password;
         this.name = name;
         this.email = email;
@@ -63,12 +63,12 @@ public class Asso {
         this.status = status;
     }
 
-    public String getNumeroSiren() {
-        return numeroSiren;
+    public String getNumeroRNA() {
+        return numeroRNA;
     }
 
-    public void setNumeroSiren(String numeroSiren) {
-        this.numeroSiren = numeroSiren;
+    public void setNumeroRNA(String numeroRNA) {
+        this.numeroRNA = numeroRNA;
     }
 
     public String getName() {

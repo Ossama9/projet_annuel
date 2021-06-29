@@ -14,7 +14,7 @@ import java.sql.SQLException;
 public class AssoConnexionController extends ControllerOne {
 
     @FXML
-    public TextField sirenField;
+    public TextField rnaField;
     @FXML
     public PasswordField passwordField;
     @FXML
@@ -23,13 +23,16 @@ public class AssoConnexionController extends ControllerOne {
 
     @FXML
     public void validConnection(ActionEvent event){
-        if (sirenField.getText().isEmpty() && passwordField.getText().isEmpty()) {
+        if (rnaField.getText().isEmpty() && passwordField.getText().isEmpty()) {
             errorMsg.setText("identifiant ou mot de passe incorrect");
         }
         else{
+            if (rnaField.getText().matches("^[0-9]{9}$") )
+                rnaField.setText('W'+rnaField.getText());
+
             AssoManager assoManager = new AssoManager();
             try {
-                Asso asso = assoManager.getAssoBySiren(sirenField.getText());
+                Asso asso = assoManager.getAssoBySiren(rnaField.getText());
 
                 ControllerAsso.loadAssoIndex(event, asso);
             }
@@ -38,6 +41,4 @@ public class AssoConnexionController extends ControllerOne {
             }
         }
     }
-
-
 }

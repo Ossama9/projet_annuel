@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.projet.ListProjet">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.project.ListProjet">
    <children>
       <AnchorPane layoutX="-3.0" prefHeight="458.0" prefWidth="607.0">
          <children>
@@ -18,7 +18,7 @@
                <children>
                   <ImageView fitHeight="130.0" fitWidth="108.0" layoutX="46.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../assets/images/logo.PNG" />
+                        <Image url="@../../assets/images/logo.PNG" />
                      </image>
                   </ImageView>
                   <Button layoutX="20.0" layoutY="225.0" mnemonicParsing="false" onAction="#sinscrire" prefHeight="26.0" prefWidth="160.0" text="S'inscrire" textAlignment="CENTER" />

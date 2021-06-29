@@ -34,6 +34,7 @@ public class UserConnexionController extends ControllerOne {
             try{
                 UserManager userManager = new UserManager();
                 User user  = userManager.getByUsername(usernameField.getText());
+                user.setProjects(userManager.getUserProjects(user.getId()));
 
                 CoinsManager coinsManager = new CoinsManager();
                 user.setEarnedCoins(coinsManager.getUserEarnedCoins(user.getId()));
@@ -46,7 +47,7 @@ public class UserConnexionController extends ControllerOne {
                     errorMsg.setText("identifiant ou mot de passe incorrect");
                 }
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                e.printStackTrace();
             }
         }
     }
