@@ -21,10 +21,10 @@
                             <div>
                                 <h5>Commande n°{{ order.id }}</h5>
                                 <p class="my-1">{{ order.countProducts }} produit(s) commandé(s)</p>
-                                <p class="my-1">Commande passée le {{ order.requestDate|date }}</p>
+                                <p class="my-1">Commande passée le {{ order.requestDate|date('d-m-Y à H:i') }}</p>
                                 <p class="my-1">
                                     {% if order.status == 1 %}
-                                        Payé le {{ order.paidDate|date }}
+                                        Payé le {{ order.paidDate|date('d-m-Y à H:i') }}
                                     {% else %}
                                         {{ order.statusToString }}
                                     {% endif %}

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des marques{% endblock %}
+
+{% block body %}
+    <h3 class="mb-4">Liste des marques</h3>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Siège</th>
+            <th>Date de fondation</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for brand in brands %}
+            <tr>
+                <td>{{ brand.id }}</td>
+                <td>{{ brand.name }}</td>
+                <td>{{ brand.description }}</td>
+                <td>{{ brand.location }}</td>
+                <td>{{ brand.foundationDate|date('d-m-Y') }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('admin.brand.show', {'id': brand.id}) }}">Voir</a>
+                    <a class="btn btn-secondary" href="{{ path('admin.brand.edit', {'id': brand.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun entrepôt</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('admin.brand.new') }}">Ajouter une marque</a>
+{% endblock %}

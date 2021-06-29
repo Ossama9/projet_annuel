@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Aperçu d'une catégorie{% endblock %}
+
+{% block body %}
+    <h3 class="mb-4">{{ category.name }}</h3>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ category.id }}</td>
+        </tr>
+        <tr>
+            <th>Nom</th>
+            <td>{{ category.name }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ category.description }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div>
+        <h5 class="mb-4">Liste des modèles dans la catégorie {{ category.name }}</h5>
+        <div class="row">
+            {% for model in category.models %}
+                {{ include('/admin/model/_card.html.twig', {model: model}) }}
+            {% else %}
+                <p class="ml-3">Aucun modèle</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="d-flex">
+        <a class="btn btn-secondary mr-2" href="{{ path('admin.category.edit', {'id': category.id}) }}">Modifier</a>
+        {{ include('admin/category/_delete_form.html.twig') }}
+        <a class="btn btn-primary mr-2" href="{{ path('admin.category.index') }}">Retour</a>
+    </div>
+{% endblock %}

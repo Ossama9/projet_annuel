@@ -40,7 +40,7 @@ class ProductController extends AbstractController
     public function index(Request $request, BrandRepository $brandRepo): Response
     {
         $brands = $brandRepo->findAll();
-        $products = $this->getDoctrine()->getRepository(Product::class)->findAll();
+        $products = $this->getDoctrine()->getRepository(Product::class)->findAcceptedProducts();
 
         $form = $this->createForm(FilterType::class);
         $form->handleRequest($request);

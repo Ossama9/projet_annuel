@@ -140,6 +140,7 @@ class MerchantProductController extends AbstractController
 
             return $this->render('/merchant/product/show.html.twig', [
                 'product' => $product,
+                'is_editable' => $product->isEditable(),
                 'pictures' => $pictures,
                 'current_page' => 'merchant.product'
             ]);
@@ -155,7 +156,7 @@ class MerchantProductController extends AbstractController
      */
     public function edit(Request $request, Product $product): Response
     {
-        if ($product->getSell()->getSoldBy() === $this->getUser()) {
+        if ($product->isEditable() && $product->getSell()->getSoldBy() === $this->getUser()) {
 
             $form = $this->createForm(ProductType::class, $product);
             $form->handleRequest($request);
