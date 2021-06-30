@@ -32,7 +32,7 @@
                             {% for product in form.products %}
                                 <div class=" group-flex">
                                     <div class="flex-fill mr-2">
-                                        <img src="https://via.placeholder.com/200x150" width="100" alt="Product image">
+                                        <img class="w-50" src="{{ asset('uploads/pictures/' ~ product.vars.data.product.pictures[0].name) }}" alt="Product picture"/>
                                     </div>
                                     <div class="flex-fill p-4">
                                         <h5 class="mt-0 mb-0">{{ product.vars.data.product.model.name }} - <b>{{ product.vars.data.product.price }} €</b></h5>
