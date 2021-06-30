@@ -27,14 +27,14 @@ class RegistrationFormType extends AbstractType
             ->add('password', PasswordType::class, [
                 'constraints' => new NotBlank([ 'message' => 'Vous devez remplir ce champs.'])
             ])
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'Vous devez accepter les mentions légales.',
-                    ]),
-                ],
-            ])
+//            ->add('agreeTerms', CheckboxType::class, [
+//                'mapped' => false,
+//                'constraints' => [
+//                    new IsTrue([
+//                        'message' => 'Vous devez accepter les mentions légales.',
+//                    ]),
+//                ],
+//            ])
         ;
     }
 

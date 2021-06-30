@@ -3,36 +3,40 @@
 {% block title %}Liste des produits{% endblock %}
 
 {% block body %}
-    <h3 class="mb-4">Liste des produits</h3>
+<div class="container mt-4">
 
+    <h3 class="mb-4">Liste des produits</h3>
     <table class="table">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Marque</th>
-                <th>Modèle</th>
-                <th>Condition</th>
-                <th>Prix</th>
-                <th>Date de dépôt</th>
-                <th>Vendu par</th>
-                <th>Statut</th>
-                <th>Action</th>
+                <th class="p-4">ID</th>
+                <th class="p-4">Marque</th>
+                <th class="p-4">Modèle</th>
+                <th class="p-4">Condition</th>
+                <th class="p-4">Prix</th>
+                <th class="p-4">Date de dépôt</th>
+                <th class="p-4">Vendu par</th>
+                <th class="p-4">Statut</th>
+                <th class="p-4">Voir</th>
+                <th class="p-4">Modifier</th>
             </tr>
         </thead>
         <tbody>
         {% for product in products %}
             <tr>
-                <td>{{ product.id }}</td>
-                <td>{{ product.model.brand.name }}</td>
-                <td>{{ product.model.name }}</td>
-                <td>{{ product.productConditionToString }}</td>
-                <td>{{ product.price }}</td>
-                <td>{{ product.depositDate ? product.depositDate|date('d-m-Y à H:i') : '' }}</td>
+                <td class="p-4">{{ product.id }}</td>
+                <td class="p-4">{{ product.model.brand.name }}</td>
+                <td class="p-4">{{ product.model.name }}</td>
+                <td class="p-4">{{ product.productConditionToString }}</td>
+                <td class="p-4">{{ product.price }}</td>
+                <td class="p-4">{{ product.depositDate ? product.depositDate|date('d-m-Y à H:i') : '' }}</td>
                 <td>{{ product.sell.soldBy.email }}</td>
                 <td>{% if product.sell.status == 0 %}En attente{% elseif product.sell.status == 1 %}Accepté{% else %}Refusé{% endif %}</td>
                 <td>
-                    <a class="btn btn-primary" href="{{ path('admin.product.show', {'id': product.id}) }}">Voir</a>
-                    <a class="btn btn-secondary" href="{{ path('admin.product.edit', {'id': product.id}) }}">Modifier</a>
+                    <a id="button" href="{{ path('admin.product.show', {'id': product.id}) }}">Voir</a>
+                </td>
+                <td>
+                    <a id="button" href="{{ path('admin.product.edit', {'id': product.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -42,6 +46,9 @@
         {% endfor %}
         </tbody>
     </table>
+
+</div>
+
 
 {#    <a class="btn btn-primary" href="{{ path('admin.product.new') }}">Ajouter un produit</a>#}
 {% endblock %}

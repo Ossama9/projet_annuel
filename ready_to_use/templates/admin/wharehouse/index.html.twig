@@ -3,37 +3,50 @@
 {% block title %}Liste des entrepôts{% endblock %}
 
 {% block body %}
-    <h3 class="mb-4">Liste des entrepôts</h3>
+    <div class="container mt-4">
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Adresse</th>
-            <th>Ville</th>
-            <th>Nombre de produits</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for wharehouse in wharehouses %}
-            <tr>
-                <td>{{ wharehouse.id }}</td>
-                <td>{{ wharehouse.address }}</td>
-                <td>{{ wharehouse.city }}</td>
-                <td>{{ wharehouse.products.count }}</td>
-                <td>
-                    <a class="btn btn-primary" href="{{ path('admin.wharehouse.show', {'id': wharehouse.id}) }}">Voir</a>
-                    <a class="btn btn-secondary" href="{{ path('admin.wharehouse.edit', {'id': wharehouse.id}) }}">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">Aucun entrepôt</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <a class="btn btn-primary" href="{{ path('admin.wharehouse.new') }}">Ajouter un entrepôt</a>
+        <h3 class="mb-4">Liste des entrepôts</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="p-4">Id</th>
+                <th class="p-4">Adresse</th>
+                <th class="p-4">Ville</th>
+                <th class="p-4">Nombre de produits</th>
+                <th class="p-4">Voir</th>
+                <th class="p-4">Modifier</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for wharehouse in wharehouses %}
+                <tr>
+                    <td class="p-4"> {{ wharehouse.id }}</td>
+                    <td class="p-4">{{ wharehouse.address }}</td>
+                    <td class="p-4">{{ wharehouse.city }}</td>
+                    <td class="p-4">{{ wharehouse.products.count }}</td>
+                    <td class="p-2">
+
+                        <a id="button" href="{{ path('admin.wharehouse.show', {'id': wharehouse.id}) }}">Voir</a>
+                    </td>
+                    <td class="p-2">
+
+                        <a id="button" href="{{ path('admin.wharehouse.edit', {'id': wharehouse.id}) }}">Modifier</a>
+                    </td>
+
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Aucun entrepôt</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div id="div">
+            <a id="button"  href="{{ path('admin.wharehouse.new') }}">Ajouter un entrepôt</a>
+        </div>
+    </div>
+
+
 {% endblock %}

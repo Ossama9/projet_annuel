@@ -3,37 +3,47 @@
 {% block title %}Liste des marques{% endblock %}
 
 {% block body %}
-    <h3 class="mb-4">Liste des marques</h3>
+    <div class="container mt-4">
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Nom</th>
-            <th>Description</th>
-            <th>Date de sortie</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for model in models %}
-            <tr>
-                <td>{{ model.id }}</td>
-                <td>{{ model.name }}</td>
-                <td>{{ model.description }}</td>
-                <td>{{ model.releaseDate|date('d-m-Y') }}</td>
-                <td>
-                    <a class="btn btn-primary" href="{{ path('admin.model.show', {'id': model.id}) }}">Voir</a>
-                    <a class="btn btn-secondary" href="{{ path('admin.model.edit', {'id': model.id}) }}">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">Aucun modèle</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <a class="btn btn-primary" href="{{ path('admin.model.new') }}">Ajouter un modèle</a>
+
+
+        <h3 class="mb-4">Liste des modèles</h3>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="p-4">Id</th>
+                <th class="p-4">Nom</th>
+                <th class="p-4">Description</th>
+                <th class="p-4">Date de sortie</th>
+                <th class="p-4">Voir</th>
+                <th class="p-4">Modifier</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for model in models %}
+                <tr>
+                    <td class="p-4">{{ model.id }}</td>
+                    <td class="p-4">{{ model.name }}</td>
+                    <td class="p-4 cm">{{ model.description }}</td>
+                    <td class="p-4">{{ model.releaseDate|date('d-m-Y') }}</td>
+                    <td class="p-4">
+                        <a id="button" href="{{ path('admin.model.show', {'id': model.id}) }}">Voir</a>
+                    </td>
+                    <td class="p-4">
+                        <a id="button" href="{{ path('admin.model.edit', {'id': model.id}) }}">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Aucun modèle</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a class="btn btn-primary" href="{{ path('admin.model.new') }}">Ajouter un modèle</a>
+    </div>
+
 {% endblock %}

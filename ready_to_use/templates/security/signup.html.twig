@@ -3,29 +3,61 @@
 {% block title "S'inscrire" %}
 
 {% block body %}
-    <div class="container mt-4">
+    <body>
+    <img class="wave" src="{{ asset('image/bg.png') }}">
 
-        {% for message in app.flashes %}
-            <div class="alert alert-success">
-                <a href="{{ path('login') }}">Votre compte a bien été créé, connectez-vous</a>.
+    <div class="test">
+        <div class="img">
+            <img src="{{ asset('image/wave.svg')}}">
+
+        </div>
+
+        <div class="login-content">
+            {{ form_start(form) }}
+            <img src="{{ asset('image/avatar.svg') }}">
+            <div class="input-div one">
+                <div class="i">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="div">
+                    <h5>Nom d'utilisateur</h5>
+                    {{ form_row(form.username) }}
+                </div>
+
             </div>
-        {% endfor %}
+            <div class="input-div one">
+                <div class="i">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="div">
+                    <h5>Adresse e-mail</h5>
+                    {{ form_row(form.email) }}
+                </div>
 
-        {{ form_start(form) }}
-        <div class="row">
-            <div class="col-md-6">{{ form_row(form.username) }}</div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">{{ form_row(form.password) }}</div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">{{ form_row(form.email) }}</div>
-        </div>
+            </div>
 
-        {{ form_rest(form) }}
-        <button type="submit" class="btn btn-primary mb-2">S'inscrire</button>
-        <p>Déjà un compte ? <a href="{{ path('login') }}">Se connecter</a></p>
+            <div class="input-div pass">
+                <div class="i">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="div">
+                    <h5>Mot de passe</h5>
+                    {{ form_row(form.password) }}
+                </div>
+
+            </div>
+            {{ form_rest(form) }}
+            <p><a href="{{ path('login') }}" id="href">Déjà un compte ? Se connecter</a></p>
+            <input type="submit" class="btn" value="S'inscrire">
+            {% for message in app.flashes %}
+                    <a href="{{ path('login') }}">Votre compte a bien été créé, connectez-vous</a>.
+
+            {% endfor %}
+        </div>
         {{ form_end(form) }}
 
     </div>
+    </body>
+    <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
+
 {% endblock %}
