@@ -6,6 +6,8 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
+*.DS_Store
+
 /public/uploads
 
 ###> symfony/phpunit-bridge ###
