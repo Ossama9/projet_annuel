@@ -3,35 +3,45 @@
 {% block title %}Liste des catégories{% endblock %}
 
 {% block body %}
-    <h3 class="mb-4">Liste des catégories</h3>
+    <div class="container mt-4">
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Nom</th>
-            <th>Description</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for category in categories %}
-            <tr>
-                <td>{{ category.id }}</td>
-                <td>{{ category.name }}</td>
-                <td>{{ category.description }}</td>
-                <td>
-                    <a class="btn btn-primary" href="{{ path('admin.category.show', {'id': category.id}) }}">Voir</a>
-                    <a class="btn btn-secondary" href="{{ path('admin.category.edit', {'id': category.id}) }}">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">Aucune catégorie</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <h3 class="mb-4">Liste des catégories</h3>
 
-    <a class="btn btn-primary" href="{{ path('admin.category.new') }}">Ajouter une catégorie</a>
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="p-4">Id</th>
+                <th class="p-4">Nom</th>
+                <th class="p-4">Description</th>
+                <th class="p-4">Voir</th>
+                <th class="p-4">Modifier</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for category in categories %}
+                <tr>
+                    <td class="p-4">{{ category.id }}</td>
+                    <td class="p-4">{{ category.name }}</td>
+                    <td class="p-4">{{ category.description }}</td>
+                    <td class="p-4">
+                        <a class="btn btn-primary" href="{{ path('admin.category.show', {'id': category.id}) }}">Voir</a>
+                    </td>
+                    <td class="p-4">
+                        <a class="btn btn-secondary" href="{{ path('admin.category.edit', {'id': category.id}) }}">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Aucune catégorie</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="flex">
+
+            <a id="button" href="{{ path('admin.category.new') }}">Ajouter une catégorie</a>
+        </div>
+    </div>
+
+
 {% endblock %}

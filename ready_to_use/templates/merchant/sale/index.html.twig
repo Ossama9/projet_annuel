@@ -3,38 +3,42 @@
 {% block title %}Historique de vos ventes{% endblock %}
 
 {% block body %}
-    <h3 class="mb-4">Historique de vos ventes</h3>
-    <p>{{ productsSold|length }} produit(s) vendu(s) pour un total de {{ total }} €</p>
+    <div class="container mt-4">
+        <h3 class="mb-4">Historique de vos ventes</h3>
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Modèle</th>
-            <th>Condition</th>
-            <th>Prix</th>
-            <th>Date de vente</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for product in productsSold %}
+         <p>{{ productsSold|length }} produit(s) vendu(s) pour un total de {{ total }} €</p>
+
+        <table class="table">
+            <thead>
             <tr>
-                <td>{{ product[0].id }}</td>
-                <td>{{ product[0].model.name }}</td>
-                <td>{{ product[0].productConditionToString }}</td>
-                <td>{{ product[0].price }} €</td>
-                <td>{{ product[1] ? product[1]|date('d-m-Y à H:i') : '' }}</td>
-                <td>
-                    <a class="btn btn-primary" href="{{ path('merchant.product.show', {'id': product[0].id}) }}">Voir</a>
-                </td>
+                <th class="p-4">ID</th>
+                <th class="p-4">Modèle</th>
+                <th class="p-4">Condition</th>
+                <th class="p-4">Prix</th>
+                <th class="p-4">Date de vente</th>
+                <th class="p-4">Action</th>
             </tr>
-        {% else %}
-            <tr>
-                <td colspan="8=">Aucune vente</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for product in productsSold %}
+                <tr>
+                    <td class="p-4">{{ product[0].id }}</td>
+                    <td class="p-4">{{ product[0].model.name }}</td>
+                    <td class="p-4">{{ product[0].productConditionToString }}</td>
+                    <td class="p-4">{{ product[0].price }} €</td>
+                    <td class="p-4">{{ product[1] ? product[1]|date('d-m-Y à H:i') : '' }}</td>
+                    <td class="p-4">
+                        <a class="btn btn-primary" href="{{ path('merchant.product.show', {'id': product[0].id}) }}">Voir</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8=">Aucune vente</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
 
 {% endblock %}

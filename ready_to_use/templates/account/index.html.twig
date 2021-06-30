@@ -3,44 +3,93 @@
 {% block title 'Mon compte' %}
 
 {% block body %}
+    <body id="body">
 
-    <div class="container mt-4">
-        <h1 class="mb-4">Mon compte</h1>
+        <div class="container mt-4 body">
         {% for message in app.flashes('success') %}
             <div class="alert alert-success">
                 {{ message }}
             </div>
         {% endfor %}
-        <div class="jumbotron">
-            {% if is_merchant %}
-                <p>Vous êtes inscrit en tant que marchand depuis le {{ merchant.requestDate|date('d-m-Y à H:i') }}.</p>
-            {% endif %}
-            {{ form_start(form) }}
-            <div class="row">
-                <div class="col-md-6">{{ form_row(form.username) }}</div>
-                <div class="col-md-6">{{ form_row(form.email) }}</div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">{{ form_row(form.firstName) }}</div>
-                <div class="col-md-4">{{ form_row(form.lastName) }}</div>
-            </div>
-            {{ form_widget(form) }}
-            <button class="btn btn-secondary">{{ button|default('Enregistrer') }}</button>
-            {{ form_end(form) }}
+    <div class="entete">
+        <h1 class="mb-4">Mon compte</h1>
+        {% if merchant %}
+            <p>Vous êtes inscrit en tant que marchand depuis le {{ merchant.requestDate|date('d-m-Y à H:i') }}.</p>
+        {% endif %}
 
-            <div class="d-flex mt-2">
-                <form method="post" action="{{ path('account.delete') }}" class="mr-2" onsubmit="return confirm('Voulez-vous vraiment supprimer votre compte ?');">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}">
-                    <button class="btn btn-danger">Supprimer mon compte</button>
-                </form>
-                {% if not is_merchant %}
+    </div>
+        <div class="content-form">
+
+            <div class="login-content login">
+                {{ form_start(form) }}
+                <img src="{{ asset('image/avatar.svg') }}" id="avatar">
+                <div class="input-div one focus">
+                    <div class="i">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Nom d'utilisateur</h5>
+                        {{ form_row(form.username) }}
+                    </div>
+                </div>
+                <div class="input-div one focus">
+                    <div class="i">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Adresse e-mail</h5>
+                        {{ form_row(form.email) }}
+                    </div>
+
+                </div>
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Prénom</h5>
+                        {{ form_row(form.firstName) }}
+                    </div>
+
+                </div>
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Nom</h5>
+                        {{ form_row(form.lastName) }}
+                    </div>
+
+                </div>
+
+
+
+
+
+            </div>
+
+
+            <div class="button-div">
+                <button class="btn btn-secondary">{{ button|default('Enregistrer') }}</button>
+                {{ form_end(form) }}
+
+                {% if not merchant %}
                 <form method="post" action="{{ path('account.merchant') }}" onsubmit="return confirm('Voulez-vous vraiment faire une demande pour devenir marchand ?');">
                     <input type="hidden" name="_token" value="{{ csrf_token('request' ~ app.user.id) }}">
                     <button class="btn btn-primary">Devenir marchand</button>
                 </form>
                 {% endif %}
+                <form method="post" action="{{ path('account.delete') }}" class="mr-2" onsubmit="return confirm('Voulez-vous vraiment supprimer votre compte ?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}">
+                    <button class="btn btn-danger">Supprimer mon compte</button>
+                </form>
             </div>
         </div>
     </div>
+    </body>
+
+    <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
+
 
 {% endblock %}

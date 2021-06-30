@@ -3,35 +3,39 @@
 {% block title %}Liste des produits{% endblock %}
 
 {% block body %}
+    <div class="container mt-4">
     {% if merchant %}
     <h3 class="mb-4">Liste de vos produits</h3>
 
     <table class="table">
-        <thead>
+        <thead >
         <tr>
-            <th>ID</th>
-            <th>Modèle</th>
-            <th>Condition</th>
-            <th>Prix souhaité</th>
-            <th>Date de dépôt</th>
-            <th>Statut</th>
-            <th>Action</th>
+            <th class="p-4">ID</th>
+            <th class="p-4">Modèle</th>
+            <th class="p-4">Condition</th>
+            <th class="p-4">Prix souhaité</th>
+            <th class="p-4">Date de dépôt</th>
+            <th class="p-4">Statut</th>
+            <th class="p-4">Action</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="teest" id="aze">
         {% for product in products %}
-            <tr>
-                <td>{{ product.id }}</td>
-                <td>{{ product.model.name }}</td>
-                <td>{{ product.productConditionToString }}</td>
-                <td>{{ product.price }} €</td>
-                <td>{{ product.depositDate ? product.depositDate|date('d-m-Y à H:i') : '' }}</td>
-                <td>{% if product.sell.status == 0 %}En attente{% elseif product.sell.status == 1 %}Accepté{% else %}Refusé{% endif %}</td>
-                <td>
-                    <a class="btn btn-primary" href="{{ path('merchant.product.show', {'id': product.id}) }}">Voir</a>
-{#                    <a class="btn btn-secondary" href="{{ path('product.edit', {'id': product.id}) }}">Modifier</a>#}
-                </td>
-            </tr>
+
+
+                <tr id="ert">
+                    <td class="p-4">{{ product.id }}</td>
+                    <td class="p-4">{{ product.model.name }}</td>
+                    <td class="p-4">{{ product.productConditionToString }}</td>
+                    <td class="p-4">{{ product.price }} €</td>
+                    <td class="p-4">{{ product.depositDate ? product.depositDate|date('d-m-Y à H:i') : '' }}</td>
+                    <td class="p-4">{% if product.sell.status == 0 %}En attente{% elseif product.sell.status == 1 %}Accepté{% else %}Refusé{% endif %}</td>
+                    <td>
+                        <a id="button" href="{{ path('merchant.product.show', {'id': product.id}) }}">Voir</a>
+
+                    </td>
+                </tr>
+
         {% else %}
             <tr>
                 <td colspan="8=">Aucun produit</td>
@@ -39,10 +43,13 @@
         {% endfor %}
         </tbody>
     </table>
+<div id="div" class="m-4">
 
-    <a class="btn btn-primary" href="{{ path('merchant.product.new') }}">Vendre un produit</a>
+    <a id="button" href="{{ path('merchant.product.new') }}">Vendre un produit</a>
+</div>
     {% else %}
         <p>Vous devez être marchand pour vendre des produits.</p>
         <a class="btn btn-primary" href="{{ path('account.index') }}">Devenir marchand</a>
     {% endif %}
+    </div>
 {% endblock %}

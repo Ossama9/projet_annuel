@@ -3,34 +3,44 @@
 {% block title %}Mon panier{% endblock %}
 
 {% block body %}
+    <body class="body_home">
+
     <div class="container mt-4">
         <h1>Mon panier</h1>
         {% if cart.products.count > 0 %}
             <div class="row mt-4">
-                <div class="col-md-8">
-                    {{ form_start(form) }}
-                    <div class="card">
+                {{ form_start(form) }}
                         <div class="card-header bg-dark text-white d-flex">
-                            <h5>Produits</h5>
-                            <div class="ml-auto">
-                                {{ form_widget(form.save, {'attr': {'class': 'btn btn-warning'}}) }}
-                                {{ form_widget(form.clear, {'attr': {'class': 'btn btn-light'}}) }}
+                <div class="">
+
+                            <div class="ml-auto div-container">
+                                <div>
+
+                                    <h5>Produits: </h5>
+                                </div>
+                                <div>
+                                   {{ form_widget(form.save, {'attr': {'class': 'btn btn-warning'}}) }}
+                                </div>
+                                <div>
+
+
+                                    {{ form_widget(form.clear, {'attr': {'class': 'btn btn-light'}}) }}
+                                </div>
                             </div>
-                        </div>
-                        <ul class="list-group list-group-flush">
+
+                        <div class="list-group list-group-flush">
                             {% for product in form.products %}
-                                <li class="list-group-item d-flex">
+                                <div class=" group-flex">
                                     <div class="flex-fill mr-2">
-                                        <img src="https://via.placeholder.com/200x150" width="100" alt="Product image">
+                                        <img class="w-50" src="{{ asset('uploads/pictures/' ~ product.vars.data.product.pictures[0].name) }}" alt="Product picture"/>
                                     </div>
-                                    <div class="flex-fill mr-2">
-                                        <h5 class="mt-0 mb-0">{{ product.vars.data.product.model.name }}</h5>
+                                    <div class="flex-fill p-4">
+                                        <h5 class="mt-0 mb-0">{{ product.vars.data.product.model.name }} - <b>{{ product.vars.data.product.price }} €</b></h5>
                                         <small>{{ product.vars.data.product.productConditionToString }}</small>
                                         <div class="form-inline mt-2">
-                                            {{ form_widget(product.remove, {'attr': {'class': 'btn btn-dark btn-sm'}}) }}
+                                            {{ form_widget(product.remove, {'attr': {'id': 'button'}}) }}
                                         </div>
-                                    </div>
-                                    <div class="d-flex flex-column justify-content-between align-items-end">
+
                                         <div>
                                             <b>{{ product.vars.data.product.priceWithMargin }} €</b>
                                         </div>
@@ -38,38 +48,46 @@
                                             <a class="btn btn-primary" href="{{ path('product.show', {id: product.vars.data.product.id }) }}">Voir</a>
                                         </div>
                                     </div>
-                                </li>
+                                </div>
                             {% endfor %}
-                        </ul>
-                    </div>
-                    {{ form_end(form, {'render_rest': false}) }}
-                </div>
-                <!-- Summary -->
-                <div class="col-md-4">
-                    <div class="card mt-4 mt-md-0">
-                        <h5 class="card-header bg-dark text-white">Résumé</h5>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between">
-                                <div><b>Total</b></div>
-                                <span><b>{{ cart.total }} €</b></span>
-                            </li>
-                        </ul>
-                        <div class="card-body">
-                            {% if app.user %}
-                                <a id="checkout" class="btn btn-warning w-100">Procéder au paiement</a>
-                            {% else %}
-                                <a href="{{ path('login') }}" class="btn btn-warning w-100">Connectez-vous</a>
-                            {% endif %}
+                            {{ form_end(form, {'render_rest': false}) }}
+
                         </div>
                     </div>
+
+                </div>
+                <!-- Summary -->
+                <div class="div-total">
+                    <div class="div-resume mt-4">
+
+
+                            <h5 class="h5">Résumé</h5>
+
+                            <b>Total</b>
+
+                            <span><b>{{ cart.total }} €</b></span>
+
+                        {% if app.user %}
+                            <a id="checkout" class="btn btn-warning w-100">Procéder au paiement</a>
+                        {% else %}
+                            <a href="{{ path('login') }}" class="btn btn-warning w-100">Connectez-vous</a>
+                        {% endif %}
+                    </div>
+
                 </div>
             </div>
         {% else %}
-            <div class="alert alert-info">
-                Votre panier est vide. <a href="{{ path('product.index') }}">Voir la liste des produits</a>.
+            <div class="jumbotron p-4">
+                <div id="panier-container">
+
+                    <p>Votre panier est vide. <a id="href" href="{{ path('product.index') }}">Voir la liste des produits</a></p>
+                </div>
             </div>
         {% endif %}
     </div>
+
+
+    </body>
 {% endblock %}
 
 {% block javascripts %}

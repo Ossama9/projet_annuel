@@ -3,13 +3,19 @@
 {% block title 'Pannel administrateur' %}
 
 {% block body %}
-    <div class="p-2">
-        <p><a href="{{ path('admin.product.index') }}">Gestion des produits</a></p>
-        <p><a href="{{ path('admin.brand.index') }}">Gestion des marques</a></p>
-        <p><a href="{{ path('admin.model.index') }}">Gestion des modèles</a></p>
-        <p><a href="{{ path('admin.category.index') }}">Gestion des catégories</a></p>
-        <p><a href="{{ path('admin.user.verification.index') }}">Gestion des marchands</a></p>
-        <p><a href="{{ path('admin.order.index') }}">Gestion des commandes</a></p>
-        <p><a href="{{ path('admin.wharehouse.index') }}">Gestion des entrepôts</a></p>
+
+    <div class="container mt-4">
+
+        <div class="p-2" id="div">
+
+            <p><a id="button" href="{{ path('admin.product.index') }}">Gestion des produits</a></p>
+            <p><a id="button" href="{{ path('admin.brand.index') }}">Gestion des marques</a></p>
+            <p><a id="button" href="{{ path('admin.model.index') }}">Gestion des modèles</a></p>
+            <p><a id="button" href="{{ path('admin.category.index') }}">Gestion des catégories</a></p>
+            <p><a id="button" href="{{ path('admin.user.verification.index') }}">Gestion des marchands</a></p>
+            <p><a id="button" href="{{ path('admin.order.index') }}">Gestion des commandes</a></p>
+            <p><a id="button" href="{{ path('admin.wharehouse.index') }}">Gestion des entrepôts</a></p>
+
+        </div>
     </div>
 {% endblock %}
