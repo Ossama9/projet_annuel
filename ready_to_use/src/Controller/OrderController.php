@@ -185,8 +185,8 @@ class OrderController extends AbstractController
                     'currency' => 'eur',
                     'unit_amount' => $product->getProduct()->getPriceWithMargin() * 100,
                     'product_data' => [
-                        'name' => $product->getProduct()->getModel()->getName()
-                        // 'images' => [$pictures],
+                        'name' => $product->getProduct()->getModel()->getName(),
+                        'images' => [$this->getParameter('domain') . '/uploads/pictures/'. $product->getProduct()->getPictures()[0]->getName()],
                     ]
                 ],
                 'quantity' => 1
@@ -204,7 +204,6 @@ class OrderController extends AbstractController
                     'order_id' => $order->getId()
                 ],
                 'mode' => 'payment',
-                // à changer plus tard
                 'success_url' => $this->getParameter('domain') . '/order/',
                 'cancel_url' => $this->getParameter('domain') . '/order/',
             ]);
