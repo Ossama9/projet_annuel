@@ -50,9 +50,9 @@
                      <columns>
                         <TableColumn fx:id="associationColumn" prefWidth="95.19995307922363" text="Association" />
                         <TableColumn fx:id="nameColumn" prefWidth="163.99999237060547" text="Nom" />
-                        <TableColumn fx:id="descriptionColumn" prefWidth="238.40005493164062" text="Description" />
-                        <TableColumn fx:id="coinsColumn" minWidth="0.0" prefWidth="42.4000244140625" text="coins" />
-                        <TableColumn fx:id="buttonColumn" prefWidth="75.0" />
+                        <TableColumn fx:id="descriptionColumn" prefWidth="215.20001220703125" text="Description" />
+                        <TableColumn fx:id="coinsColumn" minWidth="0.0" prefWidth="42.400054931640625" text="coins" />
+                        <TableColumn fx:id="buttonColumn" prefWidth="99.9998779296875" />
                      </columns>
                   </TableView>
                </children>

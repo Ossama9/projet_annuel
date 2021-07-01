@@ -33,7 +33,10 @@ public class ControllerOne {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(path)));
             Stage currentStage = (Stage)((Node) event.getSource()).getScene().getWindow();
 
-            currentStage.setScene(new Scene(loader.load()));
+            Scene scene = new Scene(loader.load());
+            scene.getStylesheets().add("/assets/css/theme.css");
+
+            currentStage.setScene(scene);
             currentStage.setTitle(title);
             currentStage.show();
         }
@@ -46,7 +49,10 @@ public class ControllerOne {
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(path)));
             Stage currentStage = (Stage) mainPane.getScene().getWindow();
-            currentStage.setScene(new Scene(loader.load()));
+            Scene scene = new Scene(loader.load());
+            scene.getStylesheets().add("/assets/css/theme.css");
+
+            currentStage.setScene(scene);
             currentStage.setTitle(title);
             currentStage.show();
         }
@@ -81,7 +87,10 @@ public class ControllerOne {
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/user/user_index.fxml")));
             Stage currentStage = (Stage)((Node) event.getSource()).getScene().getWindow();
-            currentStage.setScene(new Scene(loader.load()));
+            Scene scene = new Scene(loader.load());
+            scene.getStylesheets().add("/assets/css/theme.css");
+
+            currentStage.setScene(scene);
             currentStage.setTitle(user.getUsername());
 
             UserIndexController newController = loader.getController();
@@ -109,7 +118,9 @@ public class ControllerOne {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/asso/asso_password_choice.fxml")));
             Stage currentStage = (Stage)((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(loader.load());
-            currentStage.setScene(scene );
+            scene.getStylesheets().add("/assets/css/theme.css");
+
+            currentStage.setScene(scene);
             currentStage.setTitle("Association | Choix du mot de passe");
 
             AssoPasswordChoiceController newController = loader.getController();
@@ -128,7 +139,9 @@ public class ControllerOne {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/asso/asso_index.fxml")));
             Stage currentStage = (Stage)((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(loader.load());
-            currentStage.setScene(scene );
+            scene.getStylesheets().add("/assets/css/theme.css");
+
+            currentStage.setScene(scene);
             currentStage.setTitle(asso.getName());
 
             AssoIndexController newController = loader.getController();
@@ -145,7 +158,9 @@ public class ControllerOne {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/asso/asso_index.fxml")));
             Stage currentStage = (Stage)((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(loader.load());
-            currentStage.setScene(scene );
+            scene.getStylesheets().add("/assets/css/theme.css");
+
+            currentStage.setScene(scene);
             currentStage.setTitle(asso.getName());
 
             AssoIndexController newController = loader.getController();
@@ -165,7 +180,9 @@ public class ControllerOne {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/asso/asso_new_project.fxml")));
             Stage currentStage = (Stage)((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(loader.load());
-            currentStage.setScene(scene );
+            scene.getStylesheets().add("/assets/css/theme.css");
+
+            currentStage.setScene(scene);
             currentStage.setTitle(asso.getName() + " | Nouveau Projet");
 
             AssoNewProjectController newController = loader.getController();
@@ -183,7 +200,10 @@ public class ControllerOne {
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/admin/admin_index.fxml")));
             Stage currentStage = (Stage)((Node) event.getSource()).getScene().getWindow();
-            currentStage.setScene(new Scene(loader.load()));
+            Scene scene = new Scene(loader.load());
+            scene.getStylesheets().add("/assets/css/theme.css");
+
+            currentStage.setScene(scene);
             currentStage.setTitle("Admin | " + admin.getUsername());
 
             AdminIndexController newController = loader.getController();
@@ -200,7 +220,10 @@ public class ControllerOne {
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/admin/admin_project.fxml")));
             Stage currentStage = (Stage)((Node) event.getSource()).getScene().getWindow();
-            currentStage.setScene(new Scene(loader.load()));
+            Scene scene = new Scene(loader.load());
+            scene.getStylesheets().add("/assets/css/theme.css");
+
+            currentStage.setScene(scene);
             currentStage.setTitle("Admin | " + admin.getUsername());
 
             AdminProjectController newController = loader.getController();
@@ -217,7 +240,10 @@ public class ControllerOne {
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/admin/admin_asso.fxml")));
             Stage currentStage = (Stage)((Node) event.getSource()).getScene().getWindow();
-            currentStage.setScene(new Scene(loader.load()));
+            Scene scene = new Scene(loader.load());
+            scene.getStylesheets().add("/assets/css/theme.css");
+
+            currentStage.setScene(scene);
             currentStage.setTitle("Admin | " + admin.getUsername());
 
             AdminAssoController newController = loader.getController();
@@ -239,7 +265,9 @@ public class ControllerOne {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/project/project_index.fxml")));
             Stage currentStage = (Stage)((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(loader.load());
-            currentStage.setScene(scene );
+            scene.getStylesheets().add("/assets/css/theme.css");
+
+            currentStage.setScene(scene);
 
             currentStage.setTitle(project.getName());
 
@@ -259,7 +287,9 @@ public class ControllerOne {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/project/project_index.fxml")));
             Stage currentStage = (Stage)((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(loader.load());
-            currentStage.setScene(scene );
+            scene.getStylesheets().add("/assets/css/theme.css");
+
+            currentStage.setScene(scene);
 
             currentStage.setTitle(project.getName());
 
@@ -277,8 +307,10 @@ public class ControllerOne {
 
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/project/project_index.fxml")));
-            //Stage currentStage = (Stage)((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(loader.load());
+            scene.getStylesheets().add("/assets/css/theme.css");
+
+            currentStage.setScene(scene);
             currentStage.setScene(scene );
 
             currentStage.setTitle(project.getName());

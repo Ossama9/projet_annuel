@@ -68,7 +68,10 @@ public class UserIndexController extends ControllerUser implements Initializable
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(ControllerOne.class.getResource("/gui/user/user_projects.fxml")));
             Stage currentStage = (Stage)((Node) event.getSource()).getScene().getWindow();
-            currentStage.setScene(new Scene(loader.load()));
+            Scene scene = new Scene(loader.load());
+            scene.getStylesheets().add("/assets/css/theme.css");
+
+            currentStage.setScene(scene);
             currentStage.setTitle(user.getUsername());
 
             UserProjectsController newController = loader.getController();

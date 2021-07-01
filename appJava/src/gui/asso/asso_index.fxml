@@ -45,9 +45,9 @@
                   <TableView fx:id="assoProjectsTable" layoutX="28.0" layoutY="165.0" prefHeight="499.0" prefWidth="608.0">
                      <columns>
                         <TableColumn fx:id="nameColumn" prefWidth="163.99999237060547" text="Nom" />
-                        <TableColumn fx:id="descriptionColumn" prefWidth="324.0000915527344" text="Description" />
-                        <TableColumn fx:id="coinsColumn" minWidth="0.0" prefWidth="47.9998779296875" text="coins" />
-                        <TableColumn fx:id="buttonColumn" prefWidth="72.7999267578125" />
+                        <TableColumn fx:id="descriptionColumn" prefWidth="308.800048828125" text="Description" />
+                        <TableColumn fx:id="coinsColumn" minWidth="0.0" prefWidth="43.200103759765625" text="coins" />
+                        <TableColumn fx:id="buttonColumn" prefWidth="94.4000244140625" />
                      </columns>
                   </TableView>
                   <Label layoutX="28.0" layoutY="140.0" text="Mes projet :" />

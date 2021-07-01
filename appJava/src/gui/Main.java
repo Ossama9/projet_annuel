@@ -21,7 +21,9 @@ public class Main extends Application {
 
         try{
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("landing_page.fxml")));
-            primaryStage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add("/assets/css/theme.css");
+            primaryStage.setScene(scene);
         }
         catch (IOException e){
             System.out.println("Erreur de chargement: " + e);
